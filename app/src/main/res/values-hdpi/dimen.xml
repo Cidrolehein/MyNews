@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- TextViews -->
+    <dimen name="size_title">25sp</dimen>
+    <dimen name="padding_title">40dip</dimen>
+    <dimen name="padding_title_land">10dip</dimen>
+</resources>
