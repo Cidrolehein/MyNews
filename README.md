@@ -1,0 +1,2 @@
+# MyNews
+Application MyNews
