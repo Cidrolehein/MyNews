@@ -1,10 +1,14 @@
-package com.gacon.julien.mynews;
+package com.gacon.julien.mynews.Controllers.Activities;
 
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.gacon.julien.mynews.Controllers.Adapters.PageAdapter;
+import com.gacon.julien.mynews.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,6 +18,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //1 - Configure Toolbar
         this.configureToolbar();
+        // - View pager
+        this.configureViewPager();
     }
 
     @Override
@@ -43,5 +49,13 @@ public class MainActivity extends AppCompatActivity {
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         // Set the Toolbar
         setSupportActionBar(toolbar);
+    }
+
+    private void configureViewPager(){
+        // 1 - Get ViewPager from layout
+        ViewPager pager = findViewById(R.id.activity_main_viewpager);
+        // 2 - Set Adapter PageAdapter and glue it together
+        pager.setAdapter(new PageAdapter(getSupportFragmentManager()) {
+        });
     }
 }
