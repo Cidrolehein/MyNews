@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void configureToolbar(){
         //Get the toolbar view inside the activity layout
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.activity_main_toolbar);
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         // Set the Toolbar
         setSupportActionBar(toolbar);
     }
