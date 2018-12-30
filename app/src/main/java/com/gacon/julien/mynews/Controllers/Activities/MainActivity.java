@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.gacon.julien.mynews.Controllers.Adapters.PageAdapter;
 import com.gacon.julien.mynews.R;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         // 3 - Handle actions on menu items
         switch (item.getItemId()) {
             case R.id.menu_activity_main_params:
+                //noinspection SpellCheckingInspection
                 Toast.makeText(this, "Il n'y a rien à paramétrer", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.menu_activity_main_search:
