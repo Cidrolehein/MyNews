@@ -28,8 +28,6 @@ public class MyHttpURLConnection {
                 stringBuilder.append(line);
             }
 
-        } catch (MalformedURLException exception){
-
         } catch (IOException exception) {
 
         } catch (Exception e){
