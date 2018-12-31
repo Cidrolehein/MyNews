@@ -1,6 +1,7 @@
 language: java
 before_install:
  - chmod +x gradlew
+ before_script:
  - touch local.properties
 deploy:
   provider: pages
