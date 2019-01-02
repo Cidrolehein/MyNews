@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.ClasseUtils;
+package com.gacon.julien.mynews.Controllers.Utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

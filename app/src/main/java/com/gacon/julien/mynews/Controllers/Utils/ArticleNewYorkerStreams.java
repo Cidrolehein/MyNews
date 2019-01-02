@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.ClasseUtils;
+package com.gacon.julien.mynews.Controllers.Utils;
 
 import com.gacon.julien.mynews.Models.SearchArticleNewYorker;
 import java.util.List;

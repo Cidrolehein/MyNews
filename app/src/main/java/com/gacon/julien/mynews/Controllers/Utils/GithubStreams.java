@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.ClasseUtils;
+package com.gacon.julien.mynews.Controllers.Utils;
 
 import com.gacon.julien.mynews.Models.GithubUserInfo;
 import com.gacon.julien.mynews.Models.SearchArticleNewYorker;
@@ -6,16 +6,26 @@ import com.gacon.julien.mynews.Models.SearchArticleNewYorker;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
-import static com.gacon.julien.mynews.Controllers.ClasseUtils.ArticleNewYorkerStreams.streamFetchUserFollowing;
+import static com.gacon.julien.mynews.Controllers.Utils.ArticleNewYorkerStreams.streamFetchUserFollowing;
 
 public class GithubStreams {
 
     // 1 - Create a stream that will get user infos on Github API
+
+    public static Observable<List<SearchArticleNewYorker>> streamFetchUserFollowing(String username){
+        ArticleNewYorkerService gitHubService = ArticleNewYorkerService.retrofit.create(ArticleNewYorkerService.class);
+        return gitHubService.getFollowing(username)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .timeout(10, TimeUnit.SECONDS);
+    }
+
     public static Observable<GithubUserInfo> streamFetchUserInfos(String username) {
         ArticleNewYorkerService gitHubService = ArticleNewYorkerService.retrofit.create(ArticleNewYorkerService.class);
         return gitHubService.getUserInfos(username)
