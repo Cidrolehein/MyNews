@@ -2,16 +2,15 @@ package com.gacon.julien.mynews.Controllers.Fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.gacon.julien.mynews.Controllers.ClasseUtils.ArticleNewYorkerCalls;
-import com.gacon.julien.mynews.Controllers.ClasseUtils.NetworkAsyncTask;
-import com.gacon.julien.mynews.Models.SearchArticleNewYorker;
+import com.gacon.julien.mynews.Controllers.ClasseUtils.GithubStreams;
+import com.gacon.julien.mynews.Models.GithubUserInfo;
 import com.gacon.julien.mynews.R;
 
 import java.util.List;
@@ -19,20 +18,22 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.observers.DisposableObserver;
 
-public class MostPopularFragment extends Fragment implements NetworkAsyncTask.Listeners, ArticleNewYorkerCalls.Callbacks {
+public class MostPopularFragment extends Fragment {
 
     // FOR DESIGN
     @BindView(R.id.fragment_most_popular)
     TextView textView;
 
+    //FOR DATA
+    private Disposable disposable;
+
+    public MostPopularFragment() { }
     public static MostPopularFragment newInstance() {
         return (new MostPopularFragment());
     }
-
-    // -----------------
-    // ACTIONS
-    // -----------------
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,50 +43,50 @@ public class MostPopularFragment extends Fragment implements NetworkAsyncTask.Li
         return view;
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.disposeWhenDestroy();
+    }
+
+    // -----------------
+    // ACTIONS
+    // -----------------
+
     @OnClick(R.id.fragment_main_button)
-    public void submit(View view) {this.executeHttpRequestWithRetrofit(); }
+    public void submit(View view) {this.executeSecondHttpRequestWithRetrofit(); }
 
     // ------------------------------
-    //  HTTP REQUEST (Retrofit Way)
+    //  HTTP REQUEST (RxJAVA)
     // ------------------------------
 
-    // 4 - Execute HTTP request and update UI
-    private void executeHttpRequestWithRetrofit(){
+    // 1 - Execute our Stream
+    private void executeSecondHttpRequestWithRetrofit(){
+        // 1.1 - Update UI
         this.updateUIWhenStartingHTTPRequest();
-        ArticleNewYorkerCalls.fetchUserFollowing(this, "JakeWharton");
+        // 1.2 - Execute the stream subscribing to Observable defined inside GithubStream
+        this.disposable = GithubStreams.streamFetchUserFollowingAndFetchFirstUserInfos("JakeWharton").subscribeWith(new DisposableObserver<GithubUserInfo>() {
+
+            @Override
+            public void onNext(GithubUserInfo users) {
+                Log.e("TAG","On Next");
+                updateUIWithUserInfo(users);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                Log.e("TAG","On Error"+Log.getStackTraceString(e));
+            }
+
+            @Override
+            public void onComplete() {
+                Log.e("TAG","On Complete !!");
+            }
+        });
     }
 
-    // 2 - Override callback methods
-
-    @Override
-    public void onResponse(@Nullable List<SearchArticleNewYorker> users) {
-
-        // 2.1 - When getting response, we update UI
-        if (users != null) this.updateUIWithListOfUsers(users);
-
-    }
-
-    @Override
-    public void onFailure() {
-
-        // 2.2 - When getting error, we update UI
-        this.updateUIWhenStopingHTTPRequest("An error happened !");
-
-    }
-
-    @Override
-    public void onPreExecute() {
-
-    }
-
-    @Override
-    public void doInBackground() {
-
-    }
-
-    @Override
-    public void onPostExecute(String success) {
-
+    private void disposeWhenDestroy(){
+        if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
     }
 
     // ------------------
@@ -100,13 +101,8 @@ public class MostPopularFragment extends Fragment implements NetworkAsyncTask.Li
         this.textView.setText(response);
     }
 
-    // 3 - Update UI showing only name of users
-    private void updateUIWithListOfUsers(List<SearchArticleNewYorker> users){
-        StringBuilder stringBuilder = new StringBuilder();
-        for (SearchArticleNewYorker user : users){
-            stringBuilder.append("-"+user.getLogin()+"\n");
-        }
-        updateUIWhenStopingHTTPRequest(stringBuilder.toString());
+    private void updateUIWithUserInfo(GithubUserInfo userInfo){
+        updateUIWhenStopingHTTPRequest("The first Following of Jake Wharthon is "+userInfo.getName()+" with "+userInfo.getFollowers()+" followers.");
     }
 
 }
