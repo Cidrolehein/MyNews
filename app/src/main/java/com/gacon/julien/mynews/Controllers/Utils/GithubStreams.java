@@ -2,17 +2,12 @@ package com.gacon.julien.mynews.Controllers.Utils;
 
 import com.gacon.julien.mynews.Models.GithubUserInfo;
 import com.gacon.julien.mynews.Models.SearchArticleNewYorker;
-
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
-import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
-
-import static com.gacon.julien.mynews.Controllers.Utils.ArticleNewYorkerStreams.streamFetchUserFollowing;
 
 public class GithubStreams {
 
@@ -42,13 +37,14 @@ public class GithubStreams {
         return streamFetchUserFollowing(username) // A.
                 .map(new Function<List<SearchArticleNewYorker>, SearchArticleNewYorker>() {
                     @Override
-                    public SearchArticleNewYorker apply(List<SearchArticleNewYorker> users) throws Exception {
+                    public SearchArticleNewYorker apply(List<SearchArticleNewYorker> users) {
                         return users.get(0); // B.
                     }
                 })
                 .flatMap(new Function<SearchArticleNewYorker, Observable<GithubUserInfo>>() {
                     @Override
-                    public Observable<GithubUserInfo> apply(SearchArticleNewYorker user) throws Exception {
+                    public Observable<GithubUserInfo> apply(SearchArticleNewYorker user) throws
+                            Exception {
                         // C.
                         return streamFetchUserInfos(user.getLogin());
                     }
