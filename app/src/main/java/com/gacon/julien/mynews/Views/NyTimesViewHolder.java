@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gacon.julien.mynews.Models.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.Models.Result;
 import com.gacon.julien.mynews.R;
 
 import org.json.JSONObject;
@@ -18,7 +19,7 @@ import butterknife.ButterKnife;
 public class NyTimesViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.fragment_main_item_title)
-    TextView textView;
+    TextView textViewAsbtract;
 
     public NyTimesViewHolder(View itemView) {
         super(itemView);
@@ -27,7 +28,8 @@ public class NyTimesViewHolder extends RecyclerView.ViewHolder {
 
     public void updateWithNyUser(MainNewYorkTimesTopStories nyUser){
 
-        this.textView.setText(nyUser.getResults().toString());
+        this.textViewAsbtract.setText(nyUser.getResults().toString());
 
     }
+
 }

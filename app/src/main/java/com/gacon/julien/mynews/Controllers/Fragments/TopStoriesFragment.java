@@ -4,22 +4,25 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.gacon.julien.mynews.Controllers.Adapters.NyTimesAdapter;
-import com.gacon.julien.mynews.Controllers.Utils.NyTimesTopStoriesStreams;
+import com.gacon.julien.mynews.Controllers.Utils.NyTimesTopStoriesService;
 import com.gacon.julien.mynews.Models.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.Models.Result;
 import com.gacon.julien.mynews.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class TopStoriesFragment extends Fragment {
 
@@ -33,8 +36,8 @@ public class TopStoriesFragment extends Fragment {
 
     //FOR DATA
     private Disposable disposable;
-    // 2 - Declare list of users (GithubUser) & Adapter
-    private List<MainNewYorkTimesTopStories> mNyTopStories;
+    // 2 - Declare list of TopStories (MainTopStories) & Adapter
+    private List<MainNewYorkTimesTopStories> mNyTopStoriesList;
     private NyTimesAdapter adapter;
 
     public TopStoriesFragment() { }
@@ -43,63 +46,40 @@ public class TopStoriesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top_stories, container, false);
         ButterKnife.bind(this, view);
-        this.configureRecyclerView(); // - 4 Call during UI creation
-        this.executeHttpRequestWithRetrofit(); // 5 - Execute stream after UI creation
-        return view;
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        this.disposeWhenDestroy();
-    }
+        /*Create handle for the RetrofitInstance interface*/
+        NyTimesTopStoriesService service = NyTimesTopStoriesService.retrofit.create(NyTimesTopStoriesService.class);
 
-    // -----------------
-    // CONFIGURATION
-    // -----------------
+        /*Call the method with parameter in the interface to get the employee data*/
+        Call<MainNewYorkTimesTopStories> call = service.getNyTopStories("home");
 
-    // 3 - Configure RecyclerView, Adapter, LayoutManager & glue it together
-    private void configureRecyclerView(){
-        // 3.1 - Reset list
-        this.mNyTopStories = new ArrayList<>();
-        // 3.2 - Create adapter passing the list of users
-        this.adapter = new NyTimesAdapter(this.mNyTopStories);
-        // 3.3 - Attach the adapter to the recyclerview to populate items
-        this.recyclerView.setAdapter(this.adapter);
-        // 3.4 - Set layout manager to position the items
-        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-    }
+        /*Log the URL called*/
+        Log.wtf("URL Called", call.request().url() + "");
 
-    // -------------------
-    // HTTP (RxJAVA)
-    // -------------------
-
-    private void executeHttpRequestWithRetrofit(){
-        this.disposable = NyTimesTopStoriesStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver<List<MainNewYorkTimesTopStories>>() {
+        call.enqueue(new Callback<MainNewYorkTimesTopStories>() {
             @Override
-            public void onNext(List<MainNewYorkTimesTopStories> topStories) {
-                // 6 - Update RecyclerView after getting results from Github API
-                updateUI(topStories);
+            public void onResponse(Call<MainNewYorkTimesTopStories> call, Response<MainNewYorkTimesTopStories> response) {
+                generateEmployeeList(response.body().getResults());
             }
 
             @Override
-            public void onError(Throwable e) { }
-
-            @Override
-            public void onComplete() { }
+            public void onFailure(Call<MainNewYorkTimesTopStories> call, Throwable e) {
+                Log.e("TAG", "On Error" + Log.getStackTraceString(e));
+            }
         });
+
+        return view;
     }
 
-    private void disposeWhenDestroy(){
-        if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
+    /*Method to generate List of Top Stories using RecyclerView with custom adapter*/
+    private void generateEmployeeList(List<Result> empDataList) {
+
+        adapter = new NyTimesAdapter(empDataList);
+
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+        recyclerView.setAdapter(adapter);
+
     }
 
-    // -------------------
-    // UPDATE UI
-    // -------------------
-
-    private void updateUI(List<MainNewYorkTimesTopStories> topstories){
-        mNyTopStories.addAll(topstories);
-        adapter.notifyDataSetChanged();
-    }
 }
