@@ -18,7 +18,7 @@ import retrofit2.http.Path;
 
 public interface NyTimesTopStoriesService {
 
-    @GET("{section}.json?api-key=6587436eb3cd41d783930e3cc555da36")
+    @GET("{section}.json?api-key=KzYIpjPOMj98klY5cukvyxBmBhzKwDKO")
     Call<MainNewYorkTimesTopStories> getNyTopStories(@Path("section") String section);
 
     public static final Retrofit retrofit = new Retrofit.Builder()
