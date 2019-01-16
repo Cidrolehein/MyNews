@@ -1,5 +1,6 @@
 package com.gacon.julien.mynews.Controllers.Fragments;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,9 +10,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.bumptech.glide.Glide;
 import com.gacon.julien.mynews.Controllers.Adapters.NyTimesAdapter;
 import com.gacon.julien.mynews.Controllers.Utils.NyTimesTopStoriesService;
 import com.gacon.julien.mynews.Models.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.Models.Multimedium;
 import com.gacon.julien.mynews.Models.Result;
 import com.gacon.julien.mynews.R;
 
@@ -59,7 +62,7 @@ public class TopStoriesFragment extends Fragment {
         call.enqueue(new Callback<MainNewYorkTimesTopStories>() {
             @Override
             public void onResponse(Call<MainNewYorkTimesTopStories> call, Response<MainNewYorkTimesTopStories> response) {
-                generateEmployeeList(response.body().getResults());
+                generateTopStoriesList(response.body().getResults());
             }
 
             @Override
@@ -72,9 +75,9 @@ public class TopStoriesFragment extends Fragment {
     }
 
     /*Method to generate List of Top Stories using RecyclerView with custom adapter*/
-    private void generateEmployeeList(List<Result> empDataList) {
+    private void generateTopStoriesList(List<Result> empDataList) {
 
-        adapter = new NyTimesAdapter(empDataList);
+        adapter = new NyTimesAdapter(empDataList, Glide.with(this));
 
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 

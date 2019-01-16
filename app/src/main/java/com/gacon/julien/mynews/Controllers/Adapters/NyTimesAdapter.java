@@ -5,8 +5,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.annotation.GlideExtension;
+import com.bumptech.glide.annotation.GlideOption;
+import com.bumptech.glide.request.RequestOptions;
+import com.gacon.julien.mynews.Models.Multimedium;
 import com.gacon.julien.mynews.Models.Result;
 import com.gacon.julien.mynews.R;
 
@@ -19,10 +25,18 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
 
     // FOR DATA
     private List<Result> mNyTopStoriesList;
+    private RequestManager glide;
+
+    // FOR DESIGN
+    @BindView(R.id.fragment_main_item_title)
+    TextView textViewAsbtract;
+    @BindView(R.id.fragment_main_item_image)
+    ImageView imageView;
 
     // CONSTRUCTOR
-    public NyTimesAdapter(List<Result> mNyTopStoriesList) {
+    public NyTimesAdapter(List<Result> mNyTopStoriesList, RequestManager glide) {
         this.mNyTopStoriesList = mNyTopStoriesList;
+        this.glide = glide;
     }
 
     @Override
@@ -35,11 +49,12 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
         return new NyTimesViewHolder(view);
     }
 
-    // UPDATE VIEW HOLDER WITH A GITHUBUSER
+    // UPDATE VIEW HOLDER WITH A TOPSTORIES
     @Override
     public void onBindViewHolder(NyTimesViewHolder viewHolder, int position) {
 
-        viewHolder.textViewAsbtract.setText(mNyTopStoriesList.get(position).getAbstract());
+        viewHolder.updateWithTopStoriesItems(this.mNyTopStoriesList.get(position), this.glide);
+
     }
 
     // RETURN THE TOTAL COUNT OF ITEMS IN THE LIST
@@ -52,6 +67,8 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
 
         @BindView(R.id.fragment_main_item_title)
         TextView textViewAsbtract;
+        @BindView(R.id.fragment_main_item_image)
+        ImageView imageView;
 
         public NyTimesViewHolder(View itemView) {
             super(itemView);
@@ -59,5 +76,12 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
 
         }
 
+        public void updateWithTopStoriesItems(Result article, RequestManager glide){
+            this.textViewAsbtract.setText(article.getAbstract());
+            if (article.getMultimedia().size() > 0) {
+                glide.load(article.getMultimedia().get(0).getUrl()).into(imageView);
+            }
+        }
     }
+
 }
