@@ -7,11 +7,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
-import com.gacon.julien.mynews.Controllers.Adapters.PageAdapter;
+import com.gacon.julien.mynews.Views.PageAdapter;
 import com.gacon.julien.mynews.R;
 
-@SuppressWarnings("SpellCheckingInspection")
 public class MainActivity extends AppCompatActivity {
 
     @Override

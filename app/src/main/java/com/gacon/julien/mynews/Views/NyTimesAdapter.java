@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.Adapters;
+package com.gacon.julien.mynews.Views;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -9,10 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
-import com.bumptech.glide.annotation.GlideExtension;
-import com.bumptech.glide.annotation.GlideOption;
-import com.bumptech.glide.request.RequestOptions;
-import com.gacon.julien.mynews.Models.Multimedium;
 import com.gacon.julien.mynews.Models.Result;
 import com.gacon.julien.mynews.R;
 

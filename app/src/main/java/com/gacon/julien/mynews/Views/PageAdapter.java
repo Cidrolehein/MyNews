@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.Adapters;
+package com.gacon.julien.mynews.Views;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

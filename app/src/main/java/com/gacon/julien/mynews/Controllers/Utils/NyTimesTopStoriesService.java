@@ -1,14 +1,6 @@
 package com.gacon.julien.mynews.Controllers.Utils;
 
-
-import com.gacon.julien.mynews.Controllers.Activities.MainActivity;
 import com.gacon.julien.mynews.Models.MainNewYorkTimesTopStories;
-import com.gacon.julien.mynews.Models.Result;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import io.reactivex.Observable;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;

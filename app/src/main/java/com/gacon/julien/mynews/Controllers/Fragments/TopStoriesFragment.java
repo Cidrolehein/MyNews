@@ -1,6 +1,5 @@
 package com.gacon.julien.mynews.Controllers.Fragments;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,17 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.bumptech.glide.Glide;
-import com.gacon.julien.mynews.Controllers.Adapters.NyTimesAdapter;
 import com.gacon.julien.mynews.Controllers.Utils.NyTimesTopStoriesService;
 import com.gacon.julien.mynews.Models.MainNewYorkTimesTopStories;
-import com.gacon.julien.mynews.Models.Multimedium;
 import com.gacon.julien.mynews.Models.Result;
 import com.gacon.julien.mynews.R;
-
+import com.gacon.julien.mynews.Views.NyTimesAdapter;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
