@@ -35,7 +35,6 @@ public class TopStoriesFragment extends Fragment {
     //FOR DATA
     private Disposable disposable;
     // 2 - Declare list of TopStories (MainTopStories) & Adapter
-    private List<MainNewYorkTimesTopStories> mNyTopStoriesList;
     private NyTimesAdapter adapter;
 
     public TopStoriesFragment() { }

@@ -73,7 +73,7 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
         }
 
         public void updateWithTopStoriesItems(Result article, RequestManager glide){
-            this.textViewAsbtract.setText(article.getAbstract());
+            this.textViewAsbtract.setText(article.getTitle());
             if (article.getMultimedia().size() > 0) {
                 glide.load(article.getMultimedia().get(0).getUrl()).into(imageView);
             }

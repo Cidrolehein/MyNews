@@ -1,23 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dip">
+    android:padding="5dp"
+    android:layout_margin="0dp">
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_margin="0dp">
 
         <ImageView
             android:id="@+id/fragment_main_item_image"
-            android:layout_width="50dip"
-            android:layout_height="50dip"
-            android:layout_margin="5dip"/>
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="20dp"
+            android:contentDescription="@string/todo" />
 
         <TextView
             android:id="@+id/fragment_main_item_title"
@@ -25,7 +29,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="normal"
+            android:layout_marginEnd="10dp"/>
 
     </LinearLayout>
 
@@ -34,7 +39,8 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_margin="0dp">
         <TextView
             android:id="@+id/fragment_main_item_website"
             android:layout_width="0dp"
