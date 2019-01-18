@@ -2,6 +2,7 @@ package com.gacon.julien.mynews.Controllers.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -30,6 +31,10 @@ public class TopStoriesFragment extends Fragment {
     @BindView(R.id.fragment_main_recycler_view)
     RecyclerView recyclerView; // 1 - Declare RecyclerView
 
+    // Declare the SwipeRefreshLayout
+    @BindView(R.id.fragment_main_swipe_container)
+    SwipeRefreshLayout swipeRefreshLayout;
+
     //FOR DATA
     private Disposable disposable;
     // 2 - Declare list of TopStories (List<Result>) & Adapter
@@ -45,6 +50,7 @@ public class TopStoriesFragment extends Fragment {
 
         this.configureRecyclerView();
         this.executeHttpRequestWithRetrofit();
+        this.configureSwipeRefreshLayout();
 
         return view;
     }
@@ -69,6 +75,16 @@ public class TopStoriesFragment extends Fragment {
         this.recyclerView.setAdapter(this.adapter);
         // 3.4 - Set layout manager to position the items
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
+
+    // Configure the SwipeRefreshLayout
+    private void configureSwipeRefreshLayout() {
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                executeHttpRequestWithRetrofit();
+            }
+        });
     }
 
     // -------------------
@@ -103,6 +119,9 @@ public class TopStoriesFragment extends Fragment {
     // -------------------
 
     private void updateUI(List<Result> topStories) {
+        //stop refreshing and clear actual list of top stories
+        swipeRefreshLayout.setRefreshing(false);
+        mResultList.clear();
         mResultList.addAll(topStories);
         adapter.notifyDataSetChanged();
     }
