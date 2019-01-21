@@ -1,6 +1,8 @@
 package com.gacon.julien.mynews.Views;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
+import com.gacon.julien.mynews.Controllers.Fragments.TopStoriesFragment;
 import com.gacon.julien.mynews.Models.Result;
 import com.gacon.julien.mynews.R;
 
@@ -75,7 +80,10 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
         public void updateWithTopStoriesItems(Result article, RequestManager glide){
             this.textViewAsbtract.setText(article.getTitle());
             if (article.getMultimedia().size() > 0) {
-                glide.load(article.getMultimedia().get(0).getUrl()).into(imageView);
+                glide.load(article.getMultimedia().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
+            } else {
+                glide.clear(imageView);
+                imageView.setImageResource(R.drawable.ic_image_deffault);
             }
         }
     }
