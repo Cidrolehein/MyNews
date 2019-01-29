@@ -3,7 +3,7 @@ package com.gacon.julien.mynews.Views;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.gacon.julien.mynews.Controllers.Fragments.BusinessFragment;
+import com.gacon.julien.mynews.Controllers.Fragments.ArtsFragment;
 import com.gacon.julien.mynews.Controllers.Fragments.MostPopularFragment;
 import com.gacon.julien.mynews.Controllers.Fragments.TopStoriesFragment;
 
@@ -27,7 +27,7 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 1: //Page number 2
                 return MostPopularFragment.newInstance();
             case 2: //Page number 3
-                return BusinessFragment.newInstance();
+                return ArtsFragment.newInstance();
             default:
                 return null;
         }
@@ -41,7 +41,7 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 1: //Page number 2
                 return "MOST POPULAR";
             case 2: //Page number 3
-                return "BUSINESS";
+                return "ARTS";
             default:
                 return null;
         }

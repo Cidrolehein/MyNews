@@ -8,19 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.bumptech.glide.Glide;
 import com.gacon.julien.mynews.Controllers.Utils.NyTimesTopStoriesStreams;
 import com.gacon.julien.mynews.Models.MostPopular.NyApiMostPopular;
 import com.gacon.julien.mynews.Models.TopStories.MainNewYorkTimesTopStories;
 import com.gacon.julien.mynews.Models.TopStories.Result;
 import com.gacon.julien.mynews.R;
+import com.gacon.julien.mynews.Views.ArtsAdapter;
 import com.gacon.julien.mynews.Views.MostPopularAdapter;
 import com.gacon.julien.mynews.Views.NyTimesAdapter;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
@@ -45,6 +43,7 @@ public abstract class BaseFragment extends Fragment {
     private List<com.gacon.julien.mynews.Models.MostPopular.Result> mostPopResult;
     private NyTimesAdapter adapter;
     private MostPopularAdapter mostPopularAdapter;
+    private ArtsAdapter artsAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -52,7 +51,7 @@ public abstract class BaseFragment extends Fragment {
         ButterKnife.bind(this, view);
 
         this.configureRecyclerView();
-        this.executeHttpRequestWithRetrofit();
+        this.executeHttpRequest();
         this.configureSwipeRefreshLayout();
 
         return view;
@@ -78,19 +77,29 @@ public abstract class BaseFragment extends Fragment {
                 this.mResultList = new ArrayList<>();
                 // 3.2 - Create adapter passing the list of NY top stories
                 adapter = new NyTimesAdapter(mResultList, Glide.with(this));
+                // 3.3 - Attach the adapter to the recyclerview to populate items
+                this.recyclerView.setAdapter(this.adapter);
             break;
             case R.layout.fragment_most_popular:
                 // 3.1 - Reset list
                 this.mostPopResult = new ArrayList<>();
                 // 3.2 - Create adapter passing the list of NY top stories
                 mostPopularAdapter = new MostPopularAdapter(mostPopResult, Glide.with(this));
+                // 3.3 - Attach the adapter to the recyclerview to populate items
+                this.recyclerView.setAdapter(this.mostPopularAdapter);
             break;
+            case R.layout.fragment_arts:
+                // 3.1 - Reset list
+                this.mResultList = new ArrayList<>();
+                // 3.2 - Create adapter passing the list of NY top stories
+                artsAdapter = new ArtsAdapter(mResultList, Glide.with(this));
+                // 3.3 - Attach the adapter to the recyclerview to populate items
+                this.recyclerView.setAdapter(this.artsAdapter);
+                break;
             default:
                 break;
         }
 
-        // 3.3 - Attach the adapter to the recyclerview to populate items
-        this.recyclerView.setAdapter(this.adapter);
         // 3.4 - Set layout manager to position the items
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
     }
@@ -100,57 +109,22 @@ public abstract class BaseFragment extends Fragment {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                executeHttpRequestWithRetrofit();
+                executeHttpRequest();
             }
         });
     }
 
-    private void executeHttpRequestWithRetrofit() {
+    private void executeHttpRequest() {
 
         switch (getFragmentLayout()){
             case R.layout.fragment_top_stories:
-                this.disposable = NyTimesTopStoriesStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
-                    @Override
-                    public void onNext(MainNewYorkTimesTopStories articles) {
-
-                        // Update RecyclerView after getting results from NYTimes Top Stories API
-                        updateUI(articles.getResults());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-
-                        System.out.println(e);
-                        e.printStackTrace();
-
-                    }
-
-                    @Override
-                    public void onComplete() { }
-
-                });
+               this.executeHttpRequestTopStory();
                 break;
             case R.layout.fragment_most_popular:
-                this.disposable = NyTimesTopStoriesStreams.streamFetchMostPopular(1).subscribeWith(new DisposableObserver<NyApiMostPopular>() {
-                    @Override
-                    public void onNext(NyApiMostPopular articles) {
-
-                        // Update RecyclerView after getting results from NYTimes Top Stories API
-                        updateUIMostPopular(articles.getResults());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        System.out.println(e);
-                        e.printStackTrace();
-
-                    }
-
-                    @Override
-                    public void onComplete() { }
-
-                });
+                this.executeHttpRequestMostPopular();
                 break;
+            case R.layout.fragment_arts:
+                this.executeHttpRequestArts();
             default:
                 break;
         }
@@ -177,8 +151,72 @@ public abstract class BaseFragment extends Fragment {
         mostPopularAdapter.notifyDataSetChanged();
     }
 
+    private void updateUIArts(List<Result> textArticle) {
+        //stop refreshing and clear actual list of text article
+        swipeRefreshLayout.setRefreshing(false);
+        mResultList.clear();
+        mResultList.addAll(textArticle);
+        artsAdapter.notifyDataSetChanged();
+    }
+
     private void disposeWhenDestroy(){
         if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
+    }
+
+    // -------------------
+    // Streams Request
+    // with Retrofit
+    // -------------------
+
+    private void executeHttpRequestTopStory() {
+        this.disposable = NyTimesTopStoriesStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
+            @Override
+            public void onNext(MainNewYorkTimesTopStories articles) {
+                // Update RecyclerView after getting results from NYTimes Top Stories API
+                updateUI(articles.getResults());
+            }
+            @Override
+            public void onError(Throwable e) {
+                System.out.println(e);
+                e.printStackTrace();
+            }
+            @Override
+            public void onComplete() { }
+        });
+    }
+
+    private void executeHttpRequestMostPopular() {
+        this.disposable = NyTimesTopStoriesStreams.streamFetchMostPopular(1).subscribeWith(new DisposableObserver<NyApiMostPopular>() {
+            @Override
+            public void onNext(NyApiMostPopular articles) {
+                // Update RecyclerView after getting results from NYTimes Top Stories API
+                updateUIMostPopular(articles.getResults());
+            }
+            @Override
+            public void onError(Throwable e) {
+                System.out.println(e);
+                e.printStackTrace();
+            }
+            @Override
+            public void onComplete() { }
+        });
+    }
+
+    private void executeHttpRequestArts() {
+        this.disposable = NyTimesTopStoriesStreams.streamFetchTopStories("arts").subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
+            @Override
+            public void onNext(MainNewYorkTimesTopStories articles) {
+                // Update RecyclerView after getting results from NYTimes Top Stories API
+                updateUIArts(articles.getResults());
+            }
+            @Override
+            public void onError(Throwable e) {
+                System.out.println(e);
+                e.printStackTrace();
+            }
+            @Override
+            public void onComplete() { }
+        });
     }
 
 }

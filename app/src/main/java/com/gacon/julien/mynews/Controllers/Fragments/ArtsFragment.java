@@ -13,16 +13,14 @@ import com.gacon.julien.mynews.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BusinessFragment extends Fragment {
+public class ArtsFragment extends BaseFragment {
 
 
-    public static BusinessFragment newInstance() {
-        return (new BusinessFragment());
+    public static ArtsFragment newInstance() {
+        return (new ArtsFragment());
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_business, container, false);
-    }
+    protected int getFragmentLayout() {return R.layout.fragment_arts;}
 
 }
