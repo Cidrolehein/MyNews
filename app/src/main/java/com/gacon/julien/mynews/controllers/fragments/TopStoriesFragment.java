@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.Fragments;
+package com.gacon.julien.mynews.controllers.fragments;
 
 import com.gacon.julien.mynews.R;
 

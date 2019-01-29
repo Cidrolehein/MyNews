@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.Activities;
+package com.gacon.julien.mynews.controllers.activities;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import com.gacon.julien.mynews.Views.PageAdapter;
+import com.gacon.julien.mynews.views.PageAdapter;
 import com.gacon.julien.mynews.R;
 
 public class MainActivity extends AppCompatActivity {

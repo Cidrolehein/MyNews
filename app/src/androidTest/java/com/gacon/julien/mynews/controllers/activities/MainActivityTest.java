@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.Activities;
+package com.gacon.julien.mynews.controllers.activities;
 
 
 import android.support.test.espresso.ViewInteraction;

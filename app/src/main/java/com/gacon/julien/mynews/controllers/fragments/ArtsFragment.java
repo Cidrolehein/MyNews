@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.Fragments;
+package com.gacon.julien.mynews.controllers.fragments;
 
 
 import android.support.v4.app.Fragment;

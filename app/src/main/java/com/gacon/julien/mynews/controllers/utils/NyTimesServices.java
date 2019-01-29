@@ -1,7 +1,7 @@
-package com.gacon.julien.mynews.Controllers.Utils;
+package com.gacon.julien.mynews.controllers.utils;
 
-import com.gacon.julien.mynews.Models.MostPopular.NyApiMostPopular;
-import com.gacon.julien.mynews.Models.TopStories.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.models.mostPopular.NyApiMostPopular;
+import com.gacon.julien.mynews.models.topStories.MainNewYorkTimesTopStories;
 
 import io.reactivex.Observable;
 import retrofit2.Retrofit;

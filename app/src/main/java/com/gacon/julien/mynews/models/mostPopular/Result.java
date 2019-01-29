@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Models.MostPopular;
+package com.gacon.julien.mynews.models.mostPopular;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

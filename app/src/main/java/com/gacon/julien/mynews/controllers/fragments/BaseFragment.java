@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Controllers.Fragments;
+package com.gacon.julien.mynews.controllers.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -10,14 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
-import com.gacon.julien.mynews.Controllers.Utils.NyTimesStreams;
-import com.gacon.julien.mynews.Models.MostPopular.NyApiMostPopular;
-import com.gacon.julien.mynews.Models.TopStories.MainNewYorkTimesTopStories;
-import com.gacon.julien.mynews.Models.TopStories.Result;
+import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
+import com.gacon.julien.mynews.models.mostPopular.NyApiMostPopular;
+import com.gacon.julien.mynews.models.topStories.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.models.topStories.Result;
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.Views.ArtsAdapter;
-import com.gacon.julien.mynews.Views.MostPopularAdapter;
-import com.gacon.julien.mynews.Views.NyTimesAdapter;
+import com.gacon.julien.mynews.views.ArtsAdapter;
+import com.gacon.julien.mynews.views.MostPopularAdapter;
+import com.gacon.julien.mynews.views.NyTimesAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -41,7 +41,7 @@ public abstract class BaseFragment extends Fragment {
     private Disposable disposable;
     // 2 - Declare lists & Adapters
     private List<Result> mResultList;
-    private List<com.gacon.julien.mynews.Models.MostPopular.Result> mostPopularResult;
+    private List<com.gacon.julien.mynews.models.mostPopular.Result> mostPopularResult;
     private NyTimesAdapter adapter;
     private MostPopularAdapter mostPopularAdapter;
     private ArtsAdapter artsAdapter;
@@ -135,7 +135,7 @@ public abstract class BaseFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void updateUIMostPopular(List<com.gacon.julien.mynews.Models.MostPopular.Result> textArticle) {
+    private void updateUIMostPopular(List<com.gacon.julien.mynews.models.mostPopular.Result> textArticle) {
         //stop refreshing and clear actual list of text article
         swipeRefreshLayout.setRefreshing(false);
         mostPopularResult.clear();

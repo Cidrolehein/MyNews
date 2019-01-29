@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Views;
+package com.gacon.julien.mynews.views;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
@@ -7,10 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
-import com.gacon.julien.mynews.Models.TopStories.Result;
+import com.gacon.julien.mynews.models.topStories.Result;
 import com.gacon.julien.mynews.R;
 
 import java.text.DateFormat;
@@ -22,31 +21,31 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseViewHolder> {
+public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesViewHolder> {
 
     // FOR DATA
     private List<Result> mNyTopStoriesList;
     private RequestManager glide;
 
     // CONSTRUCTOR
-    public BaseAdapter(List<Result> mNyTopStoriesList, RequestManager glide) {
+    public NyTimesAdapter(List<Result> mNyTopStoriesList, RequestManager glide) {
         this.mNyTopStoriesList = mNyTopStoriesList;
         this.glide = glide;
     }
 
     @Override
-    public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public NyTimesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // CREATE VIEW HOLDER AND INFLATING ITS XML LAYOUT
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.fragment_main_item, parent, false);
 
-        return new BaseViewHolder(view);
+        return new NyTimesViewHolder(view);
     }
 
     // UPDATE VIEW HOLDER WITH A TOPSTORIES
     @Override
-    public void onBindViewHolder(BaseViewHolder viewHolder, int position) {
+    public void onBindViewHolder(NyTimesViewHolder viewHolder, int position) {
 
         viewHolder.updateWithTopStoriesItems(this.mNyTopStoriesList.get(position), this.glide);
 
@@ -58,7 +57,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
         return this.mNyTopStoriesList.size();
     }
 
-    public class BaseViewHolder extends RecyclerView.ViewHolder {
+    public class NyTimesViewHolder extends RecyclerView.ViewHolder {
 
         // FOR DESIGN
         @BindView(R.id.fragment_main_item_title)
@@ -72,7 +71,7 @@ public abstract class BaseAdapter extends RecyclerView.Adapter<BaseAdapter.BaseV
         @BindView(R.id.fragment_main_item_image)
         ImageView imageView;
 
-        public BaseViewHolder(View itemView) {
+        public NyTimesViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 

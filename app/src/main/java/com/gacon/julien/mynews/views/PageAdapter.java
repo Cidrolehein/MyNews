@@ -1,11 +1,11 @@
-package com.gacon.julien.mynews.Views;
+package com.gacon.julien.mynews.views;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.gacon.julien.mynews.Controllers.Fragments.ArtsFragment;
-import com.gacon.julien.mynews.Controllers.Fragments.MostPopularFragment;
-import com.gacon.julien.mynews.Controllers.Fragments.TopStoriesFragment;
+import com.gacon.julien.mynews.controllers.fragments.ArtsFragment;
+import com.gacon.julien.mynews.controllers.fragments.MostPopularFragment;
+import com.gacon.julien.mynews.controllers.fragments.TopStoriesFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
