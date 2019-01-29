@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="module_mynews" default="compile.module.mynews">
+  <dirname property="module.mynews.basedir" file="${ant.file.module_mynews}"/>
+  
+  <property name="module.jdk.home.mynews" value="${jdk.home.1.8}"/>
+  <property name="module.jdk.bin.mynews" value="${jdk.bin.1.8}"/>
+  <property name="module.jdk.classpath.mynews" value="jdk.classpath.1.8"/>
+  
+  <property name="compiler.args.mynews" value="-encoding UTF-8 -source 7 -target 7 ${compiler.args}"/>
+  
+  <property name="mynews.output.dir" value="${module.mynews.basedir}/build/classes/production/MyNews"/>
+  <property name="mynews.testoutput.dir" value="${module.mynews.basedir}/build/classes/test/MyNews"/>
+  
+  <path id="mynews.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="mynews.module.production.classpath">
+    <path refid="${module.jdk.classpath.mynews}"/>
+  </path>
+  
+  <path id="mynews.runtime.production.module.classpath">
+    <pathelement location="${mynews.output.dir}"/>
+  </path>
+  
+  <path id="mynews.module.classpath">
+    <path refid="${module.jdk.classpath.mynews}"/>
+    <pathelement location="${mynews.output.dir}"/>
+  </path>
+  
+  <path id="mynews.runtime.module.classpath">
+    <pathelement location="${mynews.testoutput.dir}"/>
+    <pathelement location="${mynews.output.dir}"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.mynews">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.mynews">
+    <patternset refid="excluded.from.module.mynews"/>
+  </patternset>
+  
+  
+  <target name="compile.module.mynews" depends="compile.module.mynews.production,compile.module.mynews.tests" description="Compile module MyNews"/>
+  
+  <target name="compile.module.mynews.production" depends="register.custom.compilers" description="Compile module MyNews; production classes"/>
+  
+  <target name="compile.module.mynews.tests" depends="register.custom.compilers,compile.module.mynews.production" description="compile module MyNews; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.mynews" description="cleanup module">
+    <delete dir="${mynews.output.dir}"/>
+    <delete dir="${mynews.testoutput.dir}"/>
+  </target>
+</project>

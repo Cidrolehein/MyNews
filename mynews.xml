@@ -1,0 +1,453 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="mynews" default="all">
+  
+  
+  <property file="mynews.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*.yarb/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.swc"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.egg"/>
+    <include name="*.ane"/>
+    <include name="*.jar"/>
+    <include name="*.ear"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.8" value="${jdk.home.1.8}/bin"/>
+  <path id="jdk.classpath.1.8">
+    <fileset dir="${jdk.home.1.8}">
+      <include name="jre/lib/charsets.jar"/>
+      <include name="jre/lib/ext/access-bridge-64.jar"/>
+      <include name="jre/lib/ext/cldrdata.jar"/>
+      <include name="jre/lib/ext/dnsns.jar"/>
+      <include name="jre/lib/ext/jaccess.jar"/>
+      <include name="jre/lib/ext/localedata.jar"/>
+      <include name="jre/lib/ext/nashorn.jar"/>
+      <include name="jre/lib/ext/sunec.jar"/>
+      <include name="jre/lib/ext/sunjce_provider.jar"/>
+      <include name="jre/lib/ext/sunmscapi.jar"/>
+      <include name="jre/lib/ext/sunpkcs11.jar"/>
+      <include name="jre/lib/ext/zipfs.jar"/>
+      <include name="jre/lib/jce.jar"/>
+      <include name="jre/lib/jsse.jar"/>
+      <include name="jre/lib/management-agent.jar"/>
+      <include name="jre/lib/resources.jar"/>
+      <include name="jre/lib/rt.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.8}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.8}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.8"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.gradle:_android.arch.core:common:1.1.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/android.arch.core/common/1.1.1/e55b70d1f5620db124b3e85a7f4bdc7bd48d9f95/common-1.1.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_android.arch.core:runtime-1.1.1.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/f79d003c719ef10ccd5c4b1d112bb3f9/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/f79d003c719ef10ccd5c4b1d112bb3f9/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_android.arch.lifecycle:common:1.1.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/android.arch.lifecycle/common/1.1.1/207a6efae6a3555e326de41f76bdadd9a239cbce/common-1.1.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_android.arch.lifecycle:livedata-1.1.1.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/69ad8f4ef643f3efa111bc0e316a0360/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/livedata-1.1.1.aar/69ad8f4ef643f3efa111bc0e316a0360/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_android.arch.lifecycle:livedata-core-1.1.1.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/bf20fdcdae9ff47a660bac7504feaf00/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/livedata-core-1.1.1.aar/bf20fdcdae9ff47a660bac7504feaf00/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_android.arch.lifecycle:runtime-1.1.1.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/3e368bd93d5df708b4df87685bf6ef59/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/runtime-1.1.1.aar/3e368bd93d5df708b4df87685bf6ef59/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_android.arch.lifecycle:viewmodel-1.1.1.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/f354dd115347050be9f59070359a0677/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/viewmodel-1.1.1.aar/f354dd115347050be9f59070359a0677/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support.constraint:constraint-layout-1.1.3.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/4d536ef923b7c9ac9e4a5fd4eeb0c13a/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/constraint-layout-1.1.3.aar/4d536ef923b7c9ac9e4a5fd4eeb0c13a/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support.constraint:constraint-layout-solver:1.1.3@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.android.support.constraint/constraint-layout-solver/1.1.3/bde0667d7414c16ed62d3cfe993cff7f9d732373/constraint-layout-solver-1.1.3.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support.test.espresso:espresso-core-3.0.2.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/espresso-core-3.0.2.aar/edbf0d002ed1ab8def0cc5e2f269b9a9/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/espresso-core-3.0.2.aar/edbf0d002ed1ab8def0cc5e2f269b9a9/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support.test.espresso:espresso-idling-resource-3.0.2.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/espresso-idling-resource-3.0.2.aar/70cc6eb6c3fd4692692db9d91ef5dcf6/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/espresso-idling-resource-3.0.2.aar/70cc6eb6c3fd4692692db9d91ef5dcf6/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support.test:monitor-1.0.2.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/monitor-1.0.2.aar/2c386f6730a9b661fbffc3ed37ea6246/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/monitor-1.0.2.aar/2c386f6730a9b661fbffc3ed37ea6246/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support.test:rules-1.0.2.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/rules-1.0.2.aar/7742e8c0b50a900be3fa5eae0d38da12/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/rules-1.0.2.aar/7742e8c0b50a900be3fa5eae0d38da12/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support.test:runner-1.0.2.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/runner-1.0.2.aar/e452bd65787b7d71d84a5268bae4c259/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/runner-1.0.2.aar/e452bd65787b7d71d84a5268bae4c259/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:animated-vector-drawable-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/a0de555bbfdeae788821060643919229/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/animated-vector-drawable-28.0.0.aar/a0de555bbfdeae788821060643919229/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:appcompat-v7-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/bf7824eecb23b0e734f98d45947db9d5/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/appcompat-v7-28.0.0.aar/bf7824eecb23b0e734f98d45947db9d5/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:asynclayoutinflater-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/8a09650d9b9e7553371868e6324105ef/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/asynclayoutinflater-28.0.0.aar/8a09650d9b9e7553371868e6324105ef/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:cardview-v7-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/bf04a746bafc5ffc39701bda5656def1/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/cardview-v7-28.0.0.aar/bf04a746bafc5ffc39701bda5656def1/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:collections:28.0.0@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.android.support/collections/28.0.0/c1bcdade4d3cc2836130424a3f3e4182c666a745/collections-28.0.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:coordinatorlayout-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/b74966092c6fc80afcf1e8873e7c61ed/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/coordinatorlayout-28.0.0.aar/b74966092c6fc80afcf1e8873e7c61ed/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:cursoradapter-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/8802526263d9a8f8a03a1ddb11b347ca/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/cursoradapter-28.0.0.aar/8802526263d9a8f8a03a1ddb11b347ca/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:customview-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/93a72ca00180e71d3a3268a1fa1781d0/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/customview-28.0.0.aar/93a72ca00180e71d3a3268a1fa1781d0/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:design-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/b5f3fc85055f267d94e60b6ff5f2981e/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/design-28.0.0.aar/b5f3fc85055f267d94e60b6ff5f2981e/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:documentfile-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/0c018e771a7bc2ad0a52bd5058289dc3/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/documentfile-28.0.0.aar/0c018e771a7bc2ad0a52bd5058289dc3/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:drawerlayout-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/3a7fbbdf7cfe47f8b2f5aa4c373cce7d/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/drawerlayout-28.0.0.aar/3a7fbbdf7cfe47f8b2f5aa4c373cce7d/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:interpolator-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/9fabe2aaa21bf0d87bca4165f292a5fe/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/interpolator-28.0.0.aar/9fabe2aaa21bf0d87bca4165f292a5fe/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:loader-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/622562c169705c4134c0bcba51977d64/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/loader-28.0.0.aar/622562c169705c4134c0bcba51977d64/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:localbroadcastmanager-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/1d248f553f833b0974d459a603a2805e/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/localbroadcastmanager-28.0.0.aar/1d248f553f833b0974d459a603a2805e/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:print-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/427fb32bfd0c983dc1f21ba477e8673b/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/print-28.0.0.aar/427fb32bfd0c983dc1f21ba477e8673b/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:recyclerview-v7-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/e47d48f574ceb11c2c73f138d678fcab/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/recyclerview-v7-28.0.0.aar/e47d48f574ceb11c2c73f138d678fcab/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:slidingpanelayout-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/4e098c13927f82d9adde1d13da04a633/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/slidingpanelayout-28.0.0.aar/4e098c13927f82d9adde1d13da04a633/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:support-annotations:28.0.0@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.android.support/support-annotations/28.0.0/ed73f5337a002d1fd24339d5fb08c2c9d9ca60d8/support-annotations-28.0.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:support-compat-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/4bfd0b98f4a3b27d6f292c60a1970ecc/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/4bfd0b98f4a3b27d6f292c60a1970ecc/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:support-core-ui-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/0a8f08db51ac992e4c201f3064c6dd42/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-core-ui-28.0.0.aar/0a8f08db51ac992e4c201f3064c6dd42/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:support-core-utils-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/1fabe2ae2500462ec9a4af1832bc2478/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-core-utils-28.0.0.aar/1fabe2ae2500462ec9a4af1832bc2478/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:support-fragment-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/2195dcd6645f8d4a4761307e0ecc3bb1/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-fragment-28.0.0.aar/2195dcd6645f8d4a4761307e0ecc3bb1/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:support-media-compat-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/dcef8d01255df38f9eb5ad888845832d/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-media-compat-28.0.0.aar/dcef8d01255df38f9eb5ad888845832d/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:support-v4-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/2c978cbc302a21235dc35e56e48d54d5/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-v4-28.0.0.aar/2c978cbc302a21235dc35e56e48d54d5/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:support-vector-drawable-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/c01b5fc3d1ba535fd594985044e28a6a/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/support-vector-drawable-28.0.0.aar/c01b5fc3d1ba535fd594985044e28a6a/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:swiperefreshlayout-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/d2c09df12c1df638d63c23bbe298f009/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/swiperefreshlayout-28.0.0.aar/d2c09df12c1df638d63c23bbe298f009/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:transition-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/bb428ecb5a840435190ce74c8461ff46/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/transition-28.0.0.aar/bb428ecb5a840435190ce74c8461ff46/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:versionedparcelable-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/2b201adbaedc759c86930dab7099a8b5/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/versionedparcelable-28.0.0.aar/2b201adbaedc759c86930dab7099a8b5/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.android.support:viewpager-28.0.0.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/fd348c66f23e07fcf3604e356da6f607/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/viewpager-28.0.0.aar/fd348c66f23e07fcf3604e356da6f607/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.github.bumptech.glide:annotations:4.3.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/annotations/4.3.1/a786169ed0f768a589503844726f2380bb2139c/annotations-4.3.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.github.bumptech.glide:disklrucache:4.3.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/disklrucache/4.3.1/9eaeaefa25c6ff18d7008f06208d41a261d8b29b/disklrucache-4.3.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.github.bumptech.glide:gifdecoder:4.3.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/gifdecoder/4.3.1/dc06b7679496073ef4505005b4c5995f522503cd/gifdecoder-4.3.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.github.bumptech.glide:glide:4.3.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.github.bumptech.glide/glide/4.3.1/9afb77c8712b19e421caecefe8e85e98ab327ce7/glide-4.3.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.code.findbugs:jsr305:2.0.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.google.code.findbugs/jsr305/2.0.1/516c03b21d50a644d538de0f0369c620989cd8f0/jsr305-2.0.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.google.code.gson:gson:2.8.5@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.8.5/f645ed69d595b24d4cf8b3fbb64cc505bede8829/gson-2.8.5.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.jakewharton.android.repackaged:dalvik-dx:1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.jakewharton.android.repackaged/dalvik-dx/1/5344672f614ef1df39f7a9d88a5aa0e44d74d4d9/dalvik-dx-1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.jakewharton.android.repackaged:libcore-dex:2@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.jakewharton.android.repackaged/libcore-dex/2/1d3c98644912295ca8cb80069b1cdea4389085b2/libcore-dex-2.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.jakewharton:butterknife-8.8.1.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/butterknife-8.8.1.aar/6122dce4ef6321f4f38c1d617eddb84e/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/butterknife-8.8.1.aar/6122dce4ef6321f4f38c1d617eddb84e/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.jakewharton:butterknife-annotations:8.8.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.jakewharton/butterknife-annotations/8.8.1/bc373fb6bc7bca3035041b924f158fd2b946ee8d/butterknife-annotations-8.8.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.squareup.okhttp3:okhttp:3.8.0@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.8.0/5a11f020cce2d11eb71ba916700600e18c4547e7/okhttp-3.8.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.squareup.okio:okio:1.13.0@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.13.0/a9283170b7305c8d92d25aff02a6ab7e45d06cbe/okio-1.13.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.squareup.retrofit2:adapter-rxjava2:2.3.0@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/adapter-rxjava2/2.3.0/f436637f9500ab5b8bc32afe556373180894b4a5/adapter-rxjava2-2.3.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.squareup.retrofit2:converter-gson:2.3.0@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.3.0/9e09011e9767bb76b5e27c9b8223476b93b14631/converter-gson-2.3.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.squareup.retrofit2:retrofit:2.3.0@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.3.0/bcacde6a8ccedcc56c127403d26b76072fe6214d/retrofit-2.3.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_com.squareup:javawriter:2.1.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/com.squareup/javawriter/2.1.1/67ff45d9ae02e583d0f9b3432a5ebbe05c30c966/javawriter-2.1.1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.reactivex.rxjava2:rxandroid-2.0.1.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.1.aar/1f67ae2cb2e58450ae56d8fd03c48259/res"/>
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/transforms-1/files-1.1/rxandroid-2.0.1.aar/1f67ae2cb2e58450ae56d8fd03c48259/jars/classes.jar"/>
+  </path>
+  
+  <path id="library.gradle:_io.reactivex.rxjava2:rxjava:2.1.7@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/io.reactivex.rxjava2/rxjava/2.1.7/8c6d3f76a0b8ed49e9d49a5af9c80c5fc2091677/rxjava-2.1.7.jar"/>
+  </path>
+  
+  <path id="library.gradle:_javax.inject:javax.inject:1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/javax.inject/javax.inject/1/6975da39a7040257bd51d21a231b76c915872d38/javax.inject-1.jar"/>
+  </path>
+  
+  <path id="library.gradle:_junit:junit:4.12@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/junit/junit/4.12/2973d150c0dc1fefe998f834810d68f278ea58ec/junit-4.12.jar"/>
+  </path>
+  
+  <path id="library.gradle:_net.bytebuddy:byte-buddy-agent:1.9.3@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.9.3/f5b78c16cf4060664d80b6ca32d80dca4bd3d264/byte-buddy-agent-1.9.3.jar"/>
+  </path>
+  
+  <path id="library.gradle:_net.bytebuddy:byte-buddy-android:1.9.3@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-android/1.9.3/6c8ea90ff6138f9981b4154f365800a4e37310a4/byte-buddy-android-1.9.3.jar"/>
+  </path>
+  
+  <path id="library.gradle:_net.bytebuddy:byte-buddy:1.9.3@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy/1.9.3/f32e510b239620852fc9a2387fac41fd053d6a4d/byte-buddy-1.9.3.jar"/>
+  </path>
+  
+  <path id="library.gradle:_net.sf.kxml:kxml2:2.3.0@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/net.sf.kxml/kxml2/2.3.0/ccbc77a5fd907ef863c29f3596c6f54ffa4e9442/kxml2-2.3.0.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.hamcrest:hamcrest-core:1.3@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-core/1.3/42a25dc3219429f0e5d060061f71acb49bf010a0/hamcrest-core-1.3.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.hamcrest:hamcrest-integration:1.3@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-integration/1.3/5de0c73fef18917cd85d0ab70bb23818685e4dfd/hamcrest-integration-1.3.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.hamcrest:hamcrest-library:1.3@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/org.hamcrest/hamcrest-library/1.3/4785a3c21320980282f9f33d0d1264a69040538f/hamcrest-library-1.3.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.mockito:mockito-android:2.23.4@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/org.mockito/mockito-android/2.23.4/bb362e086175a583fc25871c69f6bf33d646be28/mockito-android-2.23.4.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.mockito:mockito-core:2.23.4@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/org.mockito/mockito-core/2.23.4/a35b6f8ffcfa786771eac7d7d903429e790fdf3f/mockito-core-2.23.4.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.objenesis:objenesis:2.6@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/org.objenesis/objenesis/2.6/639033469776fd37c08358c6b92a4761feb2af4b/objenesis-2.6.jar"/>
+  </path>
+  
+  <path id="library.gradle:_org.reactivestreams:reactive-streams:1.0.1@jar.classpath">
+    <pathelement location="C:/Users/Cidrolehein/.gradle/caches/modules-2/files-2.1/org.reactivestreams/reactive-streams/1.0.1/1b1c911686eb40179219466e6a59b634b9d7a748/reactive-streams-1.0.1.jar"/>
+  </path>
+  <!-- Register Custom Compiler Taskdefs -->
+  <property name="javac2.home" value="${idea.home}/lib"/>
+  <path id="javac2.classpath">
+    <fileset dir="${javac2.home}">
+      <include name="javac2.jar"/>
+      <include name="jdom.jar"/>
+      <include name="asm-all*.jar"/>
+      <include name="jgoodies-forms.jar"/>
+    </fileset>
+  </path>
+  <target name="register.custom.compilers">
+    <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
+    <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  <import file="${basedir}/app/module_app.xml"/>
+  
+  <import file="${basedir}/module_mynews.xml"/>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.app, clean.module.mynews" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.app, compile.module.mynews" description="build all modules"/>
+  
+  <target name="all" depends="build.modules" description="build all"/>
+</project>
