@@ -2,7 +2,7 @@ package com.gacon.julien.mynews;
 
 import android.support.test.runner.AndroidJUnit4;
 
-import com.gacon.julien.mynews.Controllers.Utils.NyTimesTopStoriesStreams;
+import com.gacon.julien.mynews.Controllers.Utils.NyTimesStreams;
 import com.gacon.julien.mynews.Models.TopStories.MainNewYorkTimesTopStories;
 
 import org.junit.Test;
@@ -20,7 +20,7 @@ public class MainFragmentTest {
     public void downloadNyTopStories() throws Exception {
         // Get the stream
         Observable<MainNewYorkTimesTopStories> observableNyTopStories =
-                NyTimesTopStoriesStreams.streamFetchTopStories("home");
+                NyTimesStreams.streamFetchTopStories("home");
         // Create a new TestObserver
         TestObserver<MainNewYorkTimesTopStories> testObserver = new TestObserver<>();
         // Launch observable

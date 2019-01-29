@@ -1,6 +1,7 @@
 package com.gacon.julien.mynews.Views;
 
 import android.content.Context;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,15 +26,16 @@ import butterknife.ButterKnife;
 public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.MostPopularViewHolder> {
 
     // FOR DATA
-    private List<Result> mNyTopStoriesList;
+    private List<Result> mostPopularList;
     private RequestManager glide;
 
     // CONSTRUCTOR
-    public MostPopularAdapter(List<Result> mNyTopStoriesList, RequestManager glide) {
-        this.mNyTopStoriesList = mNyTopStoriesList;
+    public MostPopularAdapter(List<Result> mostPopularList, RequestManager glide) {
+        this.mostPopularList = mostPopularList;
         this.glide = glide;
     }
 
+    @NonNull
     @Override
     public MostPopularViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // CREATE VIEW HOLDER AND INFLATING ITS XML LAYOUT
@@ -44,18 +46,18 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
         return new MostPopularViewHolder(view);
     }
 
-    // UPDATE VIEW HOLDER WITH A TOPSTORIES
+    // UPDATE VIEW HOLDER WITH A MOST POPULAR LIST
     @Override
     public void onBindViewHolder(MostPopularViewHolder viewHolder, int position) {
 
-        viewHolder.updateWithTopStoriesItems(this.mNyTopStoriesList.get(position), this.glide);
+        viewHolder.updateWithMostPopularItems(this.mostPopularList.get(position), this.glide);
 
     }
 
     // RETURN THE TOTAL COUNT OF ITEMS IN THE LIST
     @Override
     public int getItemCount() {
-        return this.mNyTopStoriesList.size();
+        return this.mostPopularList.size();
     }
 
     public class MostPopularViewHolder extends RecyclerView.ViewHolder {
@@ -78,7 +80,7 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
 
         }
 
-        public void updateWithTopStoriesItems(Result article, RequestManager glide){
+        public void updateWithMostPopularItems(Result article, RequestManager glide){
 
             // get article section / subsection / date / title / image
             if (!article.getSection().equals("")) {
