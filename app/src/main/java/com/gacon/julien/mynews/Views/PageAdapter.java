@@ -3,7 +3,6 @@ package com.gacon.julien.mynews.Views;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-
 import com.gacon.julien.mynews.Controllers.Fragments.BusinessFragment;
 import com.gacon.julien.mynews.Controllers.Fragments.MostPopularFragment;
 import com.gacon.julien.mynews.Controllers.Fragments.TopStoriesFragment;

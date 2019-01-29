@@ -3,13 +3,10 @@ package com.gacon.julien.mynews;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.gacon.julien.mynews.Controllers.Utils.NyTimesTopStoriesStreams;
-import com.gacon.julien.mynews.Models.MainNewYorkTimesTopStories;
-import com.gacon.julien.mynews.Models.Result;
+import com.gacon.julien.mynews.Models.TopStories.MainNewYorkTimesTopStories;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import java.util.List;
 
 import io.reactivex.Observable;
 import io.reactivex.observers.TestObserver;

@@ -7,9 +7,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
-import com.gacon.julien.mynews.Models.TopStories.Result;
+import com.gacon.julien.mynews.Models.MostPopular.Result;
 import com.gacon.julien.mynews.R;
 
 import java.text.DateFormat;
@@ -21,31 +22,31 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesViewHolder> {
+public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.MostPopularViewHolder> {
 
     // FOR DATA
     private List<Result> mNyTopStoriesList;
     private RequestManager glide;
 
     // CONSTRUCTOR
-    public NyTimesAdapter(List<Result> mNyTopStoriesList, RequestManager glide) {
+    public MostPopularAdapter(List<Result> mNyTopStoriesList, RequestManager glide) {
         this.mNyTopStoriesList = mNyTopStoriesList;
         this.glide = glide;
     }
 
     @Override
-    public NyTimesViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public MostPopularViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // CREATE VIEW HOLDER AND INFLATING ITS XML LAYOUT
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.fragment_main_item, parent, false);
 
-        return new NyTimesViewHolder(view);
+        return new MostPopularViewHolder(view);
     }
 
     // UPDATE VIEW HOLDER WITH A TOPSTORIES
     @Override
-    public void onBindViewHolder(NyTimesViewHolder viewHolder, int position) {
+    public void onBindViewHolder(MostPopularViewHolder viewHolder, int position) {
 
         viewHolder.updateWithTopStoriesItems(this.mNyTopStoriesList.get(position), this.glide);
 
@@ -57,7 +58,7 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
         return this.mNyTopStoriesList.size();
     }
 
-    public class NyTimesViewHolder extends RecyclerView.ViewHolder {
+    public class MostPopularViewHolder extends RecyclerView.ViewHolder {
 
         // FOR DESIGN
         @BindView(R.id.fragment_main_item_title)
@@ -71,7 +72,7 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
         @BindView(R.id.fragment_main_item_image)
         ImageView imageView;
 
-        public NyTimesViewHolder(View itemView) {
+        public MostPopularViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
 
@@ -83,14 +84,11 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
             if (!article.getSection().equals("")) {
                 this.textViewSection.setText(article.getSection());
             }
-            if (!article.getSubsection().equals("")) {
-                this.textViewSubSection.setText(" > " + article.getSubsection());
-            }
             if (!article.getTitle().equals("")) {
                 this.textViewTitle.setText(article.getTitle());
             }
             if (!article.getPublishedDate().equals("")) {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 try {
                     String dateStr= article.getPublishedDate();
                     DateFormat srcDf = new SimpleDateFormat("yyyy-MM-dd");
@@ -102,8 +100,8 @@ public class NyTimesAdapter extends RecyclerView.Adapter<NyTimesAdapter.NyTimesV
                     e.printStackTrace();
                 }
             }
-            if (article.getMultimedia().size() > 0) {
-                glide.load(article.getMultimedia().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
+            if (article.getMedia().size() > 0) {
+                glide.load(article.getMedia().get(0).getMediaMetadata().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
             } else {
                 glide.clear(imageView);
                 imageView.setImageResource(R.drawable.ic_image_deffault);

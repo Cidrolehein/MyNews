@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.Models;
+package com.gacon.julien.mynews.Models.TopStories;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
