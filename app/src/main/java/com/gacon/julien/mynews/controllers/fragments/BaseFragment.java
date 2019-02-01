@@ -15,9 +15,8 @@ import com.gacon.julien.mynews.models.mostPopular.NyApiMostPopular;
 import com.gacon.julien.mynews.models.topStories.MainNewYorkTimesTopStories;
 import com.gacon.julien.mynews.models.topStories.Result;
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.views.ArtsAdapter;
-import com.gacon.julien.mynews.views.MostPopularAdapter;
-import com.gacon.julien.mynews.views.NyTimesAdapter;
+import com.gacon.julien.mynews.views.adapters.MostPopularAdapter;
+import com.gacon.julien.mynews.views.adapters.TopStoryApiAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -42,9 +41,8 @@ public abstract class BaseFragment extends Fragment {
     // 2 - Declare lists & Adapters
     private List<Result> mResultList;
     private List<com.gacon.julien.mynews.models.mostPopular.Result> mostPopularResult;
-    private NyTimesAdapter adapter;
+    private TopStoryApiAdapter adapter;
     private MostPopularAdapter mostPopularAdapter;
-    private ArtsAdapter artsAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,7 +73,7 @@ public abstract class BaseFragment extends Fragment {
         switch (getFragmentLayout()){
             case R.layout.fragment_top_stories:
                 this.mResultList = new ArrayList<>();
-                adapter = new NyTimesAdapter(mResultList, Glide.with(this));
+                adapter = new TopStoryApiAdapter(mResultList, Glide.with(this));
                 this.recyclerView.setAdapter(this.adapter);
             break;
             case R.layout.fragment_most_popular:
@@ -85,8 +83,8 @@ public abstract class BaseFragment extends Fragment {
             break;
             case R.layout.fragment_arts:
                 this.mResultList = new ArrayList<>();
-                artsAdapter = new ArtsAdapter(mResultList, Glide.with(this));
-                this.recyclerView.setAdapter(this.artsAdapter);
+                adapter = new TopStoryApiAdapter(mResultList, Glide.with(this));
+                this.recyclerView.setAdapter(this.adapter);
                 break;
             default:
                 break;
@@ -110,13 +108,13 @@ public abstract class BaseFragment extends Fragment {
 
         switch (getFragmentLayout()){
             case R.layout.fragment_top_stories:
-               this.executeHttpRequestTopStory();
+               this.executeHttpRequestTopStory("home");
                 break;
             case R.layout.fragment_most_popular:
                 this.executeHttpRequestMostPopular();
                 break;
             case R.layout.fragment_arts:
-                this.executeHttpRequestArts();
+                this.executeHttpRequestTopStory("arts");
             default:
                 break;
         }
@@ -143,14 +141,6 @@ public abstract class BaseFragment extends Fragment {
         mostPopularAdapter.notifyDataSetChanged();
     }
 
-    private void updateUIArts(List<Result> textArticle) {
-        //stop refreshing and clear actual list of text article
-        swipeRefreshLayout.setRefreshing(false);
-        mResultList.clear();
-        mResultList.addAll(textArticle);
-        artsAdapter.notifyDataSetChanged();
-    }
-
     private void disposeWhenDestroy(){
         if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
     }
@@ -160,8 +150,8 @@ public abstract class BaseFragment extends Fragment {
     // with Retrofit
     // -------------------
 
-    private void executeHttpRequestTopStory() {
-        this.disposable = NyTimesStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
+    private void executeHttpRequestTopStory(String section) {
+        this.disposable = NyTimesStreams.streamFetchTopStories(section).subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
             @Override
             public void onNext(MainNewYorkTimesTopStories articles) {
                 // Update RecyclerView after getting results from NYTimes Top Stories API
@@ -194,21 +184,6 @@ public abstract class BaseFragment extends Fragment {
         });
     }
 
-    private void executeHttpRequestArts() {
-        this.disposable = NyTimesStreams.streamFetchTopStories("arts").subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
-            @Override
-            public void onNext(MainNewYorkTimesTopStories articles) {
-                // Update RecyclerView after getting results from NYTimes Top Stories API
-                updateUIArts(articles.getResults());
-            }
-            @Override
-            public void onError(Throwable e) {
-                System.out.println(e);
-                e.printStackTrace();
-            }
-            @Override
-            public void onComplete() { }
-        });
-    }
-
 }
+
+

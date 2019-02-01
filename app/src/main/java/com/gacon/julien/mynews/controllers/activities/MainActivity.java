@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-import com.gacon.julien.mynews.views.PageAdapter;
+import com.gacon.julien.mynews.views.adapters.viewPager.PageAdapter;
 import com.gacon.julien.mynews.R;
 
 public class MainActivity extends AppCompatActivity {
