@@ -20,8 +20,12 @@ public class UpdateTextItems {
     }
 
     public String setSubSection(Result article) {
-        if (!article.getSubsection().equals("")) {
+        String sectionTitle = article.getSection();
+        String subsectionTitle = article.getSubsection();
+        if (!article.getSubsection().equals("") && subsectionTitle.compareTo(sectionTitle) != 0) {
             mString = " > " + article.getSubsection();
+        } else {
+            mString = "";
         }
         return mString;
     }

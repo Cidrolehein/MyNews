@@ -39,7 +39,7 @@ public class TopStoryApiAdapter extends RecyclerView.Adapter<TopStoryApiViewHold
     @Override
     public void onBindViewHolder(TopStoryApiViewHolder viewHolder, int position) {
 
-        viewHolder.updateWithArtsItems(this.mNyTopStoriesList.get(position), this.glide);
+        viewHolder.updateWithTopStoriesItems(this.mNyTopStoriesList.get(position), this.glide);
 
     }
 
@@ -47,6 +47,10 @@ public class TopStoryApiAdapter extends RecyclerView.Adapter<TopStoryApiViewHold
     @Override
     public int getItemCount() {
         return this.mNyTopStoriesList.size();
+    }
+
+    public String getURL (int position) {
+        return mNyTopStoriesList.get(position).getUrl();
     }
 
 }

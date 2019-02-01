@@ -109,6 +109,7 @@ public class MostPopularAdapter extends RecyclerView.Adapter<MostPopularAdapter.
                 imageView.setImageResource(R.drawable.ic_image_deffault);
             }
         }
+
     }
 
 }

@@ -3,6 +3,7 @@ package com.gacon.julien.mynews.views.adapters;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.RequestManager;
@@ -27,6 +28,8 @@ public class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
     TextView textViewDate;
     @BindView(R.id.fragment_main_item_image)
     ImageView imageView;
+    @BindView(R.id.first_layout)
+    LinearLayout mLayout;
 
     UpdateTextItems mUpdate;
 
@@ -36,23 +39,12 @@ public class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void updateWithTopStoriesItems(Result article, RequestManager glide){
+    public void updateWithTopStoriesItems(final Result article, RequestManager glide){
 
         mUpdate = new UpdateTextItems();
 
         this.textViewSection.setText(mUpdate.setSection(article));
         this.textViewSubSection.setText(mUpdate.setSubSection(article));
-        this.textViewTitle.setText(mUpdate.setTitle(article));
-        this.textViewDate.setText(mUpdate.setDate(article));
-        this.setImage(article, glide);
-
-    }
-
-    public void updateWithArtsItems(Result article, RequestManager glide){
-
-        mUpdate = new UpdateTextItems();
-
-        this.textViewSection.setText(mUpdate.setSection(article));
         this.textViewTitle.setText(mUpdate.setTitle(article));
         this.textViewDate.setText(mUpdate.setDate(article));
         this.setImage(article, glide);
