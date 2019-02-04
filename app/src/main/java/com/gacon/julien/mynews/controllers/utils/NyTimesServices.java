@@ -1,7 +1,6 @@
 package com.gacon.julien.mynews.controllers.utils;
 
-import com.gacon.julien.mynews.models.mostPopular.NyApiMostPopular;
-import com.gacon.julien.mynews.models.topStories.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
 
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
@@ -22,7 +21,7 @@ public interface NyTimesServices {
             .build();
 
     @GET("{period}.json?api-key=KzYIpjPOMj98klY5cukvyxBmBhzKwDKO")
-    Observable<NyApiMostPopular> getNyMostPopular(@Path("period") int period);
+    Observable<MainNewYorkTimesTopStories> getNyMostPopular(@Path("period") int period);
 
     Retrofit retrofitMostPopular = new Retrofit.Builder()
             .baseUrl("https://api.nytimes.com/svc/mostpopular/v2/viewed/")

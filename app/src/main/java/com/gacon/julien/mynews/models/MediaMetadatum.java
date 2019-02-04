@@ -1,9 +1,10 @@
-package com.gacon.julien.mynews.models.topStories;
+package com.gacon.julien.mynews.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Multimedium {
+public class MediaMetadatum {
+
     @SerializedName("url")
     @Expose
     private String url;

@@ -9,13 +9,13 @@ import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.models.topStories.Result;
+import com.gacon.julien.mynews.models.Result;
 import com.gacon.julien.mynews.views.datas.UpdateTextItems;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
+class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
 
     // FOR DESIGN
     @BindView(R.id.fragment_main_item_title)
@@ -34,12 +34,12 @@ public class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
     UpdateTextItems mUpdate;
 
     // CONSTRUCTOR
-    public TopStoryApiViewHolder(View itemView) {
+    protected TopStoryApiViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
-    public void updateWithTopStoriesItems(final Result article, RequestManager glide){
+    void updateWithTopStoriesItems(final Result article, RequestManager glide){
 
         mUpdate = new UpdateTextItems();
 
@@ -51,13 +51,25 @@ public class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
 
     }
 
-    public void setImage(Result article, RequestManager glide){
+    private void setImage(Result article, RequestManager glide){
+
+        if (article.getMultimedia() != null) {
         if (article.getMultimedia().size() > 0) {
             glide.load(article.getMultimedia().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
         } else {
-            glide.clear(imageView);
-            imageView.setImageResource(R.drawable.ic_image_deffault);
+            getImageDefault(glide);
+        } } else {
+            if (article.getMedia().size() > 0) {
+                glide.load(article.getMedia().get(0).getMediaMetadata().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
+            } else {
+                getImageDefault(glide);
+            }
         }
+    }
+
+    private void getImageDefault(RequestManager glide) {
+        glide.clear(imageView);
+        imageView.setImageResource(R.drawable.ic_image_deffault);
     }
 
 }

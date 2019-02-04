@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.models.topStories;
+package com.gacon.julien.mynews.models;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -33,9 +33,16 @@ public class Result {
     @SerializedName("multimedia")
     @Expose
     private List<Multimedium> multimedia = null;
+    @SerializedName("media")
+    @Expose
+    private List<Medium> media = null;
     @SerializedName("short_url")
     @Expose
     private String shortUrl;
+
+    public List<Medium> getMedia() {
+        return media;
+    }
 
     public String getSection() {
         return section;

@@ -2,7 +2,7 @@ package com.gacon.julien.mynews.controllers.fragments;
 
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
-import com.gacon.julien.mynews.models.topStories.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
 
 import io.reactivex.observers.DisposableObserver;
 

@@ -1,6 +1,7 @@
-package com.gacon.julien.mynews.models.mostPopular;
+package com.gacon.julien.mynews.models;
 
 import java.util.List;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

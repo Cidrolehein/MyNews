@@ -1,7 +1,6 @@
 package com.gacon.julien.mynews.controllers.utils;
 
-import com.gacon.julien.mynews.models.mostPopular.NyApiMostPopular;
-import com.gacon.julien.mynews.models.topStories.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -17,7 +16,7 @@ public class NyTimesStreams {
                 .timeout(10, TimeUnit.SECONDS);
     }
 
-    public static Observable<NyApiMostPopular> streamFetchMostPopular(int period) {
+    public static Observable<MainNewYorkTimesTopStories> streamFetchMostPopular(int period) {
         NyTimesServices nyService = NyTimesServices.retrofitMostPopular.create(NyTimesServices.class);
         return nyService.getNyMostPopular(period)
                 .subscribeOn(Schedulers.io())

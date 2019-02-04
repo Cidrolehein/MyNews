@@ -10,13 +10,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.gacon.julien.mynews.controllers.activities.WebViewActivity;
 import com.gacon.julien.mynews.controllers.utils.ItemClickSupport;
-import com.gacon.julien.mynews.models.topStories.Result;
+import com.gacon.julien.mynews.models.Result;
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.views.adapters.MostPopularAdapter;
 import com.gacon.julien.mynews.views.adapters.TopStoryApiAdapter;
 import java.util.ArrayList;
 import java.util.List;
@@ -42,9 +40,7 @@ public abstract class BaseFragment extends Fragment {
     protected Disposable disposable;
     // 2 - Declare lists & Adapters
     private List<Result> mResultList;
-    private List<com.gacon.julien.mynews.models.mostPopular.Result> mostPopularResult;
     private TopStoryApiAdapter adapter;
-    private MostPopularAdapter mostPopularAdapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -75,31 +71,14 @@ public abstract class BaseFragment extends Fragment {
 
                         String article;
 
-                        switch (getFragmentLayout()) {
-                            case R.layout.fragment_top_stories:
-                                // 1 - Get user from adapter
-                                article = adapter.getURL(position);
-                                // 2 - Show result in a Toast
-                                Intent intent = new Intent(getActivity(), WebViewActivity.class);
-                                intent.putExtra(BUNDLE_URL, article);
-                                startActivity(intent);
-                                break;
-                            case R.layout.fragment_most_popular:
-                                // 1 - Get user from adapter
-                                //article = mostPopularAdapter.(position);
-                                // 2 - Show result in a Toast
-                                //Toast.makeText(getContext(), "You clicked on abstract : "+article, Toast.LENGTH_SHORT).show();
-                                break;
-                            case R.layout.fragment_arts:
-                                // 1 - Get user from adapter
-                                article = adapter.getURL(position);
-                                // 2 - Show result in a Toast
-                                Toast.makeText(getContext(), "You clicked on abstract : "+article, Toast.LENGTH_SHORT).show();
-                                break;
-                                default:
-                                    break;
-                        }
+                        // 1 - Get user from adapter
+                        article = adapter.getURL(position);
+                        // 2 - Show result in a Toast
+                        Intent intent = new Intent(getActivity(), WebViewActivity.class);
+                        intent.putExtra(BUNDLE_URL, article);
+                        startActivity(intent);
                     }
+
                 });
     }
 
@@ -117,28 +96,14 @@ public abstract class BaseFragment extends Fragment {
 
     // 3 - Configure RecyclerView, Adapter, LayoutManager & glue it together
     private void configureRecyclerView(){
-        switch (getFragmentLayout()){
-            case R.layout.fragment_top_stories:
-                this.mResultList = new ArrayList<>();
-                adapter = new TopStoryApiAdapter(mResultList, Glide.with(this));
-                this.recyclerView.setAdapter(this.adapter);
-            break;
-            case R.layout.fragment_most_popular:
-                this.mostPopularResult = new ArrayList<>();
-                mostPopularAdapter = new MostPopularAdapter(mostPopularResult, Glide.with(this));
-                this.recyclerView.setAdapter(this.mostPopularAdapter);
-            break;
-            case R.layout.fragment_arts:
-                this.mResultList = new ArrayList<>();
-                adapter = new TopStoryApiAdapter(mResultList, Glide.with(this));
-                this.recyclerView.setAdapter(this.adapter);
-                break;
-            default:
-                break;
-        }
+
+        this.mResultList = new ArrayList<>();
+        adapter = new TopStoryApiAdapter(mResultList, Glide.with(this));
+        this.recyclerView.setAdapter(this.adapter);
 
         // 3.4 - Set layout manager to position the items
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
     }
 
     // Configure the SwipeRefreshLayout
@@ -161,14 +126,6 @@ public abstract class BaseFragment extends Fragment {
         mResultList.clear();
         mResultList.addAll(textArticle);
         adapter.notifyDataSetChanged();
-    }
-
-    protected void updateUIMostPopular(List<com.gacon.julien.mynews.models.mostPopular.Result> textArticle) {
-        //stop refreshing and clear actual list of text article
-        swipeRefreshLayout.setRefreshing(false);
-        mostPopularResult.clear();
-        mostPopularResult.addAll(textArticle);
-        mostPopularAdapter.notifyDataSetChanged();
     }
 
     private void disposeWhenDestroy(){

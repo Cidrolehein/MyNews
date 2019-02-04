@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.RequestManager;
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.models.topStories.Result;
+import com.gacon.julien.mynews.models.Result;
 import java.util.List;
 
 public class TopStoryApiAdapter extends RecyclerView.Adapter<TopStoryApiViewHolder> {

@@ -1,5 +1,5 @@
 package com.gacon.julien.mynews.views.datas;
-import com.gacon.julien.mynews.models.topStories.Result;
+import com.gacon.julien.mynews.models.Result;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -9,12 +9,6 @@ import java.util.Date;
 public class UpdateTextItems {
 
     private String mString;
-
-    private String Title;
-
-    public String getTitle(Result aritcle, com.gacon.julien.mynews.models.mostPopular.Result articleMostPopular) {
-        return Title;
-    }
 
     public UpdateTextItems() { }
 
@@ -27,11 +21,13 @@ public class UpdateTextItems {
 
     public String setSubSection(Result article) {
         String sectionTitle = article.getSection();
-        String subsectionTitle = article.getSubsection();
-        if (!article.getSubsection().equals("") && subsectionTitle.compareTo(sectionTitle) != 0) {
-            mString = " > " + article.getSubsection();
-        } else {
-            mString = "";
+        mString = "";
+        if (article.getSubsection() != null) {
+            String subsectionTitle = article.getSubsection();
+            if (!article.getSubsection().equals("") && subsectionTitle.compareTo(sectionTitle) != 0) {
+                mString = " > " + article.getSubsection();
+            }
+
         }
         return mString;
     }
