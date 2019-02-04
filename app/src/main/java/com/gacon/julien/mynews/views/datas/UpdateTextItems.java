@@ -10,6 +10,12 @@ public class UpdateTextItems {
 
     private String mString;
 
+    private String Title;
+
+    public String getTitle(Result aritcle, com.gacon.julien.mynews.models.mostPopular.Result articleMostPopular) {
+        return Title;
+    }
+
     public UpdateTextItems() { }
 
     public String setSection(Result article) {

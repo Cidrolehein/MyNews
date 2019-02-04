@@ -2,7 +2,6 @@ package com.gacon.julien.mynews.models.topStories;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-
 import java.util.List;
 
 public class Result {

@@ -43,11 +43,11 @@ public class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
 
         mUpdate = new UpdateTextItems();
 
-        this.textViewSection.setText(mUpdate.setSection(article));
-        this.textViewSubSection.setText(mUpdate.setSubSection(article));
-        this.textViewTitle.setText(mUpdate.setTitle(article));
-        this.textViewDate.setText(mUpdate.setDate(article));
-        this.setImage(article, glide);
+            this.textViewSection.setText(mUpdate.setSection(article));
+            this.textViewSubSection.setText(mUpdate.setSubSection(article));
+            this.textViewTitle.setText(mUpdate.setTitle(article));
+            this.textViewDate.setText(mUpdate.setDate(article));
+            this.setImage(article, glide);
 
     }
 

@@ -3,6 +3,7 @@ package com.gacon.julien.mynews.controllers.fragments;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
 import com.gacon.julien.mynews.models.mostPopular.NyApiMostPopular;
+import com.gacon.julien.mynews.models.topStories.MainNewYorkTimesTopStories;
 
 import io.reactivex.observers.DisposableObserver;
 
@@ -13,10 +14,13 @@ public class MostPopularFragment extends BaseFragment {
         return (new MostPopularFragment());
     }
 
+    // -------------------
+    // Streams Request
+    // with Retrofit
+    // -------------------
+
     @Override
     protected int getFragmentLayout() {return R.layout.fragment_most_popular;}
-
-    /*
 
     @Override
     protected void executeHttpRequest() {
@@ -35,5 +39,5 @@ public class MostPopularFragment extends BaseFragment {
             public void onComplete() { }
         });
     }
-    */
+
 }

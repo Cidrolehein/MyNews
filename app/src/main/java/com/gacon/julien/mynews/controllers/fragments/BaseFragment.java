@@ -3,25 +3,17 @@ package com.gacon.julien.mynews.controllers.fragments;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.constraint.Placeholder;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebBackForwardList;
-import android.webkit.WebView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.gacon.julien.mynews.controllers.activities.WebViewActivity;
 import com.gacon.julien.mynews.controllers.utils.ItemClickSupport;
-import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
-import com.gacon.julien.mynews.models.mostPopular.NyApiMostPopular;
-import com.gacon.julien.mynews.models.topStories.MainNewYorkTimesTopStories;
 import com.gacon.julien.mynews.models.topStories.Result;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.views.adapters.MostPopularAdapter;
@@ -31,13 +23,11 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
 
 public abstract class BaseFragment extends Fragment {
 
     protected abstract int getFragmentLayout();
-    private Fragment fragmentWebView;
-    public static final int WEB_VIEW_ACTIVITY_REQUEST_CODE = 6;
+    protected abstract void executeHttpRequest();
     public static final String BUNDLE_URL = "BUNDLE_URL";
 
     // FOR DESIGN
@@ -55,7 +45,6 @@ public abstract class BaseFragment extends Fragment {
     private List<com.gacon.julien.mynews.models.mostPopular.Result> mostPopularResult;
     private TopStoryApiAdapter adapter;
     private MostPopularAdapter mostPopularAdapter;
-    public static final int WEB_ACTIVITY_REQUEST_CODE = 6;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -94,8 +83,6 @@ public abstract class BaseFragment extends Fragment {
                                 Intent intent = new Intent(getActivity(), WebViewActivity.class);
                                 intent.putExtra(BUNDLE_URL, article);
                                 startActivity(intent);
-
-                                Toast.makeText(getContext(), "You clicked on abstract : "+article, Toast.LENGTH_SHORT).show();
                                 break;
                             case R.layout.fragment_most_popular:
                                 // 1 - Get user from adapter
@@ -164,28 +151,11 @@ public abstract class BaseFragment extends Fragment {
         });
     }
 
-    protected void executeHttpRequest() {
-
-        switch (getFragmentLayout()){
-            case R.layout.fragment_top_stories:
-               this.executeHttpRequestTopStory("home");
-                break;
-            case R.layout.fragment_most_popular:
-                this.executeHttpRequestMostPopular();
-                break;
-            case R.layout.fragment_arts:
-                this.executeHttpRequestTopStory("arts");
-            default:
-                break;
-        }
-
-    }
-
     // -------------------
     // UPDATE UI
     // -------------------
 
-    private void updateUI(List<Result> textArticle) {
+    protected void updateUI(List<Result> textArticle) {
         //stop refreshing and clear actual list of text article
         swipeRefreshLayout.setRefreshing(false);
         mResultList.clear();
@@ -193,7 +163,7 @@ public abstract class BaseFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
-    private void updateUIMostPopular(List<com.gacon.julien.mynews.models.mostPopular.Result> textArticle) {
+    protected void updateUIMostPopular(List<com.gacon.julien.mynews.models.mostPopular.Result> textArticle) {
         //stop refreshing and clear actual list of text article
         swipeRefreshLayout.setRefreshing(false);
         mostPopularResult.clear();
@@ -203,45 +173,6 @@ public abstract class BaseFragment extends Fragment {
 
     private void disposeWhenDestroy(){
         if (this.disposable != null && !this.disposable.isDisposed()) this.disposable.dispose();
-    }
-
-    // -------------------
-    // Streams Request
-    // with Retrofit
-    // -------------------
-
-    private void executeHttpRequestTopStory(String section) {
-        this.disposable = NyTimesStreams.streamFetchTopStories(section).subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
-            @Override
-            public void onNext(MainNewYorkTimesTopStories articles) {
-                // Update RecyclerView after getting results from NYTimes Top Stories API
-                updateUI(articles.getResults());
-            }
-            @Override
-            public void onError(Throwable e) {
-                System.out.println(e);
-                e.printStackTrace();
-            }
-            @Override
-            public void onComplete() { }
-        });
-    }
-
-    private void executeHttpRequestMostPopular() {
-        this.disposable = NyTimesStreams.streamFetchMostPopular(1).subscribeWith(new DisposableObserver<NyApiMostPopular>() {
-            @Override
-            public void onNext(NyApiMostPopular articles) {
-                // Update RecyclerView after getting results from MostPopular API
-                updateUIMostPopular(articles.getResults());
-            }
-            @Override
-            public void onError(Throwable e) {
-                System.out.println(e);
-                e.printStackTrace();
-            }
-            @Override
-            public void onComplete() { }
-        });
     }
 
 }
