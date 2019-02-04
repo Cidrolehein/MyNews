@@ -85,15 +85,17 @@
                 android:textStyle="normal"
                 android:layout_marginEnd="10dp"/>
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_gravity="bottom"
-                android:background="@android:color/darker_gray" />
-
         </LinearLayout>
 
     </LinearLayout>
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="286dp"
+        android:layout_height="1dp"
+        android:layout_gravity="right"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="10dp"
+        android:background="@android:color/darker_gray" />
 
 </LinearLayout>
