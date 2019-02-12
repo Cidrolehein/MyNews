@@ -6,10 +6,10 @@ import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
 import io.reactivex.observers.DisposableObserver;
 
 
-public class MostPopularFragment extends BaseFragment {
+public class MostPopularArticleFragment extends BaseArticleFragment {
 
-    public static MostPopularFragment newInstance() {
-        return (new MostPopularFragment());
+    public static MostPopularArticleFragment newInstance() {
+        return (new MostPopularArticleFragment());
     }
 
     @Override

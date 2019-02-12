@@ -1,5 +1,6 @@
 package com.gacon.julien.mynews.controllers.utils;
 
+import com.gacon.julien.mynews.models.Headline;
 import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
 
 import io.reactivex.Observable;
@@ -25,6 +26,15 @@ public interface NyTimesServices {
 
     Retrofit retrofitMostPopular = new Retrofit.Builder()
             .baseUrl("https://api.nytimes.com/svc/mostpopular/v2/viewed/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build();
+
+    @GET("articlesearch.json?q={query}&fq={filter}&api-key=KzYIpjPOMj98klY5cukvyxBmBhzKwDKO")
+    Observable<Headline> getSearchArticle(@Path("query") String query, @Path("filter") String filter);
+
+    Retrofit retrofitSearch = new Retrofit.Builder()
+            .baseUrl("https://api.nytimes.com/svc/search/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();

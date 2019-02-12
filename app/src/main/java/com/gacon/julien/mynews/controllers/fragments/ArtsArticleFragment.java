@@ -12,11 +12,11 @@ import io.reactivex.observers.DisposableObserver;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ArtsFragment extends BaseFragment {
+public class ArtsArticleFragment extends BaseArticleFragment {
 
 
-    public static ArtsFragment newInstance() {
-        return (new ArtsFragment());
+    public static ArtsArticleFragment newInstance() {
+        return (new ArtsArticleFragment());
     }
 
     @Override

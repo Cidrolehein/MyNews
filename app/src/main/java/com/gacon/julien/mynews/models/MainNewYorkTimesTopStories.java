@@ -18,4 +18,12 @@ public class MainNewYorkTimesTopStories {
     public void setResults(List<Result> results) {
         this.results = results;
     }
+    @SerializedName("snippet")
+    @Expose
+    private String snippet;
+
+    public String getSnippet() {
+        return snippet;
+    }
+
 }

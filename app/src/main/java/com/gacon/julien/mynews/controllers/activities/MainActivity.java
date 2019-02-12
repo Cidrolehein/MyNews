@@ -1,5 +1,7 @@
 package com.gacon.julien.mynews.controllers.activities;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +40,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Il n'y a rien à paramétrer", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.menu_activity_main_search:
-                Toast.makeText(this,"Recherche indisponible", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplication(), SearchActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return  super.onOptionsItemSelected(item);

@@ -3,9 +3,9 @@ package com.gacon.julien.mynews.views.adapters.viewPager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import com.gacon.julien.mynews.controllers.fragments.ArtsFragment;
-import com.gacon.julien.mynews.controllers.fragments.MostPopularFragment;
-import com.gacon.julien.mynews.controllers.fragments.TopStoriesFragment;
+import com.gacon.julien.mynews.controllers.fragments.ArtsArticleFragment;
+import com.gacon.julien.mynews.controllers.fragments.MostPopularArticleFragment;
+import com.gacon.julien.mynews.controllers.fragments.TopStoriesArticleFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
 
@@ -23,11 +23,11 @@ public class PageAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0: //Page number 1
-                return TopStoriesFragment.newInstance();
+                return TopStoriesArticleFragment.newInstance();
             case 1: //Page number 2
-                return MostPopularFragment.newInstance();
+                return MostPopularArticleFragment.newInstance();
             case 2: //Page number 3
-                return ArtsFragment.newInstance();
+                return ArtsArticleFragment.newInstance();
             default:
                 return null;
         }

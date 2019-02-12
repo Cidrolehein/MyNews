@@ -15,18 +15,18 @@ import java.util.List;
 
 public class TopStoryApiAdapter extends RecyclerView.Adapter<TopStoryApiViewHolder> {
 
+    private List<Result> mNyTopStoriesList;
+    private RequestManager glide;
+
     // CONSTRUCTOR
     public TopStoryApiAdapter(List<Result> mNyTopStoriesList, RequestManager glide) {
         this.mNyTopStoriesList = mNyTopStoriesList;
         this.glide = glide;
     }
 
-    List<Result> mNyTopStoriesList;
-    RequestManager glide;
-
     @NonNull
     @Override
-    public TopStoryApiViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TopStoryApiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // CREATE VIEW HOLDER AND INFLATING ITS XML LAYOUT
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
@@ -37,7 +37,7 @@ public class TopStoryApiAdapter extends RecyclerView.Adapter<TopStoryApiViewHold
 
     // UPDATE VIEW HOLDER WITH A TOPSTORIES
     @Override
-    public void onBindViewHolder(TopStoryApiViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull TopStoryApiViewHolder viewHolder, int position) {
 
         viewHolder.updateWithTopStoriesItems(this.mNyTopStoriesList.get(position), this.glide);
 

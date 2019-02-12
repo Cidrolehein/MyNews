@@ -6,10 +6,10 @@ import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
 
 import io.reactivex.observers.DisposableObserver;
 
-public class TopStoriesFragment extends BaseFragment {
+public class TopStoriesArticleFragment extends BaseArticleFragment {
 
-    public static TopStoriesFragment newInstance() {
-        return (new TopStoriesFragment());
+    public static TopStoriesArticleFragment newInstance() {
+        return (new TopStoriesArticleFragment());
     }
 
     @Override

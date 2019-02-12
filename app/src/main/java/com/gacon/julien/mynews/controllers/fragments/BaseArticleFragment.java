@@ -22,7 +22,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 
-public abstract class BaseFragment extends Fragment {
+public abstract class BaseArticleFragment extends Fragment {
 
     protected abstract int getFragmentLayout();
     protected abstract void executeHttpRequest();
@@ -73,7 +73,7 @@ public abstract class BaseFragment extends Fragment {
 
                         // 1 - Get user from adapter
                         article = adapter.getURL(position);
-                        // 2 - Show result in a Toast
+                        // 2 - Show result in a new WebView
                         Intent intent = new Intent(getActivity(), WebViewActivity.class);
                         intent.putExtra(BUNDLE_URL, article);
                         startActivity(intent);

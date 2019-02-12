@@ -39,26 +39,27 @@ class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    void updateWithTopStoriesItems(final Result article, RequestManager glide){
+    void updateWithTopStoriesItems(final Result article, RequestManager glide) {
 
         mUpdate = new UpdateTextItems();
 
-            this.textViewSection.setText(mUpdate.setSection(article));
-            this.textViewSubSection.setText(mUpdate.setSubSection(article));
-            this.textViewTitle.setText(mUpdate.setTitle(article));
-            this.textViewDate.setText(mUpdate.setDate(article));
-            this.setImage(article, glide);
+        this.textViewSection.setText(mUpdate.setSection(article));
+        this.textViewSubSection.setText(mUpdate.setSubSection(article));
+        this.textViewTitle.setText(mUpdate.setTitle(article));
+        this.textViewDate.setText(mUpdate.setDate(article));
+        this.setImage(article, glide);
 
     }
 
-    private void setImage(Result article, RequestManager glide){
+    private void setImage(Result article, RequestManager glide) {
 
         if (article.getMultimedia() != null) {
-        if (article.getMultimedia().size() > 0) {
-            glide.load(article.getMultimedia().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
+            if (article.getMultimedia().size() > 0) {
+                glide.load(article.getMultimedia().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
+            } else {
+                getImageDefault(glide);
+            }
         } else {
-            getImageDefault(glide);
-        } } else {
             if (article.getMedia().size() > 0) {
                 glide.load(article.getMedia().get(0).getMediaMetadata().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
             } else {
