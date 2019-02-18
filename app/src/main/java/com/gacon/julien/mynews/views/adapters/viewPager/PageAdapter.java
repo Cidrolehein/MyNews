@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.gacon.julien.mynews.controllers.fragments.ArtsArticleFragment;
 import com.gacon.julien.mynews.controllers.fragments.MostPopularArticleFragment;
+import com.gacon.julien.mynews.controllers.fragments.SearchFragment;
 import com.gacon.julien.mynews.controllers.fragments.TopStoriesArticleFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
@@ -16,7 +17,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return(3);
+        return(4);
     }
 
     @Override
@@ -28,6 +29,8 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return MostPopularArticleFragment.newInstance();
             case 2: //Page number 3
                 return ArtsArticleFragment.newInstance();
+            case 3: // Page Search
+                return SearchFragment.newInstance();
             default:
                 return null;
         }
@@ -42,6 +45,8 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return "MOST POPULAR";
             case 2: //Page number 3
                 return "ARTS";
+            case 3:
+                return "Search";
             default:
                 return null;
         }

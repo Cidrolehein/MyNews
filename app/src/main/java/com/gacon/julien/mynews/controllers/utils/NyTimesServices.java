@@ -1,9 +1,10 @@
 package com.gacon.julien.mynews.controllers.utils;
 
-import com.gacon.julien.mynews.models.Headline;
 import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.models.SearchApiResult;
 
 import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -30,8 +31,8 @@ public interface NyTimesServices {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();
 
-    @GET("articlesearch.json?q={query}&fq={filter}&api-key=KzYIpjPOMj98klY5cukvyxBmBhzKwDKO")
-    Observable<Headline> getSearchArticle(@Path("query") String query, @Path("filter") String filter);
+    @GET("articlesearch.json?q=election&api-key=KzYIpjPOMj98klY5cukvyxBmBhzKwDKO")
+    Observable<SearchApiResult> getSearchArticle();
 
     Retrofit retrofitSearch = new Retrofit.Builder()
             .baseUrl("https://api.nytimes.com/svc/search/v2/")

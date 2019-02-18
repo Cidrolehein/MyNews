@@ -1,8 +1,5 @@
 package com.gacon.julien.mynews.views.datas;
-import com.gacon.julien.mynews.models.Headline;
 import com.gacon.julien.mynews.models.Result;
-import com.gacon.julien.mynews.models.SearchApi;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -53,12 +50,6 @@ public class UpdateTextItems {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return mString;
-    }
-
-    public String setSearchTitleSeo (Headline searchResult) {
-        mString = searchResult.getSeo().toString();
-
         return mString;
     }
 

@@ -1,7 +1,8 @@
 package com.gacon.julien.mynews.controllers.utils;
 
-import com.gacon.julien.mynews.models.Headline;
 import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
+import com.gacon.julien.mynews.models.SearchApiResult;
+
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -25,9 +26,9 @@ public class NyTimesStreams {
                 .timeout(10, TimeUnit.SECONDS);
     }
 
-    public static Observable<Headline> streamFetchSearch(String query, String filter) {
+    public static Observable<SearchApiResult> streamFetchSearch() {
         NyTimesServices nyService = NyTimesServices.retrofitSearch.create(NyTimesServices.class);
-        return nyService.getSearchArticle(query, filter)
+        return nyService.getSearchArticle()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .timeout(10, TimeUnit.SECONDS);

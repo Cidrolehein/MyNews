@@ -6,19 +6,19 @@ import java.util.List;
 
 public class Result {
 
-    @SerializedName("section")
+    @SerializedName(value = "section", alternate = "section_name")
     @Expose
     private String section;
-    @SerializedName("subsection")
+    @SerializedName(value = "subsection", alternate = "subsectoinName")
     @Expose
     private String subsection;
-    @SerializedName("title")
+    @SerializedName(value = "title", alternate = "snippet")
     @Expose
     private String title;
     @SerializedName("abstract")
     @Expose
     private String _abstract;
-    @SerializedName("url")
+    @SerializedName(value = "url", alternate = "web_url")
     @Expose
     private String url;
     @SerializedName("updated_date")
@@ -27,10 +27,10 @@ public class Result {
     @SerializedName("created_date")
     @Expose
     private String createdDate;
-    @SerializedName("published_date")
+    @SerializedName(value = "published_date", alternate = "pub_date")
     @Expose
     private String publishedDate;
-    @SerializedName("multimedia")
+    @SerializedName(value = "multimedia")
     @Expose
     private List<Multimedium> multimedia = null;
     @SerializedName("media")
@@ -123,4 +123,5 @@ public class Result {
     public void setShortUrl(String shortUrl) {
         this.shortUrl = shortUrl;
     }
+
 }
