@@ -17,7 +17,7 @@ public class PageAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return(4);
+        return(3);
     }
 
     @Override
@@ -45,8 +45,6 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return "MOST POPULAR";
             case 2: //Page number 3
                 return "ARTS";
-            case 3:
-                return "Search";
             default:
                 return null;
         }

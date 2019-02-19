@@ -10,6 +10,7 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface NyTimesServices {
 
@@ -31,8 +32,12 @@ public interface NyTimesServices {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build();
 
-    @GET("articlesearch.json?q=election&api-key=KzYIpjPOMj98klY5cukvyxBmBhzKwDKO")
-    Observable<SearchApiResult> getSearchArticle();
+    @GET("articlesearch.json")
+    Observable<SearchApiResult> getSearchArticle(@Query("begin_date") String beginDate,
+                                                 @Query("end_date") String endDate,
+                                                 @Query("fq") String filter,
+                                                 @Query("q") String query,
+                                                 @Query("api-key") String apiKey);
 
     Retrofit retrofitSearch = new Retrofit.Builder()
             .baseUrl("https://api.nytimes.com/svc/search/v2/")

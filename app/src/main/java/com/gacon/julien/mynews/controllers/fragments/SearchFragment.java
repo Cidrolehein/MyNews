@@ -3,8 +3,6 @@ package com.gacon.julien.mynews.controllers.fragments;
 import android.support.v4.app.Fragment;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
-import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
-import com.gacon.julien.mynews.models.SearchApi;
 import com.gacon.julien.mynews.models.SearchApiResult;
 
 import io.reactivex.observers.DisposableObserver;
@@ -25,7 +23,14 @@ public class SearchFragment extends BaseArticleFragment {
 
     @Override
     protected void executeHttpRequest() {
-        this.disposable = NyTimesStreams.streamFetchSearch().subscribeWith(new DisposableObserver<SearchApiResult>() {
+
+        String query = getArguments().getString("data");
+        String dateBegin = getArguments().getString("dateBegin");
+        String endDate = getArguments().getString("endDate");
+        String filter = getArguments().getString("filter");
+        String art = "art";
+
+        this.disposable = NyTimesStreams.streamFetchSearch(dateBegin,endDate,filter, query, "KzYIpjPOMj98klY5cukvyxBmBhzKwDKO").subscribeWith(new DisposableObserver<SearchApiResult>() {
             @Override
             public void onNext(SearchApiResult articles) {
                 // Update RecyclerView after getting results from SearchApiResult API
