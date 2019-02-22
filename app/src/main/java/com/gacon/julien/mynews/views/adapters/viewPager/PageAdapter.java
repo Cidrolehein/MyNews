@@ -5,7 +5,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import com.gacon.julien.mynews.controllers.fragments.ArtsArticleFragment;
 import com.gacon.julien.mynews.controllers.fragments.MostPopularArticleFragment;
-import com.gacon.julien.mynews.controllers.fragments.SearchFragment;
+import com.gacon.julien.mynews.controllers.fragments.SearchResultFragment;
 import com.gacon.julien.mynews.controllers.fragments.TopStoriesArticleFragment;
 
 public class PageAdapter extends FragmentPagerAdapter {
@@ -30,7 +30,7 @@ public class PageAdapter extends FragmentPagerAdapter {
             case 2: //Page number 3
                 return ArtsArticleFragment.newInstance();
             case 3: // Page Search
-                return SearchFragment.newInstance();
+                return SearchResultFragment.newInstance();
             default:
                 return null;
         }

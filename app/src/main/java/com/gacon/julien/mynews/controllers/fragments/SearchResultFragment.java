@@ -10,15 +10,15 @@ import io.reactivex.observers.DisposableObserver;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SearchFragment extends BaseArticleFragment {
+public class SearchResultFragment extends BaseArticleFragment {
 
-    public static SearchFragment newInstance() {
-        return (new SearchFragment());
+    public static SearchResultFragment newInstance() {
+        return (new SearchResultFragment());
     }
 
     @Override
     protected int getFragmentLayout() {
-        return R.layout.fragment_search;
+        return R.layout.fragment_search_result;
     }
 
     @Override
