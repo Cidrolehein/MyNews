@@ -6,7 +6,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.controllers.fragments.MainSearchFragment;
+import com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment;
 
 import butterknife.ButterKnife;
 

@@ -1,7 +1,8 @@
-package com.gacon.julien.mynews.controllers.fragments;
+package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 import android.support.v4.app.Fragment;
 import com.gacon.julien.mynews.R;
+import com.gacon.julien.mynews.controllers.fragments.articleFragment.BaseArticleFragment;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
 import com.gacon.julien.mynews.models.SearchApiResult;
 

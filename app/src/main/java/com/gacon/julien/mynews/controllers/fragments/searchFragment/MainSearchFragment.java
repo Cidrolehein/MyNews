@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.controllers.fragments;
+package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 
 import android.app.DatePickerDialog;
@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -19,7 +18,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.controllers.activities.SearchActivity;
 
 import java.util.Calendar;
 import java.util.Objects;

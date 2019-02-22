@@ -1,37 +1,31 @@
-package com.gacon.julien.mynews.controllers.fragments;
-
-
-import android.support.v4.app.Fragment;
+package com.gacon.julien.mynews.controllers.fragments.articleFragment;
 
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
 import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
-
 import io.reactivex.observers.DisposableObserver;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class ArtsArticleFragment extends BaseArticleFragment {
 
+public class MostPopularArticleFragment extends BaseArticleFragment {
 
-    public static ArtsArticleFragment newInstance() {
-        return (new ArtsArticleFragment());
+    public static MostPopularArticleFragment newInstance() {
+        return (new MostPopularArticleFragment());
     }
 
     @Override
-    protected int getFragmentLayout() {return R.layout.fragment_arts;}
+    protected int getFragmentLayout() {return R.layout.fragment_most_popular;}
 
     // -------------------
     // Streams Request
     // with Retrofit
     // -------------------
 
+    @Override
     protected void executeHttpRequest() {
-        this.disposable = NyTimesStreams.streamFetchTopStories("arts").subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
+        this.disposable = NyTimesStreams.streamFetchMostPopular(1).subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
             @Override
             public void onNext(MainNewYorkTimesTopStories articles) {
-                // Update RecyclerView after getting results from NYTimes Top Stories API
+                // Update RecyclerView after getting results from MostPopular API
                 updateUI(articles.getResults());
             }
             @Override

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".controllers.fragments.MainSearchFragment">
+    tools:context=".controllers.fragments.searchFragment.MainSearchFragment">
 
     <!-- Include Toolbar -->
     <include

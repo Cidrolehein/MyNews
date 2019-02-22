@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".controllers.fragments.MostPopularArticleFragment">
+    tools:context=".controllers.fragments.articleFragment.MostPopularArticleFragment">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/fragment_main_recycler_view"

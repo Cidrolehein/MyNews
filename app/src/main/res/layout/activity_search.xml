@@ -6,5 +6,5 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".controllers.activities.SearchActivity"
-    android:name="com.gacon.julien.mynews.controllers.fragments.MainSearchFragment">
+    android:name="com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment">
 </fragment>

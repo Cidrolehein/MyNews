@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.controllers.fragments;
+package com.gacon.julien.mynews.controllers.fragments.articleFragment;
 
 import android.content.Intent;
 import android.os.Bundle;

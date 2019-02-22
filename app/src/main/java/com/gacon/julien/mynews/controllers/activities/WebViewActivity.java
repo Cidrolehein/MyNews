@@ -6,7 +6,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.controllers.fragments.BaseArticleFragment;
+import com.gacon.julien.mynews.controllers.fragments.articleFragment.BaseArticleFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
