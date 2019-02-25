@@ -3,9 +3,11 @@ package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -15,9 +17,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.gacon.julien.mynews.R;
+import com.gacon.julien.mynews.controllers.activities.ResultActivity;
+import com.gacon.julien.mynews.controllers.activities.SearchActivity;
 
 import java.util.Calendar;
 import java.util.Objects;
@@ -71,6 +76,11 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
 
     private String mQuery;
     private String mFilter;
+
+    public static final String QUERY = "query";
+    public static final String DATE_BEGIN = "dateBegin";
+    public static final String END_DATE = "endDate";
+    public static final String FILTER = "filter";
 
     private FragmentActivity myContext;
 
@@ -188,22 +198,16 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         }
 
         mQuery = mEditText.getText().toString();
-        SearchResultFragment searchResultFragment = new SearchResultFragment();
-
-        Bundle queryData = new Bundle();
-        queryData.putString("data", mQuery);
-        searchResultFragment.setArguments(queryData);
-
-        queryData.putString("dateBegin", dateBeginForData);
-        searchResultFragment.setArguments(queryData);
-
-        queryData.putString("endDate", endDateForData);
-        searchResultFragment.setArguments(queryData);
-
-        queryData.putString("filter", mFilter);
-        searchResultFragment.setArguments(queryData);
 
         mCallback.onButtonClicked(v);
+
+        // put data into bundle
+        Intent intentResultActivity = new Intent(getActivity(), ResultActivity.class);
+        intentResultActivity.putExtra(QUERY, mQuery);
+        intentResultActivity.putExtra(DATE_BEGIN, dateBeginForData);
+        intentResultActivity.putExtra(END_DATE, endDateForData);
+        intentResultActivity.putExtra(FILTER, mFilter);
+        startActivity(intentResultActivity);
 
     }
 

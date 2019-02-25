@@ -15,7 +15,7 @@ import com.gacon.julien.mynews.controllers.activities.WebViewActivity;
 import com.gacon.julien.mynews.controllers.utils.ItemClickSupport;
 import com.gacon.julien.mynews.models.Result;
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.views.adapters.TopStoryApiAdapter;
+import com.gacon.julien.mynews.views.adapters.articleAdapter.ArticleApiAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import butterknife.BindView;
@@ -40,7 +40,7 @@ public abstract class BaseArticleFragment extends Fragment {
     protected Disposable disposable;
     // 2 - Declare lists & Adapters
     private List<Result> mResultList;
-    private TopStoryApiAdapter adapter;
+    private ArticleApiAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,7 +98,7 @@ public abstract class BaseArticleFragment extends Fragment {
     private void configureRecyclerView(){
 
         this.mResultList = new ArrayList<>();
-        adapter = new TopStoryApiAdapter(mResultList, Glide.with(this));
+        adapter = new ArticleApiAdapter(mResultList, Glide.with(this));
         this.recyclerView.setAdapter(this.adapter);
 
         // 3.4 - Set layout manager to position the items

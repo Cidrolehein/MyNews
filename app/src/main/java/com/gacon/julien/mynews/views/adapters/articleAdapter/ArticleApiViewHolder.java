@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.views.adapters;
+package com.gacon.julien.mynews.views.adapters.articleAdapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,7 +15,7 @@ import com.gacon.julien.mynews.views.datas.UpdateTextItems;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
+class ArticleApiViewHolder extends RecyclerView.ViewHolder {
 
     // FOR DESIGN
     @BindView(R.id.fragment_main_item_title)
@@ -34,7 +34,7 @@ class TopStoryApiViewHolder extends RecyclerView.ViewHolder {
     UpdateTextItems mUpdate;
 
     // CONSTRUCTOR
-    protected TopStoryApiViewHolder(View itemView) {
+    protected ArticleApiViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }

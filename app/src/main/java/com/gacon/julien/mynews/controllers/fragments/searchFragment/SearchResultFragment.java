@@ -5,8 +5,8 @@ import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.fragments.articleFragment.BaseArticleFragment;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
 import com.gacon.julien.mynews.models.SearchApiResult;
-
 import io.reactivex.observers.DisposableObserver;
+
 
 /**
  * A simple {@link Fragment} subclass.
