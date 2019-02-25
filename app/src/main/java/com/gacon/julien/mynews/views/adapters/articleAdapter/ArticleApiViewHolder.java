@@ -5,13 +5,11 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.models.Result;
 import com.gacon.julien.mynews.views.datas.UpdateTextItems;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,22 +29,20 @@ class ArticleApiViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.first_layout)
     LinearLayout mLayout;
 
-    UpdateTextItems mUpdate;
-
     // CONSTRUCTOR
-    protected ArticleApiViewHolder(View itemView) {
+    ArticleApiViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
     }
 
     void updateWithTopStoriesItems(final Result article, RequestManager glide) {
 
-        mUpdate = new UpdateTextItems();
+        UpdateTextItems update = new UpdateTextItems();
 
-        this.textViewSection.setText(mUpdate.setSection(article));
-        this.textViewSubSection.setText(mUpdate.setSubSection(article));
-        this.textViewTitle.setText(mUpdate.setTitle(article));
-        this.textViewDate.setText(mUpdate.setDate(article));
+        this.textViewSection.setText(update.setSection(article));
+        this.textViewSubSection.setText(update.setSubSection(article));
+        this.textViewTitle.setText(update.setTitle(article));
+        this.textViewDate.setText(update.setDate(article));
         this.setImage(article, glide);
 
     }
@@ -55,13 +51,18 @@ class ArticleApiViewHolder extends RecyclerView.ViewHolder {
 
         if (article.getMultimedia() != null) {
             if (article.getMultimedia().size() > 0) {
-                glide.load(article.getMultimedia().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
+                String mUrlMultimedia = article.getMultimedia().get(0).getUrl();
+                if (mUrlMultimedia.startsWith("images")) {
+                    mUrlMultimedia = "https://www.nytimes.com/" + mUrlMultimedia;
+                }
+                glide.load(mUrlMultimedia).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
             } else {
                 getImageDefault(glide);
             }
         } else {
             if (article.getMedia().size() > 0) {
-                glide.load(article.getMedia().get(0).getMediaMetadata().get(0).getUrl()).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
+                String mUrlMedia = article.getMedia().get(0).getMediaMetadata().get(0).getUrl();
+                glide.load(mUrlMedia).apply(new RequestOptions().fallback(R.drawable.ic_launcher_background)).into(imageView);
             } else {
                 getImageDefault(glide);
             }

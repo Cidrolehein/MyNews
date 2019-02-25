@@ -1,13 +1,11 @@
 package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
-
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -17,16 +15,15 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.activities.ResultActivity;
-import com.gacon.julien.mynews.controllers.activities.SearchActivity;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -35,13 +32,12 @@ import butterknife.ButterKnife;
  */
 public class MainSearchFragment extends Fragment implements View.OnClickListener {
 
-    // for the date
-    private static final String TAG = "SearchActivity";
-    private DatePickerDialog.OnDateSetListener mOnDateSetListenerBeginDate;
-    private DatePickerDialog.OnDateSetListener mOnDateSetListenerEndDate;
+    public static final String QUERY = "query";
+    public static final String DATE_BEGIN = "dateBegin";
 
     // Design
-
+    public static final String END_DATE = "endDate";
+    public static final String FILTER = "filter";
     @BindView(R.id.fragment_base_search_notification_begin_date)
     TextView mDisplayBeginDate;
     @BindView(R.id.fragment_base_search_notification_end_date)
@@ -58,46 +54,28 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
     CheckBox mCheckBoxEntrepreneurs;
     @BindView(R.id.fragment_base_search_notification_politics_check_box)
     CheckBox mCheckBoxPolitics;
+
+    // Data
     @BindView(R.id.fragment_base_search_notification_sports_check_box)
     CheckBox mCheckBoxSports;
     @BindView(R.id.fragment_base_search_notification_travel_check_box)
     CheckBox mCheckBoxTravel;
-
-    // Data
-
+    // for the date
+    private DatePickerDialog.OnDateSetListener mOnDateSetListenerBeginDate;
+    private DatePickerDialog.OnDateSetListener mOnDateSetListenerEndDate;
     private String dateBegin;
     private String dateBeginForData;
     private String endDate;
     private String endDateForData;
-
-    private int day;
-    private int month;
-    private int year;
-
-    private String mQuery;
-    private String mFilter;
-
-    public static final String QUERY = "query";
-    public static final String DATE_BEGIN = "dateBegin";
-    public static final String END_DATE = "endDate";
-    public static final String FILTER = "filter";
-
-    private FragmentActivity myContext;
-
+    private String mFilter = null;
+    private OnButtonClickedListener mCallback;
 
     public MainSearchFragment() {
         // Required empty public constructor
     }
 
-    private OnButtonClickedListener mCallback;
-
-    public interface OnButtonClickedListener {
-        public void onButtonClicked(View view);
-    }
-
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main_search, container, false);
@@ -107,15 +85,20 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         //Edit text
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) { }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mSearchBtn.setEnabled(s.toString().length() != 0); }
+                mSearchBtn.setEnabled(s.toString().length() != 0);
+            }
+
             @Override
-            public void afterTextChanged(Editable s) { }
+            public void afterTextChanged(Editable s) {
+            }
         });
 
-        // Date
+        // Date of begin
         mDisplayBeginDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,6 +124,8 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
 
         };
 
+        // End of date
+
         mDisplayEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -158,12 +143,31 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
                     endDateForData = year + "0" + month + "" + dayOfMonth;
                 } else endDateForData = year + "" + month + "" + dayOfMonth;
 
-                mDisplayEndDate.setText(endDate);
+                System.out.println(endDateForData);
+
+                // Compare begin and end of date
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+
+               if (dateBegin != null) {
+                   try {
+                       Date bDate = sdf.parse(dateBegin);
+                       Date eDate = sdf.parse(endDate);
+                       if (eDate.before(bDate)) {
+                           Toast toast = Toast.makeText(getContext(), "La date de fin doit être postérieure à la date de début", Toast.LENGTH_SHORT);
+                           toast.show();
+                       } else {
+                           mDisplayEndDate.setText(endDate);
+                       }
+                   } catch (ParseException e) {
+                       e.printStackTrace();
+                   }
+               } else {
+                   mDisplayEndDate.setText(endDate);
+               }
+
             }
         };
-
         mSearchBtn.setOnClickListener(this);
-
         return view;
     }
 
@@ -172,6 +176,8 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         super.onAttach(context);
         this.createCallbackToParentActivity();
     }
+
+    // TODO : check default condition mFilter = null
 
     @Override
     public void onClick(View v) {
@@ -197,41 +203,50 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
             mFilter = "Travel";
         }
 
-        mQuery = mEditText.getText().toString();
+        String query = mEditText.getText().toString();
 
         mCallback.onButtonClicked(v);
 
         // put data into bundle
         Intent intentResultActivity = new Intent(getActivity(), ResultActivity.class);
-        intentResultActivity.putExtra(QUERY, mQuery);
+        intentResultActivity.putExtra(QUERY, query);
         intentResultActivity.putExtra(DATE_BEGIN, dateBeginForData);
         intentResultActivity.putExtra(END_DATE, endDateForData);
         intentResultActivity.putExtra(FILTER, mFilter);
-        startActivity(intentResultActivity);
 
-    }
-
-    private void createCallbackToParentActivity(){
-        try {
-            mCallback = (OnButtonClickedListener) getActivity();
-        } catch (ClassCastException e) {
-            throw new ClassCastException(e.toString()+ "must implement OnButtonClicketListener");
+        if (mFilter != null) {
+            startActivity(intentResultActivity);
+        } else {
+            Toast toast = Toast.makeText(getContext(), "Veuillez séléctionner au moins une catégorie", Toast.LENGTH_SHORT);
+            toast.show();
         }
     }
 
-    public void createDisplay(DatePickerDialog.OnDateSetListener dateSetListener){
+    private void createCallbackToParentActivity() {
+        try {
+            mCallback = (OnButtonClickedListener) getActivity();
+        } catch (ClassCastException e) {
+            throw new ClassCastException(e.toString() + "must implement OnButtonClicketListener");
+        }
+    }
+
+    public void createDisplay(DatePickerDialog.OnDateSetListener dateSetListener) {
         Calendar cal = Calendar.getInstance();
-        day = cal.get(Calendar.DAY_OF_MONTH);
-        month = cal.get(Calendar.MONTH);
-        year = cal.get(Calendar.YEAR);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
         DatePickerDialog dialog = new DatePickerDialog(
                 Objects.requireNonNull(getActivity()),
                 dateSetListener,
-                day,month,year);
+                day, month, year);
         dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
         cal.add(Calendar.YEAR, -5);
         dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
         dialog.show();
+    }
+
+    public interface OnButtonClickedListener {
+        void onButtonClicked(View view);
     }
 
 }

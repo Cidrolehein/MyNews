@@ -36,7 +36,9 @@ public interface NyTimesServices {
     Observable<SearchApiResult> getSearchArticle(@Query("begin_date") String beginDate,
                                                  @Query("end_date") String endDate,
                                                  @Query("fq") String filter,
+                                                 @Query("page") int page,
                                                  @Query("q") String query,
+                                                 @Query("sort") String sort,
                                                  @Query("api-key") String apiKey);
 
     Retrofit retrofitSearch = new Retrofit.Builder()
