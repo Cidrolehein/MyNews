@@ -1,6 +1,5 @@
 package com.gacon.julien.mynews.controllers.activities;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -8,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 import com.gacon.julien.mynews.views.adapters.viewPager.PageAdapter;
 import com.gacon.julien.mynews.R;
 
@@ -36,11 +34,11 @@ public class MainActivity extends AppCompatActivity {
         // 3 - Handle actions on menu items
         switch (item.getItemId()) {
             case R.id.menu_activity_main_params:
-                //noinspection SpellCheckingInspection
-                Toast.makeText(this, "Il n'y a rien à paramétrer", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getApplication(), NotificationActivity.class);
+                startActivity(intent);
                 return true;
             case R.id.menu_activity_main_search:
-                Intent intent = new Intent(getApplication(), SearchActivity.class);
+                intent = new Intent(getApplication(), SearchActivity.class);
                 startActivity(intent);
                 return true;
             default:

@@ -22,7 +22,9 @@
         android:inputType="text"
         android:textColorHighlight="@color/colorPrimary"
         android:textColorLink="@color/colorPrimary"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:autofillHints="query"
+        tools:ignore="UnusedAttribute" />
 
     <!-- date management -->
     <LinearLayout
@@ -158,6 +160,14 @@
 
     </LinearLayout>
 
+    <!-- Notification switch -->
+    <Switch
+        android:id="@+id/fragment_base_search_notification_switch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="25dp"
+        android:text="@string/fragment_base_search_notifications_switch"/>
+
     <!-- search button -->
     <Button
         android:id="@+id/fragment_base_search_notification_button"
@@ -168,10 +178,5 @@
         android:textSize="20sp"
         android:textColor="@android:color/white"
         android:layout_margin="25dp"/>
-
-    <FrameLayout
-        android:id="@+id/fragmentLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
 
 </LinearLayout>
