@@ -17,14 +17,13 @@ import com.gacon.julien.mynews.controllers.activities.ResultActivity;
  */
 public class NotificationFragment extends BaseSearchAndNotifFragment implements View.OnClickListener {
 
-    @Override
-    protected int getFragmentLayout() {
-        return R.layout.fragment_main_search;
+    public NotificationFragment() {
+        // Required empty public constructor
     }
 
     @Override
-    protected Intent getIntent() {
-        return new Intent(getActivity(), NotificationActivity.class);
+    protected int getFragmentLayout() {
+        return R.layout.fragment_main_search;
     }
 
     @Override
@@ -35,10 +34,6 @@ public class NotificationFragment extends BaseSearchAndNotifFragment implements 
     @Override
     protected boolean getButtonVisibility() {
         return false;
-    }
-
-    public NotificationFragment() {
-        // Required empty public constructor
     }
 
 }

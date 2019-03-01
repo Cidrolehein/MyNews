@@ -21,11 +21,6 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
     }
 
     @Override
-    protected Intent getIntent() {
-        return new Intent(getActivity(), ResultActivity.class);
-    }
-
-    @Override
     protected boolean getNotificationVisibility() {
         return false;
     }

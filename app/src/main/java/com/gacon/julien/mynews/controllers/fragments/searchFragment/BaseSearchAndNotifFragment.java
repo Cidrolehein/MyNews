@@ -2,24 +2,35 @@ package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.gacon.julien.mynews.R;
+import com.gacon.julien.mynews.controllers.activities.ResultActivity;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -29,13 +40,14 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.gacon.julien.mynews.controllers.utils.AppNotification.CHANNEL_ID;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public abstract class BaseSearchAndNotifFragment extends Fragment implements View.OnClickListener {
 
     protected abstract int getFragmentLayout();
-    protected abstract Intent getIntent();
     protected abstract boolean getNotificationVisibility();
     protected abstract boolean getButtonVisibility();
 
@@ -75,8 +87,13 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
     String dateBeginForData;
     private String endDate;
     String endDateForData;
-    String mFilter = null;
+
+    String mQuery;
+    String mFilter;
     MainSearchFragment.OnButtonClickedListener mCallback;
+
+    // Notifications
+    private NotificationManagerCompat mNotificationManager;
 
     public BaseSearchAndNotifFragment() {
         // Required empty public constructor
@@ -96,7 +113,7 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
             mNotificationSwitch.setVisibility(View.VISIBLE);
 
         } else {
-            mNotificationSwitch.setVisibility(View.GONE);
+            mNotificationSwitch.setVisibility(View.VISIBLE);
         }
 
         // TODO : why btn won't disappear ?
@@ -107,6 +124,40 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
         } else {
             mSearchBtn.setVisibility(View.GONE);
         }
+
+        // Switch notification button
+
+        // check current state of a Switch
+        mNotificationSwitch.setTextOn("On");
+        mNotificationSwitch.setTextOff("Off");
+
+        mNotificationManager = NotificationManagerCompat.from(getContext());
+
+        mNotificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    Log.i("Switch_Notification", "Switch is on !");
+                    getQuery();
+                    getCheckBox();
+
+                    // Notification
+                    Notification notification = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
+                            .setSmallIcon(R.drawable.ic_launcher_foreground)
+                            .setContentTitle("My notification")
+                            .setContentText("Much longer text that cannot fit one line...")
+                            .setStyle(new NotificationCompat.BigTextStyle()
+                                    .bigText("Much longer text that cannot fit one line..."))
+                            .setPriority(NotificationCompat.PRIORITY_HIGH)
+                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                            .build();
+
+                    mNotificationManager.notify(1, notification);
+
+                } else Log.i("Switch_Notification", "Switch is off !");
+            }
+        });
+
 
         //Edit text
         mEditText.addTextChangedListener(new TextWatcher() {
@@ -168,29 +219,8 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
                 if (month < 10) {
                     endDateForData = year + "0" + month + "" + dayOfMonth;
                 } else endDateForData = year + "" + month + "" + dayOfMonth;
-
                 System.out.println(endDateForData);
-
-                // Compare begin and end of date
-                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-
-                if (dateBegin != null) {
-                    try {
-                        Date bDate = sdf.parse(dateBegin);
-                        Date eDate = sdf.parse(endDate);
-                        if (eDate.before(bDate)) {
-                            Toast toast = Toast.makeText(getContext(), "La date de fin doit être postérieure à la date de début", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } else {
-                            mDisplayEndDate.setText(endDate);
-                        }
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                } else {
                     mDisplayEndDate.setText(endDate);
-                }
-
             }
         };
         mSearchBtn.setOnClickListener(this);
@@ -203,11 +233,35 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
         this.createCallbackToParentActivity();
     }
 
-    // TODO : check default condition mFilter = null
     @Override
     public void onClick(View v) {
 
         // CheckBox
+        getCheckBox();
+
+        mCallback.onButtonClicked(v);
+
+        Intent intentResultActivity = new Intent(getActivity(), ResultActivity.class);
+        // put data into activity
+        intentResultActivity.putExtra(QUERY, getQuery());
+        intentResultActivity.putExtra(DATE_BEGIN, dateBeginForData);
+        intentResultActivity.putExtra(END_DATE, endDateForData);
+        intentResultActivity.putExtra(FILTER, mFilter);
+
+        if (!mFilter.equals("")) {
+            startActivity(intentResultActivity);
+        }
+    }
+
+    private String getQuery() {
+        mQuery = "";
+        mQuery = mEditText.getText().toString();
+        Log.i("Query", mQuery);
+        return mQuery;
+    }
+
+    private void getCheckBox() {
+        mFilter = "";
 
         if (mCheckBoxArt.isChecked()) {
             mFilter = "Arts";
@@ -228,22 +282,12 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
             mFilter = "Travel";
         }
 
-        String query = mEditText.getText().toString();
-
-        mCallback.onButtonClicked(v);
-
-        // put data into activity
-        getIntent().putExtra(QUERY, query);
-        getIntent().putExtra(DATE_BEGIN, dateBeginForData);
-        getIntent().putExtra(END_DATE, endDateForData);
-        getIntent().putExtra(FILTER, mFilter);
-
-        if (mFilter != null) {
-            startActivity(getIntent());
-        } else {
+        if (mFilter.equals("")) {
             Toast toast = Toast.makeText(getContext(), "Veuillez séléctionner au moins une catégorie", Toast.LENGTH_SHORT);
             toast.show();
         }
+
+        Log.i("Check_Box", mFilter);
     }
 
     private void createCallbackToParentActivity() {
