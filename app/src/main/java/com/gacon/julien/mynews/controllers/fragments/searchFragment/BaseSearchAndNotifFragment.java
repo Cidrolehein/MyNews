@@ -100,9 +100,6 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
     //Alarm manager
     private PendingIntent pendingIntent;
 
-    // Notifications
-    private NotificationManagerCompat mNotificationManager;
-
     public BaseSearchAndNotifFragment() {
         // Required empty public constructor
     }
@@ -139,8 +136,6 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
         mNotificationSwitch.setTextOn("On");
         mNotificationSwitch.setTextOff("Off");
 
-        mNotificationManager = NotificationManagerCompat.from(getContext());
-
         mNotificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -159,19 +154,6 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
                     calendar.add(Calendar.SECOND, 10);
                     alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                     Toast.makeText(getContext(), "Start Alarm", Toast.LENGTH_LONG).show();
-
-                    // Notification
-                    Notification notification = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
-                            .setSmallIcon(R.drawable.ic_launcher_foreground)
-                            .setContentTitle("My notification")
-                            .setContentText("Much longer text that cannot fit one line...")
-                            .setStyle(new NotificationCompat.BigTextStyle()
-                                    .bigText("Much longer text that cannot fit one line..."))
-                            .setPriority(NotificationCompat.PRIORITY_HIGH)
-                            .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                            .build();
-
-                    mNotificationManager.notify(1, notification);
 
                 } else Log.i("Switch_Notification", "Switch is off !");
 

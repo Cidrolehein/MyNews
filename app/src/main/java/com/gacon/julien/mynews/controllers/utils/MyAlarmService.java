@@ -1,11 +1,20 @@
 package com.gacon.julien.mynews.controllers.utils;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.widget.Toast;
+import com.gacon.julien.mynews.R;
+
+import static com.gacon.julien.mynews.controllers.utils.AppNotification.CHANNEL_ID;
 
 public class MyAlarmService extends Service {
+
+    // Notifications
+    private NotificationManagerCompat mNotificationManager;
 
     @Override
     public void onCreate(){
@@ -25,9 +34,26 @@ public class MyAlarmService extends Service {
     }
 
     @Override
-    public void onStart(Intent intent, int startId) {
+    public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStart(intent, startId);
         Toast.makeText(this, "MyAlarmService.onStart()", Toast.LENGTH_LONG).show();
+
+        // Notification
+
+        mNotificationManager = NotificationManagerCompat.from(getApplicationContext());
+
+        Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentTitle("My notification")
+                .setContentText("Much longer text that cannot fit one line...")
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText("Much longer text that cannot fit one line..."))
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
+                .build();
+
+        mNotificationManager.notify(1, notification);
+        return START_NOT_STICKY;
     }
 
     @Override
