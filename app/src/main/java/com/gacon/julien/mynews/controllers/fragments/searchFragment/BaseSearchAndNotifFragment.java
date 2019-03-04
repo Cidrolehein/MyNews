@@ -1,10 +1,12 @@
 package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
@@ -30,6 +32,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.activities.ResultActivity;
+import com.gacon.julien.mynews.controllers.utils.MyAlarmService;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -40,6 +43,8 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.content.Context.ALARM_SERVICE;
+import static android.support.v4.content.ContextCompat.getSystemService;
 import static com.gacon.julien.mynews.controllers.utils.AppNotification.CHANNEL_ID;
 
 /**
@@ -92,6 +97,9 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
     String mFilter;
     MainSearchFragment.OnButtonClickedListener mCallback;
 
+    //Alarm manager
+    private PendingIntent pendingIntent;
+
     // Notifications
     private NotificationManagerCompat mNotificationManager;
 
@@ -141,6 +149,17 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
                     getQuery();
                     getCheckBox();
 
+                    // Alarm manager
+
+                    Intent myIntent = new Intent(getContext(), MyAlarmService.class);
+                    pendingIntent = PendingIntent.getService(getContext(), 0, myIntent, 0);
+                    AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTimeInMillis(System.currentTimeMillis());
+                    calendar.add(Calendar.SECOND, 10);
+                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    Toast.makeText(getContext(), "Start Alarm", Toast.LENGTH_LONG).show();
+
                     // Notification
                     Notification notification = new NotificationCompat.Builder(getContext(), CHANNEL_ID)
                             .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -155,6 +174,11 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
                     mNotificationManager.notify(1, notification);
 
                 } else Log.i("Switch_Notification", "Switch is off !");
+
+                // TODO Auto-generated method stub
+                AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
+                alarmManager.cancel(pendingIntent);
+                Toast.makeText(getContext(), "Cancel!", Toast.LENGTH_LONG).show();
             }
         });
 
