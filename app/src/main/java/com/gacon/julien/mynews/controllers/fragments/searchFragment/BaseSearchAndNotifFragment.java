@@ -3,19 +3,13 @@ package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -30,37 +24,28 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.activities.ResultActivity;
 import com.gacon.julien.mynews.controllers.utils.MyAlarmService;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.content.Context.ALARM_SERVICE;
-import static android.support.v4.content.ContextCompat.getSystemService;
-import static com.gacon.julien.mynews.controllers.utils.AppNotification.CHANNEL_ID;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public abstract class BaseSearchAndNotifFragment extends Fragment implements View.OnClickListener {
 
-    protected abstract int getFragmentLayout();
-    protected abstract boolean getNotificationVisibility();
-    protected abstract boolean getButtonVisibility();
-
     public static final String QUERY = "query";
     public static final String DATE_BEGIN = "dateBegin";
     public static final String END_DATE = "endDate";
     public static final String FILTER = "filter";
-
     // Design
     @BindView(R.id.fragment_base_search_notification_begin_date)
     TextView mDisplayBeginDate;
@@ -84,25 +69,28 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
     CheckBox mCheckBoxSports;
     @BindView(R.id.fragment_base_search_notification_travel_check_box)
     CheckBox mCheckBoxTravel;
-
+    String dateBeginForData;
+    String endDateForData;
+    String mQuery;
+    String mFilter;
+    MainSearchFragment.OnButtonClickedListener mCallback;
     // for the date
     private DatePickerDialog.OnDateSetListener mOnDateSetListenerBeginDate;
     private DatePickerDialog.OnDateSetListener mOnDateSetListenerEndDate;
     private String dateBegin;
-    String dateBeginForData;
     private String endDate;
-    String endDateForData;
-
-    String mQuery;
-    String mFilter;
-    MainSearchFragment.OnButtonClickedListener mCallback;
-
+    SharedPreferences mSharedPreferences;
+    public static final String PREF = "PREFS";
     //Alarm manager
     private PendingIntent pendingIntent;
-
+    private AlarmManager mAlarmManager;
     public BaseSearchAndNotifFragment() {
         // Required empty public constructor
     }
+
+    protected abstract int getFragmentLayout();
+    protected abstract boolean getNotificationVisibility();
+    protected abstract boolean getButtonVisibility();
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -112,6 +100,9 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
         View view = inflater.inflate(getFragmentLayout(), container, false);
         ButterKnife.bind(this, view);
         mSearchBtn.setEnabled(false);
+
+        // Shared Pref initialization
+        mSharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences(PREF, Context.MODE_PRIVATE);
 
         boolean i = getNotificationVisibility();
         if (i) {
@@ -131,11 +122,9 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
         }
 
         // Switch notification button
-
         // check current state of a Switch
         mNotificationSwitch.setTextOn("On");
         mNotificationSwitch.setTextOff("Off");
-
         mNotificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -144,26 +133,35 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
                     getQuery();
                     getCheckBox();
 
-                    // Alarm manager
+                    // Pass data to shared preferences
+                        mSharedPreferences
+                                .edit()
+                                .putString(QUERY, mQuery)
+                                .putString(FILTER, mFilter)
+                                .apply();
+                        Log.i("SharedPref saved", "Data saved, restart the app");
 
+                    // Alarm manager
                     Intent myIntent = new Intent(getContext(), MyAlarmService.class);
                     pendingIntent = PendingIntent.getService(getContext(), 0, myIntent, 0);
-                    AlarmManager alarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
+                    mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
                     Calendar calendar = Calendar.getInstance();
                     calendar.setTimeInMillis(System.currentTimeMillis());
                     calendar.add(Calendar.SECOND, 10);
-                    alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    mAlarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
                     Toast.makeText(getContext(), "Start Alarm", Toast.LENGTH_LONG).show();
+                } else {
+                    Log.i("Switch_Notification", "Switch is off !");
+                    mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
+                    mAlarmManager.cancel(pendingIntent);
+                    Toast.makeText(getContext(), "Alarm Canceled/Stop by User.", Toast.LENGTH_SHORT).show();
 
-                } else Log.i("Switch_Notification", "Switch is off !");
-
-                // TODO Auto-generated method stub
-                AlarmManager alarmManager = (AlarmManager)getActivity().getSystemService(ALARM_SERVICE);
-                alarmManager.cancel(pendingIntent);
-                Toast.makeText(getContext(), "Cancel!", Toast.LENGTH_LONG).show();
+                    // Delete Shared Pref
+                    mSharedPreferences.edit().clear().apply();
+                    Log.i("Clear SharedPref", "SharedPref is clear");
+                }
             }
         });
-
 
         //Edit text
         mEditText.addTextChangedListener(new TextWatcher() {
@@ -226,7 +224,7 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
                     endDateForData = year + "0" + month + "" + dayOfMonth;
                 } else endDateForData = year + "" + month + "" + dayOfMonth;
                 System.out.println(endDateForData);
-                    mDisplayEndDate.setText(endDate);
+                mDisplayEndDate.setText(endDate);
             }
         };
         mSearchBtn.setOnClickListener(this);
@@ -244,9 +242,7 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
 
         // CheckBox
         getCheckBox();
-
         mCallback.onButtonClicked(v);
-
         Intent intentResultActivity = new Intent(getActivity(), ResultActivity.class);
         // put data into activity
         intentResultActivity.putExtra(QUERY, getQuery());
@@ -268,7 +264,6 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
 
     private void getCheckBox() {
         mFilter = "";
-
         if (mCheckBoxArt.isChecked()) {
             mFilter = "Arts";
         }
@@ -287,12 +282,10 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
         if (mCheckBoxTravel.isChecked()) {
             mFilter = "Travel";
         }
-
         if (mFilter.equals("")) {
             Toast toast = Toast.makeText(getContext(), "Veuillez séléctionner au moins une catégorie", Toast.LENGTH_SHORT);
             toast.show();
         }
-
         Log.i("Check_Box", mFilter);
     }
 
@@ -322,5 +315,4 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
     public interface OnButtonClickedListener {
         void onButtonClicked(View view);
     }
-
 }

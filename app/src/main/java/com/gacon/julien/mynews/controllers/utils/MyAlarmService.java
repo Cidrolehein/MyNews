@@ -13,9 +13,6 @@ import static com.gacon.julien.mynews.controllers.utils.AppNotification.CHANNEL_
 
 public class MyAlarmService extends Service {
 
-    // Notifications
-    private NotificationManagerCompat mNotificationManager;
-
     @Override
     public void onCreate(){
         Toast.makeText(this, "MyAlarmService.onCreate()", Toast.LENGTH_LONG).show();
@@ -34,13 +31,12 @@ public class MyAlarmService extends Service {
     }
 
     @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
+    public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
         Toast.makeText(this, "MyAlarmService.onStart()", Toast.LENGTH_LONG).show();
 
-        // Notification
-
-        mNotificationManager = NotificationManagerCompat.from(getApplicationContext());
+        // Notifications
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
 
         Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -52,8 +48,7 @@ public class MyAlarmService extends Service {
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
                 .build();
 
-        mNotificationManager.notify(1, notification);
-        return START_NOT_STICKY;
+        notificationManager.notify(1, notification);
     }
 
     @Override
