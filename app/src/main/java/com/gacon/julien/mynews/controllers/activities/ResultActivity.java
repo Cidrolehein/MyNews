@@ -9,9 +9,6 @@ import com.gacon.julien.mynews.controllers.fragments.searchFragment.SearchResult
 
 public class ResultActivity extends AppCompatActivity {
 
-    // 1 - Declare main fragment
-    private SearchResultFragment SearchResultFragment;
-
     //Data
     private String mQuery;
     private String dateBeginForData;
@@ -42,23 +39,24 @@ public class ResultActivity extends AppCompatActivity {
 
     private void configureAndShowMainFragment() {
         // A - Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
-        SearchResultFragment = (SearchResultFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_result);
+        // 1 - Declare main fragment
+        com.gacon.julien.mynews.controllers.fragments.searchFragment.SearchResultFragment searchResultFragment = (SearchResultFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_result);
 
-        if (SearchResultFragment == null) {
+        if (searchResultFragment == null) {
             // B - Create new main fragment
-            SearchResultFragment = new SearchResultFragment();
+            searchResultFragment = new SearchResultFragment();
             // C - Add it to FrameLayout container and data
             Bundle queryData = new Bundle();
             queryData.putString("data", mQuery);
-            SearchResultFragment.setArguments(queryData);
+            searchResultFragment.setArguments(queryData);
             queryData.putString("dateBegin", dateBeginForData);
-            SearchResultFragment.setArguments(queryData);
+            searchResultFragment.setArguments(queryData);
             queryData.putString("endDate", endDateForData);
-            SearchResultFragment.setArguments(queryData);
+            searchResultFragment.setArguments(queryData);
             queryData.putString("filter", mFilter);
-            SearchResultFragment.setArguments(queryData);
+            searchResultFragment.setArguments(queryData);
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.frame_layout_result, SearchResultFragment)
+                    .add(R.id.frame_layout_result, searchResultFragment)
                     .commit();
         }
     }

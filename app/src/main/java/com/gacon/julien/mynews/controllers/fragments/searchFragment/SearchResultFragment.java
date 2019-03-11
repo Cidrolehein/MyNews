@@ -15,6 +15,12 @@ import io.reactivex.observers.DisposableObserver;
  */
 public class SearchResultFragment extends BaseArticleFragment {
 
+    private int size;
+
+    public int getSize() {
+        return size;
+    }
+
     public static SearchResultFragment newInstance() {
         return (new SearchResultFragment());
     }
@@ -39,7 +45,7 @@ public class SearchResultFragment extends BaseArticleFragment {
                 // Update RecyclerView after getting results from SearchApiResult API
                 updateUI(articles.getResponse().getDocs());
 
-                int size = articles.getResponse().getDocs().size();
+                size = articles.getResponse().getDocs().size();
                 if (size == 0) {
                     Toast toast = (Toast) Toast.makeText(getContext(), "Aucun résultat trouvé", Toast.LENGTH_LONG);
                     toast.show();

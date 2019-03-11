@@ -1,6 +1,7 @@
 package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.DatePickerDialog;
 import android.app.PendingIntent;
@@ -8,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -29,7 +31,10 @@ import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.activities.ResultActivity;
 import com.gacon.julien.mynews.controllers.utils.MyAlarmService;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Objects;
 
 import butterknife.BindView;
@@ -121,6 +126,7 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
             mSearchBtn.setVisibility(View.GONE);
         }
 
+        // TODO : can alarm repeat ?
         // Switch notification button
         // check current state of a Switch
         mNotificationSwitch.setTextOn("On");
@@ -133,22 +139,30 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
                     getQuery();
                     getCheckBox();
 
-                    // Pass data to shared preferences
-                        mSharedPreferences
-                                .edit()
-                                .putString(QUERY, mQuery)
-                                .putString(FILTER, mFilter)
-                                .apply();
-                        Log.i("SharedPref saved", "Data saved, restart the app");
-
                     // Alarm manager
                     Intent myIntent = new Intent(getContext(), MyAlarmService.class);
                     pendingIntent = PendingIntent.getService(getContext(), 0, myIntent, 0);
                     mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTimeInMillis(System.currentTimeMillis());
-                    calendar.add(Calendar.SECOND, 10);
-                    mAlarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+                    mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                            SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                            AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+
+                    // Save the date
+                    Calendar currentTime = Calendar.getInstance();
+                    @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+                    String currentdate = df.format(currentTime.getTime());
+                    Log.i("Current time", "Current time is " + currentdate);
+
+                    // Pass data to shared preferences
+                    mSharedPreferences
+                            .edit()
+                            .putString(QUERY, mQuery)
+                            .putString(FILTER, mFilter)
+                            .putString(DATE_BEGIN, currentdate)
+                            .putString(END_DATE, endDate)
+                            .apply();
+                    Log.i("SharedPref saved", "Data saved, restart the app");
+
                     Toast.makeText(getContext(), "Start Alarm", Toast.LENGTH_LONG).show();
                 } else {
                     Log.i("Switch_Notification", "Switch is off !");
@@ -162,6 +176,10 @@ public abstract class BaseSearchAndNotifFragment extends Fragment implements Vie
                 }
             }
         });
+
+        if (mSharedPreferences.contains(QUERY)) {
+            mNotificationSwitch.setChecked(true);
+        }
 
         //Edit text
         mEditText.addTextChangedListener(new TextWatcher() {
