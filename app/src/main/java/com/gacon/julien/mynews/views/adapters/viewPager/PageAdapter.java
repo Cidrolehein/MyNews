@@ -11,7 +11,7 @@ import com.gacon.julien.mynews.controllers.fragments.articleFragment.TopStoriesA
 public class PageAdapter extends FragmentPagerAdapter {
 
     //Default Constructor
-    public PageAdapter(FragmentManager mgr) {
+    protected PageAdapter(FragmentManager mgr) {
         super(mgr);
     }
 

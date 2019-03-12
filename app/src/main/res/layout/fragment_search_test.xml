@@ -6,12 +6,6 @@
     android:orientation="vertical"
     tools:context=".controllers.fragments.searchFragment.MainSearchFragment">
 
-    <!-- Include Toolbar -->
-    <include
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
     <!-- search keywords entry -->
     <EditText
         android:id="@+id/fragment_base_search_edit_text"
@@ -84,7 +78,6 @@
 
     <!-- CheckBoxes for search request -->
     <LinearLayout
-        android:id="@+id/box_linear_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="fill_horizontal"

@@ -17,11 +17,11 @@ import java.util.Calendar;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 
-import static com.gacon.julien.mynews.controllers.fragments.searchFragment.BaseSearchAndNotifFragment.DATE_BEGIN;
-import static com.gacon.julien.mynews.controllers.fragments.searchFragment.BaseSearchAndNotifFragment.END_DATE;
-import static com.gacon.julien.mynews.controllers.fragments.searchFragment.BaseSearchAndNotifFragment.FILTER;
-import static com.gacon.julien.mynews.controllers.fragments.searchFragment.BaseSearchAndNotifFragment.PREF;
-import static com.gacon.julien.mynews.controllers.fragments.searchFragment.BaseSearchAndNotifFragment.QUERY;
+import static com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment.DATE_BEGIN;
+import static com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment.END_DATE;
+import static com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment.FILTER;
+import static com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment.PREF;
+import static com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment.QUERY;
 import static com.gacon.julien.mynews.controllers.utils.AppNotification.CHANNEL_ID;
 
 public class MyAlarmService extends Service {

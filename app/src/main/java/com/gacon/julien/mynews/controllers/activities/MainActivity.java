@@ -2,6 +2,8 @@ package com.gacon.julien.mynews.controllers.activities;
 
 import android.content.Intent;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,6 +13,9 @@ import com.gacon.julien.mynews.views.adapters.viewPager.PageAdapter;
 import com.gacon.julien.mynews.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    public static final String ID_OTHERS_ACTIVITIES = "Details_and_help_activity";
+    public static final int FARID = 30;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +39,10 @@ public class MainActivity extends AppCompatActivity {
         // 3 - Handle actions on menu items
         switch (item.getItemId()) {
             case R.id.menu_activity_main_params:
-                Intent intent = new Intent(getApplication(), NotificationActivity.class);
-                startActivity(intent);
+                launchNotificationsAndSearchActivity(1);
                 return true;
             case R.id.menu_activity_main_search:
-                intent = new Intent(getApplication(), SearchActivity.class);
-                startActivity(intent);
+                launchNotificationsAndSearchActivity(2);
                 return true;
             default:
                 return  super.onOptionsItemSelected(item);
@@ -66,5 +69,13 @@ public class MainActivity extends AppCompatActivity {
         tabs.setupWithViewPager(pager);
         // 3 - Design purpose. Tabs have the same width
         tabs.setTabMode(TabLayout.MODE_FIXED);
+    }
+
+    private void launchNotificationsAndSearchActivity(int mFragId)
+    {
+        Intent intent = new Intent(this, SearchActivity.class);
+        intent.putExtra(ID_OTHERS_ACTIVITIES, mFragId);
+        setResult(RESULT_OK, intent);
+        startActivityForResult(intent, FARID);
     }
 }
