@@ -44,6 +44,7 @@ import static android.app.Activity.RESULT_OK;
 import static android.content.Context.ALARM_SERVICE;
 import static com.gacon.julien.mynews.controllers.activities.MainActivity.FARID;
 import static com.gacon.julien.mynews.controllers.activities.MainActivity.ID_OTHERS_ACTIVITIES;
+import static com.gacon.julien.mynews.controllers.activities.MainActivity.SCREEN_KEY;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -112,10 +113,8 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
         // Shared Pref initialization
         mSharedPreferences = Objects.requireNonNull(getContext()).getSharedPreferences(PREF, Context.MODE_PRIVATE);
 
-        //get bundle to get id of screen to display
-        Bundle bundle = getArguments();
-        if (bundle != null)
-            this.screenId = bundle.getInt(ID_OTHERS_ACTIVITIES);
+        // Get data for screen id
+        screenId = mSharedPreferences.getInt(SCREEN_KEY, 0);
         Log.i("Screen_Id", "Screen Id = " +screenId);
 
         removeUselessEntryFields();
@@ -218,7 +217,6 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
         };
 
         // End of date
-
         mDisplayEndDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -336,17 +334,13 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
                 //For search screen : Remove the switch field and the separator because they are useless
                 this.mNotificationSwitch.setVisibility(View.GONE);
                 break;
-
             case 1:
                 //for notification screen : remove the date selection fields and the button because they are useless
                 this.mBoxLinearLayout.setVisibility(View.GONE);
                 this.mSearchBtn.setVisibility(View.GONE);
                 break;
-
             default:
                 break;
         }
-
     }
-
 }
