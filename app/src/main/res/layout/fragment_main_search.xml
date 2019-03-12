@@ -28,7 +28,7 @@
 
     <!-- date management -->
     <LinearLayout
-        android:id="@+id/fragment_base_search_notification_date_management_linear_layout"
+        android:id="@+id/fragment_search_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="20dp"

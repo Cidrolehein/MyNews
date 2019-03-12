@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.annotation.NonNull;
@@ -27,34 +26,28 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.gacon.julien.mynews.R;
-import com.gacon.julien.mynews.controllers.activities.MainActivity;
 import com.gacon.julien.mynews.controllers.activities.ResultActivity;
 import com.gacon.julien.mynews.controllers.utils.MyAlarmService;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static android.app.Activity.RESULT_OK;
 import static android.content.Context.ALARM_SERVICE;
-import static com.gacon.julien.mynews.controllers.activities.MainActivity.FARID;
-import static com.gacon.julien.mynews.controllers.activities.MainActivity.ID_OTHERS_ACTIVITIES;
 import static com.gacon.julien.mynews.controllers.activities.MainActivity.SCREEN_KEY;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MainSearchFragment extends BaseSearchAndNotifFragment implements View.OnClickListener {
+public class MainSearchFragment extends Fragment implements View.OnClickListener {
 
     public static final String QUERY = "query";
     public static final String DATE_BEGIN = "dateBegin";
     public static final String END_DATE = "endDate";
     public static final String FILTER = "filter";
+    public static final String PREF = "PREFS";
     // Design
     @BindView(R.id.fragment_base_search_notification_begin_date)
     TextView mDisplayBeginDate;
@@ -78,6 +71,8 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
     CheckBox mCheckBoxSports;
     @BindView(R.id.fragment_base_search_notification_travel_check_box)
     CheckBox mCheckBoxTravel;
+    @BindView(R.id.fragment_search_date)
+    LinearLayout mDateLinearLayout;
     @BindView(R.id.box_linear_layout)
     LinearLayout mBoxLinearLayout;
     String dateBeginForData;
@@ -85,13 +80,12 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
     String mQuery;
     String mFilter;
     MainSearchFragment.OnButtonClickedListener mCallback;
+    SharedPreferences mSharedPreferences;
     // for the date
     private DatePickerDialog.OnDateSetListener mOnDateSetListenerBeginDate;
     private DatePickerDialog.OnDateSetListener mOnDateSetListenerEndDate;
     private String dateBegin;
     private String endDate;
-    SharedPreferences mSharedPreferences;
-    public static final String PREF = "PREFS";
     //Alarm manager
     private PendingIntent pendingIntent;
     private AlarmManager mAlarmManager;
@@ -106,7 +100,7 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(getFragmentLayout(), container, false);
+        View view = inflater.inflate(R.layout.fragment_main_search, container, false);
         ButterKnife.bind(this, view);
         mSearchBtn.setEnabled(false);
 
@@ -115,7 +109,7 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
 
         // Get data for screen id
         screenId = mSharedPreferences.getInt(SCREEN_KEY, 0);
-        Log.i("Screen_Id", "Screen Id = " +screenId);
+        Log.i("Screen_Id", "Screen Id = " + screenId);
 
         removeUselessEntryFields();
 
@@ -127,52 +121,24 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
         mNotificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                getQuery();
+                getCheckBox();
                 if (isChecked) {
                     Log.i("Switch_Notification", "Switch is on !");
-                    getQuery();
-                    getCheckBox();
-
-                    // Alarm manager
-                    Intent myIntent = new Intent(getContext(), MyAlarmService.class);
-                    pendingIntent = PendingIntent.getService(getContext(), 0, myIntent, 0);
-                    mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
-                    mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                            SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                            AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
-
-                    // Save the date
-                    Calendar currentTime = Calendar.getInstance();
-                    @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-                    String currentdate = df.format(currentTime.getTime());
-                    Log.i("Current time", "Current time is " + currentdate);
-
-                    // Pass data to shared preferences
-                    mSharedPreferences
-                            .edit()
-                            .putString(QUERY, mQuery)
-                            .putString(FILTER, mFilter)
-                            .putString(DATE_BEGIN, currentdate)
-                            .putString(END_DATE, endDate)
-                            .apply();
-                    Log.i("SharedPref saved", "Data saved, restart the app");
-
-                    Toast.makeText(getContext(), "Start Alarm", Toast.LENGTH_LONG).show();
+                    if (!mFilter.equals("")) {
+                        getAlarmManager();
+                    } else
+                    {
+                        Toast.makeText(getContext(), "Choisissez au moins une catégorie", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
                     Log.i("Switch_Notification", "Switch is off !");
-                    mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
-                    mAlarmManager.cancel(pendingIntent);
-                    Toast.makeText(getContext(), "Alarm Canceled/Stop by User.", Toast.LENGTH_SHORT).show();
-
-                    // Delete Shared Pref
-                    mSharedPreferences.edit().clear().apply();
-                    Log.i("Clear SharedPref", "SharedPref is clear");
+                    if (mAlarmManager != null) {
+                        cancelAlarmManager();
+                    }
                 }
             }
         });
-
-        if (mSharedPreferences.contains(QUERY)) {
-            mNotificationSwitch.setChecked(true);
-        }
 
         //Edit text
         mEditText.addTextChangedListener(new TextWatcher() {
@@ -241,6 +207,44 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
         return view;
     }
 
+    private void getAlarmManager() {
+
+            // Alarm manager
+            Intent myIntent = new Intent(getContext(), MyAlarmService.class);
+            pendingIntent = PendingIntent.getService(getContext(), 0, myIntent, 0);
+            mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
+            mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                    SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                    AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+
+            // Save the date
+            Calendar currentTime = Calendar.getInstance();
+            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+            String currentdate = df.format(currentTime.getTime());
+            Log.i("Current time", "Current time is " + currentdate);
+
+            // Pass data to shared preferences
+            mSharedPreferences
+                    .edit()
+                    .putString(QUERY, mQuery)
+                    .putString(FILTER, mFilter)
+                    .putString(DATE_BEGIN, currentdate)
+                    .putString(END_DATE, endDate)
+                    .apply();
+            Log.i("SharedPref saved", "Data saved, restart the app");
+            Toast.makeText(getContext(), "Start Alarm", Toast.LENGTH_LONG).show();
+
+    }
+
+    private void cancelAlarmManager() {
+        mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
+        mAlarmManager.cancel(pendingIntent);
+        Toast.makeText(getContext(), "Alarm Canceled/Stop by User.", Toast.LENGTH_SHORT).show();
+        // Delete Shared Pref
+        mSharedPreferences.edit().clear().apply();
+        Log.i("Clear SharedPref", "SharedPref is clear");
+    }
+
     @Override
     public void onClick(View v) {
 
@@ -286,11 +290,12 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
         if (mCheckBoxTravel.isChecked()) {
             mFilter = "Travel";
         }
-        if (mFilter.equals("")) {
+        if (mFilter.equals("") && mSharedPreferences == null) {
             Toast toast = Toast.makeText(getContext(), "Veuillez séléctionner au moins une catégorie", Toast.LENGTH_SHORT);
             toast.show();
         }
         Log.i("Check_Box", mFilter);
+
     }
 
     private void createCallbackToParentActivity() {
@@ -301,46 +306,44 @@ public class MainSearchFragment extends BaseSearchAndNotifFragment implements Vi
         }
     }
 
-    public interface OnButtonClickedListener {
-        void onButtonClicked(View view);
-    }
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.createCallbackToParentActivity();
     }
 
-    @Override
-    protected int getFragmentLayout() {
-        return R.layout.fragment_main_search;
-    }
-
-    @Override
-    protected boolean getNotificationVisibility() {
-        return false;
-    }
-
-    @Override
-    protected boolean getButtonVisibility() {
-        return true;
-    }
-
-    private void removeUselessEntryFields()
-    {
-        switch (screenId)
-        {
+    private void removeUselessEntryFields() {
+        switch (screenId) {
             case 2:
                 //For search screen : Remove the switch field and the separator because they are useless
                 this.mNotificationSwitch.setVisibility(View.GONE);
                 break;
             case 1:
                 //for notification screen : remove the date selection fields and the button because they are useless
-                this.mBoxLinearLayout.setVisibility(View.GONE);
+                this.mDateLinearLayout.setVisibility(View.GONE);
                 this.mSearchBtn.setVisibility(View.GONE);
                 break;
             default:
                 break;
         }
+    }
+
+    public interface OnButtonClickedListener {
+        void onButtonClicked(View view);
+    }
+
+    public void createDisplay(DatePickerDialog.OnDateSetListener dateSetListener) {
+        Calendar cal = Calendar.getInstance();
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
+        DatePickerDialog dialog = new DatePickerDialog(
+                Objects.requireNonNull(getActivity()),
+                dateSetListener,
+                day, month, year);
+        dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
+        cal.add(Calendar.YEAR, -5);
+        dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
+        dialog.show();
     }
 }
