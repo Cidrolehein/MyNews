@@ -17,10 +17,6 @@ public class SearchResultFragment extends BaseArticleFragment {
 
     private int size;
 
-    public int getSize() {
-        return size;
-    }
-
     public static SearchResultFragment newInstance() {
         return (new SearchResultFragment());
     }
@@ -47,14 +43,13 @@ public class SearchResultFragment extends BaseArticleFragment {
 
                 size = articles.getResponse().getDocs().size();
                 if (size == 0) {
-                    Toast toast = (Toast) Toast.makeText(getContext(), "Aucun résultat trouvé", Toast.LENGTH_LONG);
+                    Toast toast = Toast.makeText(getContext(), "Aucun résultat trouvé", Toast.LENGTH_LONG);
                     toast.show();
                 }
                 System.out.println(size);
             }
             @Override
             public void onError(Throwable e) {
-                System.out.println(e);
                 e.printStackTrace();
             }
             @Override

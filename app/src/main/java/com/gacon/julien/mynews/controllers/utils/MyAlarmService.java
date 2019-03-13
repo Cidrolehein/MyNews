@@ -33,8 +33,15 @@ public class MyAlarmService extends Service {
 
     @Override
     public void onCreate(){
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
         Toast.makeText(this, "MyAlarmService.onCreate()", Toast.LENGTH_LONG).show();
         executeHttpRequest();
+        Log.i("LocalService", "Received start id " + startId + ": " + intent);
+        return START_NOT_STICKY;
     }
 
     @Override
@@ -47,12 +54,6 @@ public class MyAlarmService extends Service {
     public void onDestroy(){
         super.onDestroy();
         Toast.makeText(this, "MyAlarmService.onDestroy()", Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onStart(Intent intent, int startId) {
-        super.onStart(intent, startId);
-        Toast.makeText(this, "MyAlarmService.onStart()", Toast.LENGTH_LONG).show();
     }
 
     @Override

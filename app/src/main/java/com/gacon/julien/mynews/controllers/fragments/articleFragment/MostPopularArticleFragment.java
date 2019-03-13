@@ -30,7 +30,6 @@ public class MostPopularArticleFragment extends BaseArticleFragment {
             }
             @Override
             public void onError(Throwable e) {
-                System.out.println(e);
                 e.printStackTrace();
             }
             @Override

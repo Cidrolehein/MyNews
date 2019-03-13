@@ -4,8 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,12 +16,8 @@ import static com.gacon.julien.mynews.controllers.fragments.searchFragment.MainS
 
 public class MainActivity extends AppCompatActivity {
 
-    public static final String ID_OTHERS_ACTIVITIES = "Details_and_help_activity";
-    public static final int FARID = 30;
-    public static final String SCREEN_ID = "SCREEN_ID";
     public static final String SCREEN_KEY = "SCREEN_KEY";
 
-    private Context mContext;
     private SharedPreferences sharedPreferences;
 
     @Override
@@ -89,8 +83,6 @@ public class MainActivity extends AppCompatActivity {
                 .apply();
 
         Intent intent = new Intent(this, SearchActivity.class);
-        intent.putExtra(ID_OTHERS_ACTIVITIES, mFragId);
-        setResult(RESULT_OK, intent);
-        startActivityForResult(intent, FARID);
+        startActivity(intent);
     }
 }

@@ -22,12 +22,11 @@ public class WebViewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
         ButterKnife.bind(this);
+        // Configure webview
         mWebViewClient = new WebViewClient();
         mWebView.setWebViewClient(mWebViewClient);
-
         String url=getIntent().getStringExtra(BaseArticleFragment.BUNDLE_URL);
         mWebView.loadUrl(url);
-
     }
 
 }
