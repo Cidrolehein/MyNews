@@ -1,11 +1,15 @@
 package com.gacon.julien.mynews.controllers.activities;
 
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment;
+
+import java.util.Objects;
+
 import butterknife.ButterKnife;
 
 public class SearchActivity extends AppCompatActivity implements MainSearchFragment.OnButtonClickedListener {
@@ -30,6 +34,10 @@ public class SearchActivity extends AppCompatActivity implements MainSearchFragm
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         // Set the Toolbar
         setSupportActionBar(toolbar);
+        ActionBar ab = getSupportActionBar();
+        // Enable the up button
+        assert ab != null;
+        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
     }
 
 }
