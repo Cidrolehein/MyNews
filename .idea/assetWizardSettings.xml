@@ -107,9 +107,8 @@
                                       <entry key="backgroundAssetType" value="COLOR" />
                                       <entry key="backgroundColor" value="3343bb" />
                                       <entry key="backgroundLayerName" value="ic_no_image_background" />
-                                      <entry key="foregroundAssetType" value="TEXT" />
                                       <entry key="foregroundLayerName" value="ic_no_image_layer" />
-                                      <entry key="outputName" value="ic_no_image_found" />
+                                      <entry key="outputName" value="ic_android_navdrawer" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -182,7 +181,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/Logiciels/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/image/ic_image_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/Logiciels/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/notification/ic_sms_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -193,7 +192,7 @@
                         <option name="values">
                           <map>
                             <entry key="color" value="3343bb" />
-                            <entry key="outputName" value="ic_image_deffault" />
+                            <entry key="outputName" value="ic_notifications" />
                             <entry key="sourceFile" value="C:\Users\Cidrolehein" />
                           </map>
                         </option>

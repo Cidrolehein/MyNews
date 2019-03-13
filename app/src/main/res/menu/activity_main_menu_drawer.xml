@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/activity_top_story"
+            android:icon="@drawable/ic_top_story"
+            android:title="@string/top_stories" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/activity_most_popular"
+            android:icon="@drawable/ic_most_popular"
+            android:title="@string/most_popular" />
+    </group>
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/activity_arts"
+            android:icon="@drawable/ic_arts"
+            android:title="@string/art" />
+    </group>
+
+    <item android:title="@string/trouver_un_article">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/activity_search"
+                    android:icon="@drawable/ic_search"
+                    android:title="@string/recherche" />
+                <item
+                    android:id="@+id/activity_notifications"
+                    android:icon="@drawable/ic_notifications"
+                    android:title="@string/notifications" />
+            </group>
+        </menu>
+    </item>
+
+</menu>

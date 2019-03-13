@@ -20,4 +20,13 @@
     <string name="sports">Sports</string>
     <string name="travel">Travel</string>
     <string name="search_btn">SEARCH</string>
+    <!-- Used in NavigationDrawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="top_stories">Top Stories</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="art">Arts</string>
+    <string name="trouver_un_article">Trouver un article</string>
+    <string name="recherche">Recherche</string>
+    <string name="notifications">Notifications</string>
 </resources>
