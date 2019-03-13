@@ -16,6 +16,11 @@ import io.reactivex.observers.DisposableObserver;
 public class SearchResultFragment extends BaseArticleFragment {
 
     private int size;
+    private String dateBegin;
+    private String endDate;
+    private String filter;
+    private String query;
+
 
     public static SearchResultFragment newInstance() {
         return (new SearchResultFragment());
@@ -29,11 +34,7 @@ public class SearchResultFragment extends BaseArticleFragment {
     @Override
     protected void executeHttpRequest() {
 
-        assert getArguments() != null;
-        String query = getArguments().getString("data");
-        String dateBegin = getArguments().getString("dateBegin");
-        String endDate = getArguments().getString("endDate");
-        String filter = getArguments().getString("filter");
+        getData();
 
         this.disposable = NyTimesStreams.streamFetchSearch(dateBegin,endDate,filter, query, 30, "newest", "KzYIpjPOMj98klY5cukvyxBmBhzKwDKO").subscribeWith(new DisposableObserver<SearchApiResult>() {
             @Override
@@ -55,5 +56,13 @@ public class SearchResultFragment extends BaseArticleFragment {
             @Override
             public void onComplete() { }
         });
+    }
+
+    private void getData() {
+        assert getArguments() != null;
+        query = getArguments().getString("data");
+        dateBegin = getArguments().getString("dateBegin");
+        endDate = getArguments().getString("endDate");
+        filter = getArguments().getString("filter");
     }
 }

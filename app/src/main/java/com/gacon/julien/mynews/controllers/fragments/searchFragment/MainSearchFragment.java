@@ -113,7 +113,6 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
 
         removeUselessEntryFields();
 
-        // TODO : can alarm repeat ?
         // Switch notification button
         // check current state of a Switch
         mNotificationSwitch.setTextOn("On");

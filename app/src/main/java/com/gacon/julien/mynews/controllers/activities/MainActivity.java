@@ -19,6 +19,8 @@ import android.view.MenuItem;
 import com.gacon.julien.mynews.views.adapters.viewPager.PageAdapter;
 import com.gacon.julien.mynews.R;
 
+import java.util.Objects;
+
 import static com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment.PREF;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -125,7 +127,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // Configure NavigationView
     private void configureNavigationView(){
-        this.navigationView = (NavigationView) findViewById(R.id.activity_main_nav_view);
+        this.navigationView = findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
