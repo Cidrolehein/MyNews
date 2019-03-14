@@ -1,4 +1,5 @@
 language : android
+sudo: false
 email: false
 
 # Global Reference Values for the file
