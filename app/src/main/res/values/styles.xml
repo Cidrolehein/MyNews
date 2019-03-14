@@ -12,7 +12,6 @@
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.Light">
         <!-- Color of the title text in the Toolbar -->
         <item name="android:textColorPrimary">@color/colorTitle</item>
-        <item name="colorControlNormal">@color/colorTitle</item>
     </style>
 
     <!-- TOOLBAR TITLE THEME -->

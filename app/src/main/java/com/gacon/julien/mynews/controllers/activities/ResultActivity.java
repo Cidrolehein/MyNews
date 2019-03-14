@@ -1,14 +1,11 @@
 package com.gacon.julien.mynews.controllers.activities;
 
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment;
 import com.gacon.julien.mynews.controllers.fragments.searchFragment.SearchResultFragment;
-
-import java.util.Objects;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -22,7 +19,7 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
-        configureToolbar();
+
         this.getData();
         this.configureAndShowMainFragment();
     }
@@ -62,16 +59,5 @@ public class ResultActivity extends AppCompatActivity {
                     .add(R.id.frame_layout_result, searchResultFragment)
                     .commit();
         }
-    }
-
-    private void configureToolbar(){
-        //Get the toolbar view inside the activity layout
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        // Set the Toolbar
-        setSupportActionBar(toolbar);
-        ActionBar ab = getSupportActionBar();
-        // Enable the up button
-        assert ab != null;
-        Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
     }
 }
