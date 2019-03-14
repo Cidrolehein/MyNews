@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- TextViews -->
-    <dimen name="size_title">35sp</dimen>
+    <dimen name="size_title">60sp</dimen>
     <dimen name="padding_title">40dip</dimen>
     <dimen name="padding_title_land">10dip</dimen>
+    <!-- Default NavigationView Header height -->
+    <dimen name="nav_header_height">176dp</dimen>
 </resources>

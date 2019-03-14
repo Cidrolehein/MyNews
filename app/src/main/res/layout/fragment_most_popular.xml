@@ -1,20 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment_main_swipe_container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    tools:context=".Controllers.Fragments.MostPopularFragment">
+    android:orientation="vertical"
+    tools:context=".controllers.fragments.articleFragment.MostPopularArticleFragment">
 
-        <TextView
-            android:id="@+id/fragment_most_popular"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dip"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="#000"
-            android:textAlignment="center"
-            android:text="Nous pourrions afficher les articles les plus populaires ici non ?"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_main_recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
-</LinearLayout>
+</android.support.v4.widget.SwipeRefreshLayout>

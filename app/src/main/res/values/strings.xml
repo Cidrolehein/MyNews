@@ -5,4 +5,28 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="todo">TODO</string>
+
+    <!-- Date format for research -->
+    <string name="fragment_base_search_notifications_switch">Enable notifications (once per day)</string>
+    <string name="date_format" translatable="false">DD/MM/YYYY</string>
+    <string name="search_query_term">Search query term</string>
+    <string name="begin_date">Begin Date</string>
+    <string name="end_date">End Date</string>
+    <string name="arts">Arts</string>
+    <string name="business">Business</string>
+    <string name="entrepreneurs">Entrepreneurs</string>
+    <string name="politics">Politics</string>
+    <string name="sports">Sports</string>
+    <string name="travel">Travel</string>
+    <string name="search_btn">SEARCH</string>
+    <!-- Used in NavigationDrawer -->
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="top_stories">Top Stories</string>
+    <string name="most_popular">Most Popular</string>
+    <string name="art">Arts</string>
+    <string name="trouver_un_article">Trouver un article</string>
+    <string name="recherche">Recherche</string>
+    <string name="notifications">Notifications</string>
 </resources>
