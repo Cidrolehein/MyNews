@@ -5,9 +5,9 @@ sudo: false
 email: false
 
   licenses:
-  - android-sdk-preview-license-.+
-  - android-sdk-license-.+
-  - google-gdk-license-.+
+  - 'android-sdk-preview-license-.+'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
   - '.+'
 
 jdk:
