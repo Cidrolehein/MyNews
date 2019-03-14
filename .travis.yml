@@ -1,47 +1,49 @@
-language: android
-
-jdk:
- - oraclejdk8
-
 sudo: false
 
-env:
- global:
-  - ANDROID_API_LEVEL=21
-  - ANDROID_EMULATOR_LEVEL=18
-  - ANDROID_BUILD_TOOLS_VERSION=26.1.1
-  - ADB_INSTALL_TIMEOUT=20
-  - ANDROID_ABI=armeabi-v7a
-  - ANDROID_TAG=google_apis
-  - QEMU_AUDIO_DRV=none
-
-  android:
-   components:
-   - tools
-   - platform-tools
-   - tools
-   - build-tools-$ANDROID_BUILD_TOOLS_VERSION
-   - android-$ANDROID_API_LEVEL
-   - android-$ANDROID_EMULATOR_LEVEL
-   - extra-android-support
-   - extra-google-m2repository
-   - extra-android-m2repository
-   - sys-img-$ANDROID_ABI-google_apis-$ANDROID_EMULATOR_LEVEL
+language: android
 
 licenses:
-- android-sdk-preview-license-.+
-- android-sdk-license-.+
-- google-gdk-license-.+
+- 'android-sdk-license-.+'
+
+env:
+  global:
+  - ANDROID_API_LEVEL=27
+  - ANDROID_EMULATOR_LEVEL=22
+  - ANDROID_BUILD_TOOLS_VERSION=27.0.3
+  - ANDROID_ABI=armeabi-v7a
+  - ANDROID_TAG=google_apis
+  - ADB_INSTALL_TIMEOUT=20
+
+android:
+  components:
+  # Uncomment the lines below if you want to
+  # use the latest revision of Android SDK Tools
+  # - tools
+  # - platform-tools
+
+  # The BuildTools version used by your project
+  - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+
+  # The SDK version used to compile your project
+  - android-$EMULATOR_API_LEVEL
+
+  # Additional components
+  - android-$ANDROID_EMULATOR_LEVEL
+  - sys-img-armeabi-v7a-google_apis-$ANDROID_EMULATOR_LEVEL
+
+  # Specify at least one system image,
+  # if you need to run emulator(s) during your tests
 
 before_install:
-- chmod +x gradlew
+- yes | sdkmanager "platforms;android-27"
 
 before_script:
-- android list targets
-- echo no | android create avd --force -n test -t android-ANDROID_EMULATOR_LEVEL --abi $ANDROID_ABI --tag $ANDROID_TAG
-- emulator -avd test -no-window &
+- chmod +x gradlew
+- echo no | android create avd --force -n test -t android-$EMULATOR_API_LEVEL --abi $ANDROID_ABI
+- emulator -avd test -no-skin -no-audio -no-window &
 - android-wait-for-emulator
+- adb shell input keyevent 82 &
 
 script:
-- ./gradlew dependencyCheckAnalyze build
-- ./gradlew connectedCheck -PdisablePreDex --stacktrace
+- android list target
+- ./gradlew connectedAndroidTest
