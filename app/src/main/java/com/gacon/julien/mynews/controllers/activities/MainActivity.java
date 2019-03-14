@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.views.adapters.viewPager.PageAdapter;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class MainActivity extends AppCompatActivity {
 
     @Override
