@@ -1,7 +1,10 @@
 language: android
 
 licenses:
-- 'android-sdk-license-.+'
+- android-sdk-preview-license-.+
+- android-sdk-license-.+
+- google-gdk-license-.+
+- '.+'
 
 android:
  components:
