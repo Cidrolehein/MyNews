@@ -61,4 +61,5 @@ before_script:
 #- cd MyNews
 
 script:
-  ./gradlew connectedAndroidTest
+- chmod +x ./gradlew build connectedCheck
+- chmod +x ./gradlew connectedAndroidTest
