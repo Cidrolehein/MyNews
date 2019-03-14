@@ -1,5 +1,8 @@
 language: android
 
+licenses:
+- '.+'
+
 android:
  components:
  - platform-tools
