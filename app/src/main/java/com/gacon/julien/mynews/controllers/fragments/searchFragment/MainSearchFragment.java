@@ -213,8 +213,8 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
             pendingIntent = PendingIntent.getService(getContext(), 0, myIntent, 0);
             mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
             mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
-                    AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);
+                    SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_DAY,
+                    AlarmManager.INTERVAL_DAY, pendingIntent);
 
             // Save the date
             Calendar currentTime = Calendar.getInstance();
