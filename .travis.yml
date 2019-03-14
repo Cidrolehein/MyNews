@@ -1,12 +1,13 @@
-language: android
-sudo: false
-email: false
+  language: android
 
-licenses:
-- '.+'
-- 'android-sdk-preview-license-52d11cd2'
-- 'android-sdk-license-.+'
-- 'google-gdk-license-.+'
+  sudo: false
+
+  email: false
+
+  licenses:
+  - android-sdk-preview-license-.+
+  - android-sdk-license-.+
+  - google-gdk-license-.+
 
 jdk:
 - oraclejdk8
