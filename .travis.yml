@@ -20,7 +20,7 @@ env:
   - ANDROID_API_LEVEL=26
 
   #Android API Version for the emulator
-  - EMULATOR_API_LEVEL=19
+  - EMULATOR_API_LEVEL=27
 
   #Android Build Tools Version
   - ANDROID_BUILD_TOOLS_VERSION=26.0.2

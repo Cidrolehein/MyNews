@@ -7,6 +7,7 @@ import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.fragments.articleFragment.BaseArticleFragment;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
 import com.gacon.julien.mynews.models.SearchApiResult;
+
 import io.reactivex.observers.DisposableObserver;
 
 
@@ -36,7 +37,7 @@ public class SearchResultFragment extends BaseArticleFragment {
 
         getData();
 
-        this.disposable = NyTimesStreams.streamFetchSearch(dateBegin,endDate,filter, query, 30, "newest", "KzYIpjPOMj98klY5cukvyxBmBhzKwDKO").subscribeWith(new DisposableObserver<SearchApiResult>() {
+        this.disposable = NyTimesStreams.streamFetchSearch(dateBegin, endDate, filter, query, 30, "newest", "KzYIpjPOMj98klY5cukvyxBmBhzKwDKO").subscribeWith(new DisposableObserver<SearchApiResult>() {
             @Override
             public void onNext(SearchApiResult articles) {
                 // Update RecyclerView after getting results from SearchApiResult API
@@ -49,12 +50,15 @@ public class SearchResultFragment extends BaseArticleFragment {
                 }
                 System.out.println(size);
             }
+
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
             }
+
             @Override
-            public void onComplete() { }
+            public void onComplete() {
+            }
         });
     }
 
