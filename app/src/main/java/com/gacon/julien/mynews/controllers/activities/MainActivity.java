@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+
 import com.gacon.julien.mynews.views.adapters.viewPager.PageAdapter;
 import com.gacon.julien.mynews.R;
 
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     @Override
-    public boolean onCreateOptionsMenu (Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
         //2 - Inflate the menu and add it to the Toolbar
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
@@ -74,7 +75,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 launchNotificationsAndSearchActivity(2);
                 return true;
             default:
-                return  super.onOptionsItemSelected(item);
+                return super.onOptionsItemSelected(item);
         }
     }
 
@@ -84,8 +85,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         // 6 - Show fragment after user clicked on a menu item
-        switch (id){
-            case R.id.activity_top_story :
+        switch (id) {
+            case R.id.activity_top_story:
                 mViewPager.setCurrentItem(0);
                 break;
             case R.id.activity_most_popular:
@@ -108,14 +109,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // Configure Drawer Layout
-    private void configureDrawerLayout(){
+    private void configureDrawerLayout() {
         this.drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
     }
 
-    private void configureToolbar(){
+    private void configureToolbar() {
         //Get the toolbar view inside the activity layout
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         // Set the Toolbar
@@ -123,12 +124,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     // Configure NavigationView
-    private void configureNavigationView(){
+    private void configureNavigationView() {
         this.navigationView = findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
 
-    private void configureViewPagerAndTabs(){
+    private void configureViewPagerAndTabs() {
         // 1 - Get ViewPager from layout
         ViewPager pager = findViewById(R.id.activity_main_viewpager);
         // 2 - Set Adapter PageAdapter and glue it together
@@ -136,15 +137,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         // 1 - Get TabLayout from layout
-        TabLayout tabs= findViewById(R.id.activity_main_tabs);
+        TabLayout tabs = findViewById(R.id.activity_main_tabs);
         // 2 - Glue TabLayout and ViewPager together
         tabs.setupWithViewPager(pager);
         // 3 - Design purpose. Tabs have the same width
         tabs.setTabMode(TabLayout.MODE_FIXED);
     }
 
-    private void launchNotificationsAndSearchActivity(int mFragId)
-    {
+    private void launchNotificationsAndSearchActivity(int mFragId) {
         sharedPreferences
                 .edit()
                 .putInt(SCREEN_KEY, mFragId)

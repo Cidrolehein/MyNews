@@ -1,6 +1,7 @@
 package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 import android.widget.CheckBox;
+import android.widget.TimePicker;
 
 import org.junit.Test;
 import org.mockito.Mockito;

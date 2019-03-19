@@ -1,4 +1,5 @@
 package com.gacon.julien.mynews.views.datas;
+
 import com.gacon.julien.mynews.models.Result;
 import java.text.DateFormat;
 import java.text.ParseException;
