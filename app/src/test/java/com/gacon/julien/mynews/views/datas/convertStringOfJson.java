@@ -7,7 +7,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * This class test all methods that convert string of Json of good format.
+ * This class test all methods that convert string of Json to good format.
  */
 
 public class convertStringOfJson {

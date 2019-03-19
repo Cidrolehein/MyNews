@@ -1,15 +1,18 @@
 package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.TimePicker;
 
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import butterknife.ButterKnife;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 
-public class getCheckBox {
+public class searchFragmentTest {
 
     @Test
     public void getCheckBox() {
@@ -23,8 +26,5 @@ public class getCheckBox {
 
         Mockito.when(Arts.isChecked()).thenReturn(Boolean.valueOf("Arts"));
         Mockito.when(Business.isChecked()).thenReturn(Boolean.valueOf("Business"));
-
-
-
     }
 }
