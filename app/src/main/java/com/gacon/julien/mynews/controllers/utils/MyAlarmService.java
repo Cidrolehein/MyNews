@@ -28,6 +28,8 @@ public class MyAlarmService extends Service {
 
     private int size;
 
+    private String query, dateBegin, endDate, filter;
+
     SharedPreferences mSharedPreferences;
     private Disposable disposable;
 
@@ -66,10 +68,7 @@ public class MyAlarmService extends Service {
 
         mSharedPreferences = getApplicationContext().getSharedPreferences(PREF, MODE_PRIVATE);
 
-        String query = mSharedPreferences.getString(QUERY, null);
-        String dateBegin = mSharedPreferences.getString(DATE_BEGIN, null);
-        String endDate = mSharedPreferences.getString(END_DATE, null);
-        String filter = mSharedPreferences.getString(FILTER, null);
+        loadSharedPreferences();
 
         this.disposable = NyTimesStreams.streamFetchSearch(dateBegin,endDate,filter, query, 30, "newest", "KzYIpjPOMj98klY5cukvyxBmBhzKwDKO").subscribeWith(new DisposableObserver<SearchApiResult>() {
 
@@ -99,6 +98,13 @@ public class MyAlarmService extends Service {
             @Override
             public void onComplete() { }
         });
+    }
+
+    public void loadSharedPreferences() {
+        query = mSharedPreferences.getString(QUERY, null);
+        dateBegin = mSharedPreferences.getString(DATE_BEGIN, null);
+        endDate = mSharedPreferences.getString(END_DATE, null);
+        filter = mSharedPreferences.getString(FILTER, null);
     }
 
     private void createNotification(String texte) {
