@@ -26,12 +26,15 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.activities.ResultActivity;
 import com.gacon.julien.mynews.controllers.utils.MyAlarmService;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -126,8 +129,7 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
                     Log.i("Switch_Notification", "Switch is on !");
                     if (!mFilter.equals("")) {
                         getAlarmManager();
-                    } else
-                    {
+                    } else {
                         Toast.makeText(getContext(), "Choisissez au moins une catégorie", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -208,31 +210,36 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
 
     private void getAlarmManager() {
 
-            // Alarm manager
-            Intent myIntent = new Intent(getContext(), MyAlarmService.class);
-            pendingIntent = PendingIntent.getService(getContext(), 0, myIntent, 0);
-            mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
-            mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                    SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_DAY,
-                    AlarmManager.INTERVAL_DAY, pendingIntent);
+        // Alarm manager
+        Intent myIntent = new Intent(getContext(), MyAlarmService.class);
+        pendingIntent = PendingIntent.getService(getContext(), 0, myIntent, 0);
+        mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
+        mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_DAY,
+                AlarmManager.INTERVAL_DAY, pendingIntent);
 
-            // Save the date
-            Calendar currentTime = Calendar.getInstance();
-            @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
-            String currentdate = df.format(currentTime.getTime());
-            Log.i("Current time", "Current time is " + currentdate);
+        // Save the date
+        Calendar currentTime = Calendar.getInstance();
+        @SuppressLint("SimpleDateFormat") SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
+        String currentdate = df.format(currentTime.getTime());
+        Log.i("Current time", "Current time is " + currentdate);
 
-            // Pass data to shared preferences
-            mSharedPreferences
-                    .edit()
-                    .putString(QUERY, mQuery)
-                    .putString(FILTER, mFilter)
-                    .putString(DATE_BEGIN, currentdate)
-                    .putString(END_DATE, endDate)
-                    .apply();
-            Log.i("SharedPref saved", "Data saved, restart the app");
-            Toast.makeText(getContext(), "Start Alarm", Toast.LENGTH_LONG).show();
+        // Pass data to shared preferences
+        putDataToSharedPreferences(mQuery, mFilter, currentdate, endDate);
 
+        Toast.makeText(getContext(), "Start Alarm", Toast.LENGTH_LONG).show();
+
+    }
+
+    public void putDataToSharedPreferences(String query, String filter, String currentdate, String endDate) {
+        mSharedPreferences
+                .edit()
+                .putString(QUERY, query)
+                .putString(FILTER, filter)
+                .putString(DATE_BEGIN, currentdate)
+                .putString(END_DATE, endDate)
+                .apply();
+        Log.i("SharedPref saved", "Data saved, restart the app");
     }
 
     private void cancelAlarmManager() {
@@ -327,10 +334,6 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    public interface OnButtonClickedListener {
-        void onButtonClicked(View view);
-    }
-
     public void createDisplay(DatePickerDialog.OnDateSetListener dateSetListener) {
         Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -344,5 +347,9 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         cal.add(Calendar.YEAR, -5);
         dialog.getDatePicker().setMinDate(cal.getTimeInMillis());
         dialog.show();
+    }
+
+    public interface OnButtonClickedListener {
+        void onButtonClicked(View view);
     }
 }
