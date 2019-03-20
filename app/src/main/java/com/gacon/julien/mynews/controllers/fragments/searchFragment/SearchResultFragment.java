@@ -22,7 +22,6 @@ public class SearchResultFragment extends BaseArticleFragment {
     private String filter;
     private String query;
 
-
     public static SearchResultFragment newInstance() {
         return (new SearchResultFragment());
     }
@@ -35,6 +34,7 @@ public class SearchResultFragment extends BaseArticleFragment {
     @Override
     protected void executeHttpRequest() {
 
+        // Get datas from MainSearchFragment
         getData();
 
         this.disposable = NyTimesStreams.streamFetchSearch(dateBegin, endDate, filter, query, 30, "newest", "KzYIpjPOMj98klY5cukvyxBmBhzKwDKO").subscribeWith(new DisposableObserver<SearchApiResult>() {
@@ -48,7 +48,6 @@ public class SearchResultFragment extends BaseArticleFragment {
                     Toast toast = Toast.makeText(getContext(), "Aucun résultat trouvé", Toast.LENGTH_LONG);
                     toast.show();
                 }
-                System.out.println(size);
             }
 
             @Override

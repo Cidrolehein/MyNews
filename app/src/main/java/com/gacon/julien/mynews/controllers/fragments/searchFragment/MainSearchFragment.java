@@ -208,7 +208,7 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         return view;
     }
 
-    private void getAlarmManager() {
+    protected void getAlarmManager() {
 
         // Alarm manager
         Intent myIntent = new Intent(getContext(), MyAlarmService.class);
