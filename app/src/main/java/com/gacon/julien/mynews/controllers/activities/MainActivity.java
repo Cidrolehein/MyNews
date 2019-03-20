@@ -15,58 +15,62 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-
 import com.gacon.julien.mynews.views.adapters.viewPager.PageAdapter;
 import com.gacon.julien.mynews.R;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import static com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment.PREF;
+
+/**
+ * Main Activity Class with Navigation View
+ */
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final String SCREEN_KEY = "SCREEN_KEY";
-
+    //Shared Preferences for switch between Research and Notification fragment
     private SharedPreferences sharedPreferences;
+    public static final String SCREEN_KEY = "SCREEN_KEY";
 
     // For Design
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private Toolbar toolbar;
-    private ViewPager mViewPager;
+    @BindView(R.id.activity_main_viewpager)
+    ViewPager mViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // ButterKnif init
+        ButterKnife.bind(this);
+        // SharedPref init
         sharedPreferences = getBaseContext().getSharedPreferences(PREF, Context.MODE_PRIVATE);
-        mViewPager = findViewById(R.id.activity_main_viewpager);
+
+        // Configure tools view
+
+        // View pager with tabs
+        this.configureViewPagerAndTabs();
         // Configure Toolbar
         this.configureToolbar();
-        this.configureDrawerLayout();
+        // DrawerLayout with Navigation View
         this.configureNavigationView();
-        // View pager
-        this.configureViewPagerAndTabs();
+        this.configureDrawerLayout();
     }
 
-    @Override
-    public void onBackPressed() {
-        // 5 - Handle back click to close menu
-        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
-            this.drawerLayout.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }
+    // For ViewPager and Toolbar
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        //2 - Inflate the menu and add it to the Toolbar
+        // Inflate the menu and add it to the Toolbar
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // 3 - Handle actions on menu items
+        // Handle actions on menu items
         switch (item.getItemId()) {
             case R.id.menu_activity_main_params:
                 launchNotificationsAndSearchActivity(1);
@@ -81,10 +85,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
         int id = item.getItemId();
 
-        // 6 - Show fragment after user clicked on a menu item
+        // Show fragment after user clicked on a menu item
         switch (id) {
             case R.id.activity_top_story:
                 mViewPager.setCurrentItem(0);
@@ -103,24 +106,33 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
         }
 
+        // Close DrawerLayout after the fragment is open
         this.drawerLayout.closeDrawer(GravityCompat.START);
 
         return true;
     }
 
-    // Configure Drawer Layout
+    // For DrawerLayout and NavigationDrawer
+
+    @Override
+    public void onBackPressed() {
+        // Handle back click to close menu
+        if (this.drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            this.drawerLayout.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     *     Configure Drawer Layout and NavigationView
+      */
+
     private void configureDrawerLayout() {
-        this.drawerLayout = (DrawerLayout) findViewById(R.id.activity_main_drawer_layout);
+        this.drawerLayout = findViewById(R.id.activity_main_drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
-    }
-
-    private void configureToolbar() {
-        //Get the toolbar view inside the activity layout
-        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
-        // Set the Toolbar
-        setSupportActionBar(toolbar);
     }
 
     // Configure NavigationView
@@ -128,6 +140,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.navigationView = findViewById(R.id.activity_main_nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
+    /**
+     *     Configure ViewPager, Tabs and ToolBar
+     */
 
     private void configureViewPagerAndTabs() {
         // 1 - Get ViewPager from layout
@@ -144,6 +160,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabs.setTabMode(TabLayout.MODE_FIXED);
     }
 
+    private void configureToolbar() {
+        //Get the toolbar view inside the activity layout
+        android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
+        // Set the Toolbar
+        setSupportActionBar(toolbar);
+    }
+
+    // Configure and start tools items : Search and Notification Activity with FragId
     private void launchNotificationsAndSearchActivity(int mFragId) {
         sharedPreferences
                 .edit()
