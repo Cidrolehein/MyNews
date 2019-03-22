@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     /**
      * Inflate the menu and add it to the Toolbar
-     * @param menu
+     * @param menu Menu
      * @return true or false
      */
     @Override
