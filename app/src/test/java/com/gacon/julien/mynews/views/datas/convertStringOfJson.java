@@ -1,5 +1,6 @@
 package com.gacon.julien.mynews.views.datas;
 
+import com.gacon.julien.mynews.controllers.utils.UpdateTextItems;
 import com.gacon.julien.mynews.models.Result;
 import org.junit.Test;
 import static org.junit.Assert.*;

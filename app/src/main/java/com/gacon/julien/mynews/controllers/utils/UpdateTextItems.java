@@ -1,4 +1,4 @@
-package com.gacon.julien.mynews.views.datas;
+package com.gacon.julien.mynews.controllers.utils;
 
 import com.gacon.julien.mynews.models.Result;
 import java.text.DateFormat;

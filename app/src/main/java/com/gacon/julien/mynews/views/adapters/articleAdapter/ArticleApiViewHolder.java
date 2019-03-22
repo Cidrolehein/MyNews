@@ -9,7 +9,7 @@ import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.models.Result;
-import com.gacon.julien.mynews.views.datas.UpdateTextItems;
+import com.gacon.julien.mynews.controllers.utils.UpdateTextItems;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
