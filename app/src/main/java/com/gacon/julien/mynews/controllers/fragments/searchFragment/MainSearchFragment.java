@@ -255,6 +255,7 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         int year = cal.get(Calendar.YEAR);
         DatePickerDialog dialog = new DatePickerDialog(
                 Objects.requireNonNull(getActivity()),
+                R.style.DatePickerDialogTheme,
                 dateSetListener,
                 day, month, year);
         dialog.getDatePicker().setMaxDate(cal.getTimeInMillis());
