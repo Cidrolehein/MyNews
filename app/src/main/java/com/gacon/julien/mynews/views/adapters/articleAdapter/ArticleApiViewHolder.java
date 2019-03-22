@@ -3,7 +3,6 @@ package com.gacon.julien.mynews.views.adapters.articleAdapter;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.bumptech.glide.RequestManager;
 import com.bumptech.glide.request.RequestOptions;
@@ -31,14 +30,21 @@ class ArticleApiViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.fragment_main_item_image)
     ImageView imageView;
 
-    // CONSTRUCTOR
+    /**
+     * Constructor
+     * @param itemView view
+     */
     ArticleApiViewHolder(View itemView) {
         super(itemView);
         // init ButterKnife
         ButterKnife.bind(this, itemView);
     }
 
-    // update the list with items
+    /**
+     * update the list with items
+     * @param article Text article
+     * @param glide Image
+     */
     void updateWithTopStoriesItems(final Result article, RequestManager glide) {
         UpdateTextItems update = new UpdateTextItems();
         // set Section
@@ -53,8 +59,11 @@ class ArticleApiViewHolder extends RecyclerView.ViewHolder {
         this.setImage(article, glide);
     }
 
-    // TODO : can I test this class ?
-    // Image manager
+    /**
+     * Image manager
+     * @param article List of Result
+     * @param glide Image
+     */
     private void setImage(Result article, RequestManager glide) {
         // if image is from Multimedia model
         if (article.getMultimedia() != null) {
@@ -85,7 +94,10 @@ class ArticleApiViewHolder extends RecyclerView.ViewHolder {
         }
     }
 
-    // Default image
+    /**
+     * Default image
+     * @param glide Image
+     */
     private void getImageDefault(RequestManager glide) {
         glide.clear(imageView);
         imageView.setImageResource(R.drawable.ic_image_deffault);

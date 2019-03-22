@@ -20,7 +20,9 @@ public class AppNotification extends Application {
         this.createNotificationChannels();
     }
 
-    // Notification Channel for notify the list of articles
+    /**
+     * Notification Channel for notify the list of articles
+     */
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(

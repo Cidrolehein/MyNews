@@ -134,7 +134,10 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         return view;
     }
 
-    // For button onClick to getView
+    /**
+     * For button onClick to getView
+     * @param v View
+     */
     @Override
     public void onClick(View v) {
 
@@ -153,25 +156,35 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    // Attach the fragment with activity
+    /**
+     * Attach the fragment with activity
+     * @param context Context
+     */
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         this.createCallbackToParentActivity();
     }
 
-    //Button
+    /**
+     * Button
+     */
     private void getSearchButton() {
         mSearchBtn.setOnClickListener(this);
         // Search Button is not enabled
         mSearchBtn.setEnabled(false);
     }
-    // Button Listener
+
+    /**
+     * Button Listener
+     */
     public interface OnButtonClickedListener {
         void onButtonClicked(View view);
     }
 
-    // Edit Text
+    /**
+     * Edit Text
+     */
     private void getEditTextForQuery() {
         //Edit text
         mEditText.addTextChangedListener(new TextWatcher() {
@@ -196,7 +209,9 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         return mQuery;
     }
 
-    // Date Display
+    /**
+     * Date Display
+     */
     private void getDisplayBeginDate() {
         // Date of begin
         mDisplayBeginDate.setOnClickListener(new View.OnClickListener() {
@@ -247,7 +262,11 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
             }
         };
     }
-    // Date Listener
+
+    /**
+     * Date Listener
+     * @param dateSetListener OnDate Listener
+     */
     private void createDisplay(DatePickerDialog.OnDateSetListener dateSetListener) {
         Calendar cal = Calendar.getInstance();
         int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -264,7 +283,9 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         dialog.show();
     }
 
-    // Configure notification button
+    /**
+     * Configure notification button
+     */
     private void getSwitchNotificationBtn() {
         // Switch notification button
         // check current state of a Switch
@@ -292,7 +313,9 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         });
     }
 
-    // Configure AlarmManager and put data into shared preferences
+    /**
+     * Configure AlarmManager and put data into shared preferences
+     */
     private void getAlarmManager() {
 
         // Alarm manager
@@ -336,7 +359,9 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         Log.i("Clear SharedPref", "SharedPref is clear");
     }
 
-    // Configure CheckBox
+    /**
+     * Configure CheckBox
+     */
     protected void getCheckBox() {
         mFilter = "";
         if (mCheckBoxArt.isChecked()) {
@@ -373,7 +398,9 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         }
     }
 
-    // Check the screen, notification or search utils, and show what is necessary
+    /**
+     * Check the screen, notification or search utils, and show what is necessary
+     */
     private void removeUselessEntryFields() {
         // Get data for screen id
         screenId = mSharedPreferences.getInt(SCREEN_KEY, 0);

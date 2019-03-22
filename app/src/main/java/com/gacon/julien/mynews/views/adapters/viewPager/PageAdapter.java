@@ -13,16 +13,28 @@ import com.gacon.julien.mynews.controllers.fragments.articleFragment.TopStoriesA
  */
 public class PageAdapter extends FragmentPagerAdapter {
 
-    //Default Constructor
+    /**
+     * Constructor
+     * @param mgr Fragment Manager
+     */
     protected PageAdapter(FragmentManager mgr) {
         super(mgr);
     }
 
+    /**
+     * Number of fragment to show
+     * @return Number of fragment
+     */
     @Override
     public int getCount() {
         return(3);
     }
 
+    /**
+     * Items
+     * @param position Item position
+     * @return New item instance
+     */
     @Override
     public Fragment getItem(int position) {
         switch (position){
@@ -39,6 +51,11 @@ public class PageAdapter extends FragmentPagerAdapter {
         }
     }
 
+    /**
+     * Title of the pages
+     * @param position Item position
+     * @return Title
+     */
     @Override
     public CharSequence getPageTitle(int position) {
         switch (position){

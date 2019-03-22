@@ -29,6 +29,10 @@ public class SearchResultFragment extends BaseArticleFragment {
         return (new SearchResultFragment());
     }
 
+    /**
+     *  Fragment layout
+     * @return Layout
+     */
     @Override
     protected int getFragmentLayout() {
         return R.layout.fragment_search_result;
@@ -38,6 +42,10 @@ public class SearchResultFragment extends BaseArticleFragment {
     // Streams Request
     // with Retrofit
     // -------------------
+
+    /**
+     * Create a stream request with Retrofit
+     */
     @Override
     protected void executeHttpRequest() {
 
@@ -68,7 +76,9 @@ public class SearchResultFragment extends BaseArticleFragment {
         });
     }
 
-    // Get data from MainSearchFragment
+    /**
+     * Get data from MainSearchFragment
+     */
     private void getData() {
         assert getArguments() != null;
         // get query and filter

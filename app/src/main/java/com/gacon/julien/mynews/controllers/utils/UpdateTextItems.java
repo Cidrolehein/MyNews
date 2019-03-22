@@ -15,10 +15,16 @@ public class UpdateTextItems {
     // text string tha we show on the app
     private String mString;
 
-    // empty constructor
+    /**
+     * Constructor
+     */
     public UpdateTextItems() { }
 
-    // set article section
+    /**
+     * set article section
+     * @param article Article text Section
+     * @return String article text
+     */
     public String setSection(Result article) {
         if (!article.getSection().equals("")) {
             mString = article.getSection();
@@ -26,7 +32,11 @@ public class UpdateTextItems {
         return mString;
     }
 
-    // set article SubSection - add ">" if they are unless get blank
+    /**
+     * set article SubSection - add ">" if they are unless get blank
+     * @param article Text article Subsection
+     * @return Text article Subsection + >
+     */
     public String setSubSection(Result article) {
         String sectionTitle = article.getSection();
         mString = "";
@@ -40,7 +50,11 @@ public class UpdateTextItems {
         return mString;
     }
 
-    // set Title
+    /**
+     * set Title
+     * @param article Set text Title
+     * @return String of title
+     */
     public String setTitle(Result article) {
         if (!article.getTitle().equals("")) {
             mString = article.getTitle();
@@ -48,7 +62,11 @@ public class UpdateTextItems {
         return mString;
     }
 
-    // set Date and convert to the format
+    /**
+     * Set date
+     * @param article List of Result
+     * @return Date in format
+     */
     public String setDate(Result article){
         try {
             String dateStr= article.getPublishedDate();

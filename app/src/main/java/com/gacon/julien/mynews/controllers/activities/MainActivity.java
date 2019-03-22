@@ -25,7 +25,6 @@ import static com.gacon.julien.mynews.controllers.fragments.searchFragment.MainS
 /**
  * Main Activity Class with Navigation View
  */
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     //Shared Preferences for switch between Research and Notification fragment
@@ -60,15 +59,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         this.configureDrawerLayout();
     }
 
-    // For ViewPager and Toolbar
-
+    /**
+     * Inflate the menu and add it to the Toolbar
+     * @param menu
+     * @return true or false
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu and add it to the Toolbar
         getMenuInflater().inflate(R.menu.menu_activity_main, menu);
         return true;
     }
 
+    /**
+     * Items selected when user click on tools items
+     * @param item tools iteù
+     * @return true or false
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle actions on menu items
@@ -87,6 +93,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     * Items selected when user click on the menu
+     * @param item Menu item
+     * @return true or false
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
@@ -112,7 +123,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
-    // For DrawerLayout and NavigationDrawer
+    /**
+     * For DrawerLayout and NavigationDrawer
+     */
     @Override
     public void onBackPressed() {
         // Handle back click to close menu
@@ -142,7 +155,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     /**
-     *     Configure ViewPager, Tabs and ToolBar
+     * Configure ViewPager, Tabs and ToolBar
      */
     private void configureViewPagerAndTabs() {
         // Get ViewPager from layout
@@ -159,6 +172,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tabs.setTabMode(TabLayout.MODE_FIXED);
     }
 
+    /**
+     * Toolbar configuration with tools items and hamburger button
+     */
     private void configureToolbar() {
         // Get the toolbar view inside the activity layout
         toolbar = findViewById(R.id.toolbar);

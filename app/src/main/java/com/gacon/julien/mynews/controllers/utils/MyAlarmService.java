@@ -41,6 +41,13 @@ public class MyAlarmService extends Service {
     public void onCreate(){
     }
 
+    /**
+     * On Start
+     * @param intent Intent
+     * @param flags
+     * @param startId
+     * @return
+     */
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         // show message in the app when alarm starting
@@ -69,7 +76,9 @@ public class MyAlarmService extends Service {
         return super.onUnbind(intent);
     }
 
-    // Connect to the NyTimes API
+    /**
+     * Connect to the NyTimes API
+     */
     protected void executeHttpRequest() {
         mSharedPreferences = getApplicationContext().getSharedPreferences(PREF, MODE_PRIVATE);
         // load data from search fragment
@@ -104,7 +113,9 @@ public class MyAlarmService extends Service {
         });
     }
 
-    // load data from search fragment
+    /**
+     * load data from search fragment
+     */
     public void loadSharedPreferences() {
         query = mSharedPreferences.getString(QUERY, null);
         dateBegin = mSharedPreferences.getString(DATE_BEGIN, null);
@@ -113,6 +124,11 @@ public class MyAlarmService extends Service {
     }
 
     // get the notification
+
+    /**
+     * get the notification
+     * @param texte Texte of the notification
+     */
     private void createNotification(String texte) {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getApplicationContext());
         Notification notification = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)

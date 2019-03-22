@@ -30,17 +30,26 @@ public class ArticleApiAdapter extends RecyclerView.Adapter<ArticleApiViewHolder
         this.glide = glide;
     }
 
+    /**
+     * CREATE VIEW HOLDER AND INFLATING ITS XML LAYOUT
+     * @param parent Parent activity
+     * @param viewType View
+     * @return View ViewHolder
+     */
     @NonNull
     @Override
     public ArticleApiViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // CREATE VIEW HOLDER AND INFLATING ITS XML LAYOUT
         Context context = parent.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.fragment_main_item, parent, false);
         return new ArticleApiViewHolder(view);
     }
 
-    // UPDATE VIEW HOLDER WITH A TOPSTORIES
+    /**
+     * UPDATE VIEW HOLDER WITH A TOPSTORIES
+     * @param viewHolder Article view Holder
+     * @param position Position article
+     */
     @Override
     public void onBindViewHolder(@NonNull ArticleApiViewHolder viewHolder, int position) {
 // update with new articles
@@ -48,13 +57,20 @@ public class ArticleApiAdapter extends RecyclerView.Adapter<ArticleApiViewHolder
 
     }
 
-    // RETURN THE TOTAL COUNT OF ITEMS IN THE LIST
+    /**
+     * RETURN THE TOTAL COUNT OF ITEMS IN THE LIST
+     * @return Size of list
+     */
     @Override
     public int getItemCount() {
         return this.mNyTopStoriesList.size();
     }
 
-    // get Url from the RecyclerView position for the web view
+    /**
+     * get Url from the RecyclerView position for the web view
+     * @param position Position article
+     * @return Url
+     */
     public String getURL (int position) {
         return mNyTopStoriesList.get(position).getUrl();
     }

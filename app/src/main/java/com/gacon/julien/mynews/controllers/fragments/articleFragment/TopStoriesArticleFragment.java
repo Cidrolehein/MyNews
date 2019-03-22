@@ -11,7 +11,10 @@ import io.reactivex.observers.DisposableObserver;
  */
 public class TopStoriesArticleFragment extends BaseArticleFragment {
 
-    // Instantiate fragment for page adaptor
+    /**
+     *  Fragment layout
+     * @return Layout
+     */
     public static TopStoriesArticleFragment newInstance() {
         return (new TopStoriesArticleFragment());
     }
@@ -24,6 +27,9 @@ public class TopStoriesArticleFragment extends BaseArticleFragment {
     // with Retrofit
     // -------------------
 
+    /**
+     * Create a stream request with Retrofit
+     */
     protected void executeHttpRequest() {
         this.disposable = NyTimesStreams.streamFetchTopStories("home").subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
             @Override

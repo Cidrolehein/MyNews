@@ -11,7 +11,6 @@ import java.util.Objects;
 /**
  * Result Activity Class
  */
-
 public class ResultActivity extends AppCompatActivity {
 
     // For Data
@@ -32,7 +31,9 @@ public class ResultActivity extends AppCompatActivity {
         this.configureAndShowMainFragment();
     }
 
-    // Data from MainSearchFragment
+    /**
+     * Data from MainSearchFragment
+     */
     private void getData() {
         mQuery=getIntent().getStringExtra(MainSearchFragment.QUERY);
         dateBeginForData = getIntent().getStringExtra(MainSearchFragment.DATE_BEGIN);
@@ -44,6 +45,9 @@ public class ResultActivity extends AppCompatActivity {
     // FRAGMENTS
     // --------------
 
+    /**
+     * MainSearchFragment configuration
+     */
     private void configureAndShowMainFragment() {
         // A - Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
         // Declare main fragment
@@ -68,6 +72,9 @@ public class ResultActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Add a toolbar
+     */
     private void configureToolbar(){
         //Get the toolbar view inside the activity layout
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);

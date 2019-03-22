@@ -14,7 +14,6 @@ import butterknife.ButterKnife;
 /**
  * For Web View
  */
-
 public class WebViewActivity extends AppCompatActivity {
 
     // Web View Layout
@@ -34,6 +33,9 @@ public class WebViewActivity extends AppCompatActivity {
         this.getWebView();
     }
 
+    /**
+     * Create the webView
+     */
     private void getWebView() {
         mWebViewClient = new WebViewClient();
         mWebView.setWebViewClient(mWebViewClient);
@@ -41,6 +43,9 @@ public class WebViewActivity extends AppCompatActivity {
         mWebView.loadUrl(url);
     }
 
+    /**
+     * Add Toolbar
+     */
     private void configureToolbar(){
         //Get the toolbar view inside the activity layout
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
@@ -51,5 +56,4 @@ public class WebViewActivity extends AppCompatActivity {
         assert ab != null;
         Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
     }
-
 }

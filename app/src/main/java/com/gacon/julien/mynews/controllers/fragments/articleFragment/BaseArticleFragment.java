@@ -23,7 +23,7 @@ import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 
 /**
- * Class to manage manage fragments
+ * Class to manage fragments
  */
 public abstract class BaseArticleFragment extends Fragment {
 
@@ -67,7 +67,9 @@ public abstract class BaseArticleFragment extends Fragment {
         return view;
     }
 
-    // When the fragment is distroy
+    /**
+     * When the fragment is distroy
+     */
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -78,7 +80,9 @@ public abstract class BaseArticleFragment extends Fragment {
     // ACTION
     // -----------------
 
-    // Configure item click on RecyclerView
+    /**
+     * Configure item click on RecyclerView
+     */
     private void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(recyclerView, R.layout.fragment_main_item)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
@@ -101,7 +105,9 @@ public abstract class BaseArticleFragment extends Fragment {
     // METHODS
     // -----------------
 
-    // Configure RecyclerView, Adapter, LayoutManager & glue it together
+    /**
+     * Configure RecyclerView, Adapter, LayoutManager & glue it together
+     */
     private void configureRecyclerView(){
 
         this.mResultList = new ArrayList<>();
@@ -113,7 +119,9 @@ public abstract class BaseArticleFragment extends Fragment {
 
     }
 
-    // Configure the SwipeRefreshLayout
+    /**
+     * Configure the SwipeRefreshLayout
+     */
     private void configureSwipeRefreshLayout() {
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -127,8 +135,11 @@ public abstract class BaseArticleFragment extends Fragment {
     // UPDATE UI
     // -------------------
 
+    /**
+     * stop refreshing and clear actual list of text article
+     * @param textArticle List of article
+     */
     protected void updateUI(List<Result> textArticle) {
-        //stop refreshing and clear actual list of text article
         swipeRefreshLayout.setRefreshing(false);
         mResultList.clear();
         mResultList.addAll(textArticle);

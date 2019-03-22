@@ -17,6 +17,10 @@ public class ArtsArticleFragment extends BaseArticleFragment {
         return (new ArtsArticleFragment());
     }
 
+    /**
+     *  Fragment layout
+     * @return Layout
+     */
     @Override
     protected int getFragmentLayout() {return R.layout.fragment_arts;}
 
@@ -25,6 +29,9 @@ public class ArtsArticleFragment extends BaseArticleFragment {
     // with Retrofit
     // -------------------
 
+    /**
+     * Create a stream request with Retrofit
+     */
     protected void executeHttpRequest() {
         this.disposable = NyTimesStreams.streamFetchTopStories("arts").subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {
             @Override

@@ -16,6 +16,10 @@ public class MostPopularArticleFragment extends BaseArticleFragment {
         return (new MostPopularArticleFragment());
     }
 
+    /**
+     *  Fragment layout
+     * @return Layout
+     */
     @Override
     protected int getFragmentLayout() {return R.layout.fragment_most_popular;}
 
@@ -24,6 +28,9 @@ public class MostPopularArticleFragment extends BaseArticleFragment {
     // with Retrofit
     // -------------------
 
+    /**
+     * Create a stream request with Retrofit
+     */
     @Override
     protected void executeHttpRequest() {
         this.disposable = NyTimesStreams.streamFetchMostPopular(1).subscribeWith(new DisposableObserver<MainNewYorkTimesTopStories>() {

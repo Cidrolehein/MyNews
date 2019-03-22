@@ -12,7 +12,6 @@ import java.util.Objects;
 /**
  * Search Activity Class for MainSearchFragment
  */
-
 public class SearchActivity extends AppCompatActivity implements MainSearchFragment.OnButtonClickedListener {
 
     @Override
@@ -23,11 +22,18 @@ public class SearchActivity extends AppCompatActivity implements MainSearchFragm
         this.configureToolbar();
     }
 
+    /**
+     * Craet activity when button clicked
+     * @param view new view
+     */
     @Override
     public void onButtonClicked(View view) {
         Log.e(getClass().getSimpleName(), "Activity created !");
     }
 
+    /**
+     * Add toolbar
+     */
     private void configureToolbar(){
         //Get the toolbar view inside the activity layout
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
@@ -38,5 +44,4 @@ public class SearchActivity extends AppCompatActivity implements MainSearchFragm
         assert ab != null;
         Objects.requireNonNull(ab).setDisplayHomeAsUpEnabled(true);
     }
-
 }
