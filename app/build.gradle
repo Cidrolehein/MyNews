@@ -48,5 +48,6 @@ dependencies {
     androidTestImplementation "org.robolectric:robolectric:3.0"
     androidTestImplementation "com.google.truth:truth:0.27"
     implementation 'org.jetbrains:annotations-java5:15.0'
-    implementation 'org.jetbrains:annotations-java5:15.0'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-web:3.0.2'
 }
