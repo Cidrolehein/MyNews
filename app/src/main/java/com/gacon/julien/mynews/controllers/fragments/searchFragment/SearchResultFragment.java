@@ -2,26 +2,29 @@ package com.gacon.julien.mynews.controllers.fragments.searchFragment;
 
 import android.support.v4.app.Fragment;
 import android.widget.Toast;
-
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.fragments.articleFragment.BaseArticleFragment;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
 import com.gacon.julien.mynews.models.SearchApiResult;
-
 import io.reactivex.observers.DisposableObserver;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment} subclass for search result
  */
 public class SearchResultFragment extends BaseArticleFragment {
 
+    // size of Api Respons
     private int size;
+    // Date
     private String dateBegin;
     private String endDate;
+    // Filter of ChekBox
     private String filter;
+    // Query of EditText
     private String query;
 
+    // New Instance
     public static SearchResultFragment newInstance() {
         return (new SearchResultFragment());
     }
@@ -31,10 +34,14 @@ public class SearchResultFragment extends BaseArticleFragment {
         return R.layout.fragment_search_result;
     }
 
+    // -------------------
+    // Streams Request
+    // with Retrofit
+    // -------------------
     @Override
     protected void executeHttpRequest() {
 
-        // Get datas from MainSearchFragment
+        // Data
         getData();
 
         this.disposable = NyTimesStreams.streamFetchSearch(dateBegin, endDate, filter, query, 30, "newest", "KzYIpjPOMj98klY5cukvyxBmBhzKwDKO").subscribeWith(new DisposableObserver<SearchApiResult>() {
@@ -61,11 +68,14 @@ public class SearchResultFragment extends BaseArticleFragment {
         });
     }
 
+    // Get data from MainSearchFragment
     private void getData() {
         assert getArguments() != null;
+        // get query and filter
         query = getArguments().getString("data");
+        filter = getArguments().getString("filter");
+        // get date
         dateBegin = getArguments().getString("dateBegin");
         endDate = getArguments().getString("endDate");
-        filter = getArguments().getString("filter");
     }
 }

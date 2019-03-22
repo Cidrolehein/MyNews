@@ -146,22 +146,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
      */
 
     private void configureViewPagerAndTabs() {
-        // 1 - Get ViewPager from layout
+        // Get ViewPager from layout
         ViewPager pager = findViewById(R.id.activity_main_viewpager);
-        // 2 - Set Adapter PageAdapter and glue it together
+        // Set Adapter PageAdapter and glue it together
         pager.setAdapter(new PageAdapter(getSupportFragmentManager()) {
         });
 
-        // 1 - Get TabLayout from layout
+        // Get TabLayout from layout
         TabLayout tabs = findViewById(R.id.activity_main_tabs);
-        // 2 - Glue TabLayout and ViewPager together
+        // Glue TabLayout and ViewPager together
         tabs.setupWithViewPager(pager);
-        // 3 - Design purpose. Tabs have the same width
+        // Design purpose. Tabs have the same width
         tabs.setTabMode(TabLayout.MODE_FIXED);
     }
 
     private void configureToolbar() {
-        //Get the toolbar view inside the activity layout
+        // Get the toolbar view inside the activity layout
         android.support.v7.widget.Toolbar toolbar = findViewById(R.id.toolbar);
         // Set the Toolbar
         setSupportActionBar(toolbar);

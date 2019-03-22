@@ -22,13 +22,19 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.disposables.Disposable;
 
+/**
+ * Class to manage manage fragments
+ */
 public abstract class BaseArticleFragment extends Fragment {
 
     protected abstract int getFragmentLayout();
+    //Connect to the NyTimes Api
     protected abstract void executeHttpRequest();
     public static final String BUNDLE_URL = "BUNDLE_URL";
 
-    // FOR DESIGN
+    // ------------- FOR DESIGN --------------------------
+
+    // Declare the RecyclerView
     @BindView(R.id.fragment_main_recycler_view)
     RecyclerView recyclerView; // 1 - Declare RecyclerView
 
@@ -36,43 +42,50 @@ public abstract class BaseArticleFragment extends Fragment {
     @BindView(R.id.fragment_main_swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    //FOR DATA
+    // ------------- FOR DATA --------------------------
+    // Declare disposable to call Retrofit
     protected Disposable disposable;
-    // 2 - Declare lists & Adapters
+    // Declare lists & Adapters
     private List<Result> mResultList;
     private ArticleApiAdapter adapter;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate view
         View view = inflater.inflate(getFragmentLayout(), container, false);
+        // Instentiate ButterKnife
         ButterKnife.bind(this, view);
-
+        // RecyclerView
         this.configureRecyclerView();
+        // Connect to the Api
         this.executeHttpRequest();
-        this.configureSwipeRefreshLayout();
-        // 2 - Calling the method that configuring click on RecyclerView
+        // Calling the method that configuring click on RecyclerView
         this.configureOnClickRecyclerView();
+        // SwipeRefreshLayout
+        this.configureSwipeRefreshLayout();
 
         return view;
     }
 
+    // When the fragment is distroy
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        this.disposeWhenDestroy();
+    }
 
     // -----------------
     // ACTION
     // -----------------
 
-    // 1 - Configure item click on RecyclerView
-
+    // Configure item click on RecyclerView
     private void configureOnClickRecyclerView(){
         ItemClickSupport.addTo(recyclerView, R.layout.fragment_main_item)
                 .setOnItemClickListener(new ItemClickSupport.OnItemClickListener() {
                     @Override
                     public void onItemClicked(RecyclerView recyclerView, int position, View v) {
-
-                        String article;
-
                         // 1 - Get user from adapter
-                        article = adapter.getURL(position);
+                        String article = adapter.getURL(position);
                         // 2 - Show result in a new WebView
                         Intent intent = new Intent(getActivity(), WebViewActivity.class);
                         intent.putExtra(BUNDLE_URL, article);
@@ -82,26 +95,20 @@ public abstract class BaseArticleFragment extends Fragment {
                 });
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        this.disposeWhenDestroy();
-    }
-
     // -----------------
     // CONFIGURATION
     // ON CREATE VIEW
     // METHODS
     // -----------------
 
-    // 3 - Configure RecyclerView, Adapter, LayoutManager & glue it together
+    // Configure RecyclerView, Adapter, LayoutManager & glue it together
     private void configureRecyclerView(){
 
         this.mResultList = new ArrayList<>();
         adapter = new ArticleApiAdapter(mResultList, Glide.with(this));
         this.recyclerView.setAdapter(this.adapter);
 
-        // 3.4 - Set layout manager to position the items
+        // Set layout manager to position the items
         this.recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
     }

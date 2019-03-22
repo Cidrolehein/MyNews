@@ -2,19 +2,17 @@ package com.gacon.julien.mynews.controllers.fragments.articleFragment;
 
 
 import android.support.v4.app.Fragment;
-
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
 import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
-
 import io.reactivex.observers.DisposableObserver;
 
 /**
- * A simple {@link Fragment} subclass.
+ * A simple {@link Fragment} subclass for Arts Article section
  */
 public class ArtsArticleFragment extends BaseArticleFragment {
 
-
+    // Instantiate fragment for page adaptor
     public static ArtsArticleFragment newInstance() {
         return (new ArtsArticleFragment());
     }
@@ -42,5 +40,4 @@ public class ArtsArticleFragment extends BaseArticleFragment {
             public void onComplete() { }
         });
     }
-
 }

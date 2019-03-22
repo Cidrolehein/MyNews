@@ -1,13 +1,17 @@
 package com.gacon.julien.mynews.controllers.fragments.articleFragment;
 
+import android.support.v4.app.Fragment;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.utils.NyTimesStreams;
 import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
-
 import io.reactivex.observers.DisposableObserver;
 
+/**
+ * A simple {@link Fragment} subclass for TopStories section
+ */
 public class TopStoriesArticleFragment extends BaseArticleFragment {
 
+    // Instantiate fragment for page adaptor
     public static TopStoriesArticleFragment newInstance() {
         return (new TopStoriesArticleFragment());
     }
