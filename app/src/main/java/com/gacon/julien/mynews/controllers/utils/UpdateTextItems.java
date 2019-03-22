@@ -6,12 +6,19 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Utils class to manage models and JSon Strings
+ */
+
 public class UpdateTextItems {
 
+    // text string tha we show on the app
     private String mString;
 
+    // empty constructor
     public UpdateTextItems() { }
 
+    // set article section
     public String setSection(Result article) {
         if (!article.getSection().equals("")) {
             mString = article.getSection();
@@ -19,6 +26,7 @@ public class UpdateTextItems {
         return mString;
     }
 
+    // set article SubSection - add ">" if they are unless get blank
     public String setSubSection(Result article) {
         String sectionTitle = article.getSection();
         mString = "";
@@ -32,6 +40,7 @@ public class UpdateTextItems {
         return mString;
     }
 
+    // set Title
     public String setTitle(Result article) {
         if (!article.getTitle().equals("")) {
             mString = article.getTitle();
@@ -39,8 +48,8 @@ public class UpdateTextItems {
         return mString;
     }
 
+    // set Date and convert to the format
     public String setDate(Result article){
-
         try {
             String dateStr= article.getPublishedDate();
             DateFormat srcDf = new SimpleDateFormat("yyyy-MM-dd");

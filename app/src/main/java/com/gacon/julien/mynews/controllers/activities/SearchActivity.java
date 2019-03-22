@@ -7,10 +7,11 @@ import android.util.Log;
 import android.view.View;
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment;
-
 import java.util.Objects;
 
-import butterknife.ButterKnife;
+/**
+ * Search Activity Class for MainSearchFragment
+ */
 
 public class SearchActivity extends AppCompatActivity implements MainSearchFragment.OnButtonClickedListener {
 
@@ -18,10 +19,8 @@ public class SearchActivity extends AppCompatActivity implements MainSearchFragm
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        ButterKnife.bind(this);
         // Configure Toolbar
         this.configureToolbar();
-
     }
 
     @Override

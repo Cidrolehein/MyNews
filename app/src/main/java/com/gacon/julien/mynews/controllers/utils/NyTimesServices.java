@@ -2,7 +2,6 @@ package com.gacon.julien.mynews.controllers.utils;
 
 import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
 import com.gacon.julien.mynews.models.SearchApiResult;
-
 import io.reactivex.Observable;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -11,9 +10,14 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
+/**
+ * Connect to the NyTimes Api
+ */
 public interface NyTimesServices {
 
+    // get section with key
     @GET("{section}.json?api-key=KzYIpjPOMj98klY5cukvyxBmBhzKwDKO")
+    // model observable
     Observable<MainNewYorkTimesTopStories> getNyTopStories(@Path("section") String section);
 
     Retrofit retrofitTopStories = new Retrofit.Builder()

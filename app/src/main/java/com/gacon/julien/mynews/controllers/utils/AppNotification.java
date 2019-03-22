@@ -5,6 +5,10 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.os.Build;
 
+/**
+ * Create a notification Channels
+ */
+
 public class AppNotification extends Application {
 
     public static final String CHANNEL_ID = "CHANNEL_ID";
@@ -13,9 +17,10 @@ public class AppNotification extends Application {
     public void onCreate() {
         super.onCreate();
 
-        createNotificationChannels();
+        this.createNotificationChannels();
     }
 
+    // Notification Channel for notify the list of articles
     private void createNotificationChannels() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
@@ -23,8 +28,8 @@ public class AppNotification extends Application {
                     "Channel",
                     NotificationManager.IMPORTANCE_HIGH
             );
+            // Describe the channel
             channel.setDescription("This is channel for notification NYTimes article");
-
             NotificationManager manager = getSystemService(NotificationManager.class);
             manager.createNotificationChannel(channel);
         }

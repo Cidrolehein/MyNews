@@ -3,16 +3,18 @@ package com.gacon.julien.mynews.controllers.activities;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.fragments.searchFragment.MainSearchFragment;
 import com.gacon.julien.mynews.controllers.fragments.searchFragment.SearchResultFragment;
-
 import java.util.Objects;
+
+/**
+ * Result Activity Class
+ */
 
 public class ResultActivity extends AppCompatActivity {
 
-    //Data
+    // For Data
     private String mQuery;
     private String dateBeginForData;
     private String endDateForData;
@@ -22,13 +24,15 @@ public class ResultActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+        // Toolbar
         configureToolbar();
+        // Get data from the Bundle
         this.getData();
+        // Put Data into the fragment and commit
         this.configureAndShowMainFragment();
     }
 
-    // Data
-
+    // Data from MainSearchFragment
     private void getData() {
         mQuery=getIntent().getStringExtra(MainSearchFragment.QUERY);
         dateBeginForData = getIntent().getStringExtra(MainSearchFragment.DATE_BEGIN);
@@ -42,7 +46,7 @@ public class ResultActivity extends AppCompatActivity {
 
     private void configureAndShowMainFragment() {
         // A - Get FragmentManager (Support) and Try to find existing instance of fragment in FrameLayout container
-        // 1 - Declare main fragment
+        // Declare main fragment
         com.gacon.julien.mynews.controllers.fragments.searchFragment.SearchResultFragment searchResultFragment = (SearchResultFragment) getSupportFragmentManager().findFragmentById(R.id.frame_layout_result);
 
         if (searchResultFragment == null) {

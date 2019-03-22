@@ -8,6 +8,9 @@ import com.gacon.julien.mynews.controllers.fragments.articleFragment.MostPopular
 import com.gacon.julien.mynews.controllers.fragments.searchFragment.SearchResultFragment;
 import com.gacon.julien.mynews.controllers.fragments.articleFragment.TopStoriesArticleFragment;
 
+/**
+ * Simple Page Adaptor to manage fragments
+ */
 public class PageAdapter extends FragmentPagerAdapter {
 
     //Default Constructor
@@ -29,7 +32,7 @@ public class PageAdapter extends FragmentPagerAdapter {
                 return MostPopularArticleFragment.newInstance();
             case 2: //Page number 3
                 return ArtsArticleFragment.newInstance();
-            case 3: // Page Search
+            case 3: // Create a new instance for Search / Notification fragment
                 return SearchResultFragment.newInstance();
             default:
                 return null;

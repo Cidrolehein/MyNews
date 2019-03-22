@@ -4,6 +4,10 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+/**
+ * OnClickSupport for the RecyclerView
+ */
+
 public class ItemClickSupport {
 
     private final RecyclerView mRecyclerView;

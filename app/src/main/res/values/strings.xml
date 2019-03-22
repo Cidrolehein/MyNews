@@ -26,7 +26,7 @@
     <string name="top_stories">Top Stories</string>
     <string name="most_popular">Most Popular</string>
     <string name="art">Arts</string>
-    <string name="trouver_un_article">Trouver un article</string>
-    <string name="recherche">Recherche</string>
-    <string name="notifications">Notifications</string>
+    <string name="trouver_un_article">Find an article</string>
+    <string name="recherche">Search</string>
+    <string name="notifications">Notification</string>
 </resources>

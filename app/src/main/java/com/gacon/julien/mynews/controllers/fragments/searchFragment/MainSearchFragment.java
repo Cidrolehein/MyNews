@@ -298,9 +298,11 @@ public class MainSearchFragment extends Fragment implements View.OnClickListener
         Intent myIntent = new Intent(getContext(), MyAlarmService.class);
         pendingIntent = PendingIntent.getService(getContext(), 0, myIntent, 0);
         mAlarmManager = (AlarmManager) Objects.requireNonNull(getActivity()).getSystemService(ALARM_SERVICE);
-        mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
-                SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_DAY,
-                AlarmManager.INTERVAL_DAY, pendingIntent);
+        // repeat Alarm every minutes
+        mAlarmManager.setRepeating(AlarmManager.ELAPSED_REALTIME, SystemClock.elapsedRealtime(), 60*60, pendingIntent);
+        /* mAlarmManager.setInexactRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                SystemClock.elapsedRealtime() + AlarmManager.INTERVAL_FIFTEEN_MINUTES,
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES, pendingIntent);*/
 
         // Save the date
         Calendar currentTime = Calendar.getInstance();

@@ -5,17 +5,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-
 import com.gacon.julien.mynews.R;
 import com.gacon.julien.mynews.controllers.fragments.articleFragment.BaseArticleFragment;
-
 import java.util.Objects;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * For Web View
+ */
+
 public class WebViewActivity extends AppCompatActivity {
 
+    // Web View Layout
     @BindView(R.id.webview)
     WebView mWebView;
     WebViewClient mWebViewClient;
@@ -24,9 +26,15 @@ public class WebViewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_web_view);
+        // Initialize ButterKnife
         ButterKnife.bind(this);
+        // Toolbar
         configureToolbar();
         // Configure webview
+        this.getWebView();
+    }
+
+    private void getWebView() {
         mWebViewClient = new WebViewClient();
         mWebView.setWebViewClient(mWebViewClient);
         String url=getIntent().getStringExtra(BaseArticleFragment.BUNDLE_URL);

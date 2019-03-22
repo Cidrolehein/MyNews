@@ -2,11 +2,14 @@ package com.gacon.julien.mynews.controllers.utils;
 
 import com.gacon.julien.mynews.models.MainNewYorkTimesTopStories;
 import com.gacon.julien.mynews.models.SearchApiResult;
-
 import java.util.concurrent.TimeUnit;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
+
+/**
+ * Creat a stream with observable
+ */
 
 public class NyTimesStreams {
 
